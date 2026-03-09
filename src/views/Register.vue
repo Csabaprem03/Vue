@@ -8,10 +8,11 @@
     </FromWrapper>
 </template>
 <script setup lang="ts">
-import FromWrapper from '../Forms/FromWrapper.vue';
-import SubmitButton from '../Forms/SubmitButton.vue';
-import FormField from '../validators/FormField.vue';
+import FromWrapper from '../components/Forms/FromWrapper.vue';
+
 import {string} from 'yup'
+import FormField from '../components/validators/FormField.vue';
+import SubmitButton from '../components/Forms/SubmitButton.vue';
 
 const handleSubmit=(value:any)=>{
     console.log(value);

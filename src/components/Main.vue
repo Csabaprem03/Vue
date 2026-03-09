@@ -14,6 +14,7 @@ import { RouterView } from 'vue-router';
 </template>
 
 <style scoped>
+@import 'animate.css';
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;

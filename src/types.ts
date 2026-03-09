@@ -39,3 +39,9 @@ export interface Collectible {
     images: Array<string>,
     map_location: Array<string>,
 }
+
+export interface APIREsponse<T>{
+    success:boolean,
+    content:T;
+    status?:number;
+}

@@ -22,7 +22,7 @@ interface Props {
     rules?: string
 }
 
-defineRule('confirmed', (value, [target]) => {
+defineRule('confirmed', (value:any, [target]:any) => {
     if (!value) {
         return 'köletező mező'
     }

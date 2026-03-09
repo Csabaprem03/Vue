@@ -8,7 +8,7 @@ const store = useSettingStore()
 <template>
     <header>
         <nav class="bg-neutral-600 w-full">
-            <div class="max-w-screen-xl flex flex-nowrap items-center justify-between mx-auto p-3.5">
+            <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3.5">
                 <button @click="store.toggleMenu" data-collapse-toggle="navbar-default" type="button"
                     class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading"
                     aria-controls="navbar-default" aria-expanded="false">
@@ -21,7 +21,7 @@ const store = useSettingStore()
                 <div :class="['w-full md:block md:w-auto', store.isOpen ? 'block' : 'hidden']">
                     <ul class="font-medium flex flex-col md:flex-row md:space-x-4">
                         <li>
-                            <RouterLink to="/lista"
+                            <RouterLink to="/games"
                                 class="block py-2 px-3 text-dark rounded md:bg-neutral-300  md:text-fg-brand md:p-0 ">
                                 Játékok listája</RouterLink>
                         </li>
@@ -31,7 +31,7 @@ const store = useSettingStore()
                                 termékek</RouterLink>
                         </li>
                         <li>
-                            <RouterLink to="/gyujtheto"
+                            <RouterLink to="/ccollectible"
                                 class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-neutral-300  md:border-0 md:hover:text-fg-brand md:p-0 ">
                                 Gyűjthető</RouterLink>
                         </li>
