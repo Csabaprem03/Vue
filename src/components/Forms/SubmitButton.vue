@@ -5,13 +5,12 @@
             betöltés...
         </span>
         <span v-else>
-
-            <slot/>
+            <slot />
         </span>
     </button>
 </template>
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
 
-const {isSubmitting} =useForm() 
+const { isSubmitting } = useForm() 
 </script>

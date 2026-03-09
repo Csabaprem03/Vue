@@ -37,8 +37,7 @@ const store = useSettingStore()
                         </li>
                     </ul>
                 </div>
-                <div class="z-10  bg-neutral-primary-medium border-default-medium rounderd-base shadow-g w-44"
-                    >
+                <div class="z-10  bg-neutral-primary-medium border-default-medium rounderd-base shadow-g w-44">
                     <ul class="relative">
                         <li class="relative group">
                             <button type="button" class="flex items-center py-2 px-3 text-heading hover:text-fg-brand">
@@ -63,7 +62,7 @@ const store = useSettingStore()
                                         Bejelentkezve</RouterLink>
                                 </li>
                             </ul>
-    
+
                         </li>
                     </ul>
                 </div>

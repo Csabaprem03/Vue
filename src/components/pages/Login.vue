@@ -2,7 +2,7 @@
 import FromWrapper from '../Forms/FromWrapper.vue';
 import SubmitButton from '../Forms/SubmitButton.vue';
 import FormField from '../validators/FormField.vue';
-import {string} from 'yup';
+import { string } from 'yup';
 
 
 const handleSubmit = (value: any) => {
