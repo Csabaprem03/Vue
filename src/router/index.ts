@@ -26,8 +26,8 @@ const router = createRouter({
             enterClass: 'animate__animated animate__fadeInRight',
             leaveClass: 'animate__animated animate__fadeOutLeft',
         }},
-        {path:'/games/:slug',name:'games.detail',component:()=>import('../views/GameView.vue'),props:true,children:[{
-            path:'/collectible/:type', name:'game.collectibles',component:()=>import('../views/CollectibleView.vue'),props:true
+        {path:'/games/:id',name:'games.detail',component:()=>import('../views/GameView.vue'),props:route=>({id:Number(route.params.id)}),children:[{
+            path:'/collectible/:type', name:'game.collectibles.type',component:()=>import('../components/domains/CollectibleTypeCard.vue'),props:true
         }]}
         // {path:'/collectible/:id',name:'collectible.id',component:()=>import('../')
         

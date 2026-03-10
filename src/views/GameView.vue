@@ -1,7 +1,7 @@
 <template>
     <div>
         <Suspense>
-            <template #default>   
+            <template #default>
                 <GameDetails />
             </template>
             <template #fallback>
@@ -14,11 +14,9 @@
 import { defineAsyncComponent } from 'vue';
 
 
-const GameDetails=defineAsyncComponent({
-    loader:()=>import('../components/domains/GameDetails.vue'),
-
-    delay:200,
-
-    timeout:3000
+const GameDetails = defineAsyncComponent({
+    loader: () => import('../components/domains/GameDetails.vue'),
+    delay: 200,
+    timeout: 3000
 })
 </script>
