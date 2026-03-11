@@ -5,14 +5,19 @@
                 <GameDetails />
             </template>
             <template #fallback>
-                betöltése...
+                betöltése
             </template>
         </Suspense>
     </div>
 </template>
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue';
+import { defineAsyncComponent, ref } from 'vue';
+import { useGamesStore } from '../stores/gamesStore';
+import { Game } from '../types';
+import SkeletonLoading from '../components/pages/SkeletonLoading.vue';
 
+
+const games=ref<Game[]>([])
 
 const GameDetails = defineAsyncComponent({
     loader: () => import('../components/domains/GameDetails.vue'),

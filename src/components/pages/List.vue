@@ -5,6 +5,6 @@
 </template>
 <script setup lang="ts">
 defineProps<{
-    items: any[]
+    items: any[] | number
 }>()
 </script>

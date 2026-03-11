@@ -1,14 +1,17 @@
 import { defineStore } from "pinia";
 import type { Collectible, Game } from "../types";
 import { API } from '../services/index';
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import type { APIResponse } from "../services/types";
 import type { AxiosError } from "axios";
+import { slugify } from "./slugfiy";
 
 export const useGamesStore = defineStore('gamesStore', () => {
 
     const games = ref<Game[]>([])
     const collectibles = ref<Collectible[]>([])
+
+    
 
     function initGames(data: Game[]) {
         games.value = data || [];
@@ -17,6 +20,7 @@ export const useGamesStore = defineStore('gamesStore', () => {
     function initCollectibles(data: Collectible[]) {
         collectibles.value = data || [];
     }
+
 
     async function GETById(id: number): Promise<APIResponse<null>> {
         try {

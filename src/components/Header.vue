@@ -26,11 +26,6 @@ const store = useSettingStore()
                                 Játékok listája</RouterLink>
                         </li>
                         <li>
-                            <RouterLink to="/termek"
-                                class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-neutral-300  md:border-0 md:hover:text-fg-brand md:p-0 ">
-                                termékek</RouterLink>
-                        </li>
-                        <li>
                             <RouterLink to="/collectible"
                                 class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-neutral-300  md:border-0 md:hover:text-fg-brand md:p-0 ">
                                 Gyűjthető</RouterLink>
