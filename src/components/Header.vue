@@ -21,7 +21,7 @@ const store = useSettingStore()
                 <div :class="['w-full md:block md:w-auto', store.isOpen ? 'block' : 'hidden']">
                     <ul class="font-medium flex flex-col md:flex-row md:space-x-4">
                         <li>
-                            <RouterLink to="/games"
+                            <RouterLink to="/games/:slug"
                                 class="block py-2 px-3 text-dark rounded md:bg-neutral-300  md:text-fg-brand md:p-0 ">
                                 Játékok listája</RouterLink>
                         </li>

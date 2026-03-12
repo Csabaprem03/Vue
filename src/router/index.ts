@@ -23,7 +23,7 @@ const router = createRouter({
                 leaveClass: 'animate__animated animate__fadeOutLeft',
             }
         },
-        { path: '/games', name: 'games.list', component: () => import('../views/Game.vue') },
+        // { path: '/games', name: 'games.list', component: () => import('../views/GameView.vue') },
         {
             path: '/colletible', name: 'gyujtheto', component: () => import('../components/pages/Collectible.vue'), meta: {
                 enterClass: 'animate__animated animate__fadeInRight',

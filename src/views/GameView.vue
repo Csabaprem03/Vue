@@ -14,7 +14,7 @@
 import { defineAsyncComponent, ref } from 'vue';
 import { useGamesStore } from '../stores/gamesStore';
 import { Game } from '../types';
-import SkeletonLoading from '../components/pages/SkeletonLoading.vue';
+
 
 
 const games=ref<Game[]>([])
