@@ -21,12 +21,12 @@ const store = useSettingStore()
                 <div :class="['w-full md:block md:w-auto', store.isOpen ? 'block' : 'hidden']">
                     <ul class="font-medium flex flex-col md:flex-row md:space-x-4">
                         <li>
-                            <RouterLink to="/games/:slug"
+                            <RouterLink to="/games"
                                 class="block py-2 px-3 text-dark rounded md:bg-neutral-300  md:text-fg-brand md:p-0 ">
                                 Játékok listája</RouterLink>
                         </li>
                         <li>
-                            <RouterLink to="/collectible"
+                            <RouterLink to="/collectibles"
                                 class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-neutral-300  md:border-0 md:hover:text-fg-brand md:p-0 ">
                                 Gyűjthető</RouterLink>
                         </li>
@@ -47,14 +47,14 @@ const store = useSettingStore()
                             <ul class="absolute right-0 hidden group-hover:block bg-white shadow-lg rounded w-40"
                                 aria-labelledby="user-menu-drop-button">
                                 <li>
-                                    <RouterLink to="/register"
+                                    <RouterLink to="/user/register"
                                         class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded">
                                         Regisztráció</RouterLink>
                                 </li>
                                 <li>
-                                    <RouterLink to="/login"
+                                    <RouterLink to="/user/login"
                                         class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded">
-                                        Bejelentkezve</RouterLink>
+                                        Bejelentkezés</RouterLink>
                                 </li>
                             </ul>
 

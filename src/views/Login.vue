@@ -14,7 +14,7 @@ const handleSubmit = (value: any) => {
 
 <template>
     <FromWrapper @submit="handleSubmit">
-        <h1>Bejelentkezve</h1>
+        <h1>Bejelentkezés</h1>
         <FormField label="Email" type="email" name="email"
             :validator="string().required('köletező az email!').email('Email érvényes')" />
         <FormField label="Jelszó" type="password" name="password"

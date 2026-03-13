@@ -8,7 +8,7 @@ import { slugify } from "./slugfiy";
 
 export const useGamesStore = defineStore('gamesStore', () => {
 
-    const games = ref<Game[]>([])
+const games = ref<Game[]>([])
     const collectibles = ref<Collectible[]>([])
 
     

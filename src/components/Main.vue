@@ -1,16 +1,20 @@
 <script setup lang="ts">
+
 import { Transition } from 'vue';
 import { RouterView } from 'vue-router';
 
 </script>
 
 <template>
-    <RouterView v-slot="{ Component, route }">
-        <Transition name="fade" mode="out-in" :enter-active-class="route.meta.enterClass"
-            :leave-active-class="route.meta.leaveClass">
-            <component :is="Component" />
-        </Transition>
-    </RouterView>
+    <main >
+
+        <RouterView v-slot="{ Component, route }">
+            <Transition name="fade" mode="out-in" :enter-active-class="route.meta.enterClass"
+                :leave-active-class="route.meta.leaveClass">
+                <component :is="Component" :key="route.path"/>
+            </Transition>
+        </RouterView>
+    </main>
 </template>
 
 <style scoped>
