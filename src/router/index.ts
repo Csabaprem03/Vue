@@ -23,9 +23,9 @@ const router = createRouter({
                 leaveClass: 'animate__animated animate__fadeOutLeft',
             }
         },
-        { path: '/games', name: 'games.list', component: () => import('../views/GameView.vue') },
+        { path: '/games', name: 'games.list', component: () => import('../views/Game.vue') },
         {
-            path: '/collectibles', name: 'gyujtheto', component: () => import('../views/CollectibleView.vue'), meta: {
+            path: '/collectibles', name: 'gyujtheto', component: () => import('../views/Collectible.vue'), meta: {
                 enterClass: 'animate__animated animate__fadeInRight',
                 leaveClass: 'animate__animated animate__fadeOutLeft',
             }
@@ -34,8 +34,8 @@ const router = createRouter({
             path: '/games/:slug', name: 'games.detail', component: () => import('../components/domains/GameDetails.vue'), props: true, children: [{
                 path: 'collectibles/:type', name: 'game.collectibles.type', component: () => import('../components/domains/CollectibleTypeCard.vue'), props: true
             }]
-        }
-        // {path:'/collectibles/:id',name:'collectible.id',component:()=>import('../')
+        },
+        {path:'/collectibles/:id',name:'collectible.id',component:()=>import('../components/domains/CollectibleDetails.vue'),props: route=>({...route.params,id:Number(route.params.id)})}
 
     ]
 

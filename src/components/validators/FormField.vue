@@ -29,7 +29,6 @@ defineRule('confirmed', (value:any, [target]:any) => {
     if (value === target) {
         return true
     }
-
     return 'A jelszavak nem egyeznek'
 })
 

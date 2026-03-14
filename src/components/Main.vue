@@ -7,7 +7,6 @@ import { RouterView } from 'vue-router';
 
 <template>
     <main >
-
         <RouterView v-slot="{ Component, route }">
             <Transition name="fade" mode="out-in" :enter-active-class="route.meta.enterClass"
                 :leave-active-class="route.meta.leaveClass">

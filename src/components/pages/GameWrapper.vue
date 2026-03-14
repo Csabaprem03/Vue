@@ -5,7 +5,10 @@
                 <GameDetails :slug="slug" />
             </template>
             <template #fallback>
-                <SkeletonLoading v-for="n in 4" :key="n" />
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <SkeletonLoading v-for="n in 6" :key="n" />
+                </div>
+                
             </template>
         </Suspense>
     </div>

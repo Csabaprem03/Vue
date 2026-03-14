@@ -1,24 +1,38 @@
 import { defineStore } from "pinia";
 import type { Collectible, Game } from "../types";
 import { API } from '../services/index';
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import type { APIResponse } from "../services/types";
 import type { AxiosError } from "axios";
-import { slugify } from "./slugfiy";
+
 
 export const useGamesStore = defineStore('gamesStore', () => {
 
-const games = ref<Game[]>([])
+    const games = ref<Game[]>([])
     const collectibles = ref<Collectible[]>([])
-
-    
 
     function initGames(data: Game[]) {
         games.value = data || [];
     }
-
     function initCollectibles(data: Collectible[]) {
         collectibles.value = data || [];
+    }
+
+    function saveToLocalStorage():void {
+        const datas={
+            games:games.value,
+            collectibles:collectibles.value
+        }
+        localStorage.setItem('gamesStore',JSON.stringify(datas))
+    }
+
+    function loadFromLocalStorage():void {
+        const saved=localStorage.getItem("gamesStore")
+
+        if (saved) {
+            games.value=JSON.parse(saved)
+            collectibles.value=JSON.parse(saved)
+        }
     }
 
 
@@ -26,16 +40,12 @@ const games = ref<Game[]>([])
         try {
             const res = await API.games.getGameById(id)
             const data = await res.data
-            if (res.status == 400 && data) {
+            if (res.status == 200 && data) {
                 return {
                     success: true,
                     content: null
                 };
-            } else if (res.status == 404 && data) {
-                return {
-                    success: false,
-                    content: null,
-                };
+            
             }
             initGames(data)
         } catch (error) {
@@ -79,20 +89,16 @@ const games = ref<Game[]>([])
         }
     }
 
-    async function GETColById(id: number): Promise<APIResponse<null>> {
+    async function GETCollectibleById(id: number): Promise<APIResponse<null>> {
         try {
             const res = await API.collectibles.getCollectibleById(id)
             const data = await res.data
-            if (res.status == 400 && data) {
+            if (res.status == 200 && data) {
                 return {
                     success: true,
                     content: null
                 };
-            } else if (res.status == 404 && data) {
-                return {
-                    success: false,
-                    content: null,
-                };
+            
             }
         } catch (error) {
             const _error = error as AxiosError<string>;
@@ -133,6 +139,7 @@ const games = ref<Game[]>([])
             content: null,
             status: 400,
         }
+
     }
 
     return {
@@ -143,7 +150,7 @@ const games = ref<Game[]>([])
         GETallgames,
         GETallcollectibles,
         GETById,
-        GETColById,
-        
+        GETCollectibleById,
+
     }
 })

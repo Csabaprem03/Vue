@@ -1,0 +1,29 @@
+<template>
+    <div>
+        <Suspense>
+            <template #default>
+                <CollectibleDetails :id="id"/>
+            </template>
+            <template #fallback>
+                <SkeletonLoading v-for="n in 4" :key="n" />
+            </template>
+        </Suspense>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { defineAsyncComponent } from 'vue';
+import SkeletonLoading from './SkeletonLoading.vue';
+
+defineProps<{id:number}>()
+const CollectibleDetails=defineAsyncComponent({
+    loader: ()=>import('../domains/CollectibleDetails.vue'),
+    delay:200,
+    timeout:5000
+})
+
+</script>
+
+<style scoped>
+
+</style>
