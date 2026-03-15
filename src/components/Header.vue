@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import { useSettingStore } from '../stores/settingsStore';
+import { useAuthStore } from '../stores/authStore';
 
 const store = useSettingStore()
+const authStore=useAuthStore()
 </script>
 
 <template>
@@ -46,16 +48,23 @@ const store = useSettingStore()
                             </button>
                             <ul class="absolute right-0 hidden group-hover:block bg-white shadow-lg rounded w-40"
                                 aria-labelledby="user-menu-drop-button">
-                                <li>
-                                    <RouterLink to="/user/register"
-                                        class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded">
-                                        Regisztráció</RouterLink>
-                                </li>
-                                <li>
-                                    <RouterLink to="/user/login"
-                                        class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded">
-                                        Bejelentkezés</RouterLink>
-                                </li>
+                                <template v-if="!authStore.token">
+                                    <li>
+                                        <RouterLink to="/user/register"
+                                            class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded">
+                                            Regisztráció</RouterLink>
+                                    </li>
+                                    <li>
+                                        <RouterLink to="/user/login"
+                                            class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded">
+                                            Bejelentkezés</RouterLink>
+                                    </li>
+                                </template>
+                                <template v-else>
+                                    <li>
+                                        <button @click="authStore.logout">Kijelentkezés</button>
+                                    </li>
+                                </template>
                             </ul>
 
                         </li>

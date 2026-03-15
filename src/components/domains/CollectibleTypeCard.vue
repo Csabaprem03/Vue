@@ -18,6 +18,13 @@ import { slugify } from '../../stores/slugfiy';
 const props = defineProps<{ slug: string,type:string,gameId?:number }>();
 const store = useGamesStore();
 
+if (store.games.length === 0) {
+    store.GETallgames(); 
+}
+if (store.collectibles.length === 0) {
+    store.GETallcollectibles();
+}
+
 const filteredCollectibles = computed(() => {
 
     const game =store.games.find((g) => slugify(g.name) === props.slug);

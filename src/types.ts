@@ -45,3 +45,14 @@ export interface FilteredGames{
     title:string,
     order:string
 }
+
+export interface LoginCredentials{
+    name:string,
+    password:string,
+}
+
+export interface RegisterData{
+    name:string,
+    email:string,
+    password:string,
+}

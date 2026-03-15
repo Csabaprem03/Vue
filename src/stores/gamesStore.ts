@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { Collectible, Game } from "../types";
 import { API } from '../services/index';
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import type { APIResponse } from "../services/types";
 import type { AxiosError } from "axios";
 
@@ -10,6 +10,7 @@ export const useGamesStore = defineStore('gamesStore', () => {
 
     const games = ref<Game[]>([])
     const collectibles = ref<Collectible[]>([])
+    const isLoading=ref<boolean>(false)
 
     function initGames(data: Game[]) {
         games.value = data || [];
@@ -65,6 +66,7 @@ export const useGamesStore = defineStore('gamesStore', () => {
 
     async function GETallgames(): Promise<APIResponse<null>> {
         try {
+            isLoading.value=true;
             const res = await API.games.getGames();
             const data = await res.data.data;
             if (res.status === 200 && data) {
@@ -81,12 +83,16 @@ export const useGamesStore = defineStore('gamesStore', () => {
                 status: _error.response?.status,
                 content: null,
             };
+        } finally{
+            isLoading.value=false
         }
+        saveToLocalStorage()
         return {
             success: false,
             content: null,
             status: 400,
         }
+        
     }
 
     async function GETCollectibleById(id: number): Promise<APIResponse<null>> {
@@ -117,6 +123,7 @@ export const useGamesStore = defineStore('gamesStore', () => {
 
     async function GETallcollectibles(): Promise<APIResponse<null>> {
         try {
+            isLoading.value=true;
             const res = await API.collectibles.getColectibles();
             const data = await res.data;
             if (res.status === 200 && data) {
@@ -133,24 +140,31 @@ export const useGamesStore = defineStore('gamesStore', () => {
                 status: _error.response?.status,
                 content: null,
             };
+        } finally{
+            isLoading.value=false
         }
+        saveToLocalStorage()
         return {
             success: false,
             content: null,
             status: 400,
         }
+        
 
     }
 
+    loadFromLocalStorage()
+
     return {
         games,
+        isLoading,
         collectibles,
         initCollectibles,
         initGames,
+        GETCollectibleById,
+        GETById,
         GETallgames,
         GETallcollectibles,
-        GETById,
-        GETCollectibleById,
 
     }
 })

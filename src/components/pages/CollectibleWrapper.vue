@@ -5,7 +5,7 @@
                 <CollectibleDetails :id="id"/>
             </template>
             <template #fallback>
-                <SkeletonLoading v-for="n in 4" :key="n" />
+                betöltése...
             </template>
         </Suspense>
     </div>
@@ -19,7 +19,7 @@ defineProps<{id:number}>()
 const CollectibleDetails=defineAsyncComponent({
     loader: ()=>import('../domains/CollectibleDetails.vue'),
     delay:200,
-    timeout:5000
+    timeout:3000
 })
 
 </script>

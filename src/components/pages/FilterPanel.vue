@@ -9,8 +9,11 @@
         <div>
             <slot name="fileredOption" />
         </div>
-        <div class="flex flex-col items-center justify-center">
-            <slot name="fileredButton" />
+        <div >
+            <button>
+
+                <slot name="fileredButton" />
+            </button>
         </div>
     </div>
 </template>

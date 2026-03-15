@@ -8,6 +8,11 @@ import { RouterLink } from 'vue-router';
 const props=defineProps<{slug:string}>()
 const store=useGamesStore()
 
+
+if (store.games.length === 0) {
+    store.GETallgames();
+}
+store.GETallcollectibles();
 const game=computed(()=>{
     return store.games.find((g)=>slugify(g.name)===props.slug)
 })

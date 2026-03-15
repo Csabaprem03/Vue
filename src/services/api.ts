@@ -6,4 +6,13 @@ const instance=axios.create({
         Accept:"application/json"
     }
 });
+instance.interceptors.request.use(request=>{
+    const accessToken=localStorage.getItem('accessToken')
+    if (accessToken) {
+        request.headers['Authorization']=`Bearer ${accessToken}`;
+    }
+    return request;
+    },error=>{
+        return Promise.reject(error)
+    })
 export default instance

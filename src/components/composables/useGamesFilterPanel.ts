@@ -38,6 +38,10 @@ export function useGamesFilterPanel(gamesData:Game[]) {
             }
         })
     })
+    
+    function applyFiltered(appropriate: FilteredGames):void {
+        filteredActive.value={...appropriate}
+    }
 
     function resetGame():void {
         filteredActive.value={
@@ -52,6 +56,7 @@ export function useGamesFilterPanel(gamesData:Game[]) {
         allGenre,
         FilteredGames,
         FilteredGamesOrder,
+        applyFiltered,
         resetGame,
     }
 }
