@@ -3,7 +3,6 @@ import { RouterLink } from 'vue-router';
 import Card from './Card.vue';
 import List from './List.vue';
 import { slugify } from '../../stores/slugfiy';
-import { computed } from 'vue';
 import { useGamesStore } from '../../stores/gamesStore';
 
 const props = defineProps<{ data: any[]}>()

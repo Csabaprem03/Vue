@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watchEffect } from 'vue';
 import { useGamesStore } from '../../stores/gamesStore';
 
 const props = defineProps<{ id: number }>();
@@ -42,14 +42,17 @@ const store = useGamesStore();
 const activeImage = ref('');
 
 const item = computed(() => {
-  return store.collectibles.find(c => Number(c.id) === Number(props.id));
+  return store.collectibles.find(c => c.id === Number(props.id));
 });
 
-
-if (!item.value) {
-  store.GETCollectibleById(Number(props.id))
-}
-if (!item.value && item.value.images.length > 0 && typeof item.value === "string") {
-  item.value.activeImage = item.value.images[0]
-}
+watchEffect(()=>{
+  if (!item.value) {
+    store.GETCollectibleById(Number(props.id))
+  }
+  if (!item.value && item.value.images.length > 0 && typeof item.value === "string") {
+    item.value.activeImage = item.value.images[0]
+  }
+  console.log(item.value);
+  
+})
 </script>

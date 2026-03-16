@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
-import SkeletonLoading from './SkeletonLoading.vue';
 
 defineProps<{id:number}>()
 const CollectibleDetails=defineAsyncComponent({

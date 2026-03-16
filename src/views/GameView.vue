@@ -17,8 +17,7 @@ const { FilteredGamesOrder, allGenre, filteredActive, resetGame, applyFiltered }
 
 applyFiltered(filteredActive.value)
 
-watchEffect(()=>{
-
+onMounted(()=>{
     store.GETallgames()
 })
 

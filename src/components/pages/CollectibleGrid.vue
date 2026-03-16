@@ -5,7 +5,7 @@
 
                 <div v-for="(img,index) in  item.images" :key="index">
                     <RouterLink :to="{name:'collectible.id',params:{id:Number(item.id)}}">
-                        <img v-if="img" referrerpolicy="no-referrer" :src="img" class="w-20">{{ img }}
+                        <img v-if="img"  :src="img" class="w-20">{{ img }}
                     </RouterLink>
                 </div>
             </div>

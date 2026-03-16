@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import type { Collectible, Game } from "../types";
 import { API } from '../services/index';
-import { ref, watchEffect } from "vue";
+import { ref } from "vue";
 import type { APIResponse } from "../services/types";
 import type { AxiosError } from "axios";
 
@@ -68,7 +68,7 @@ export const useGamesStore = defineStore('gamesStore', () => {
         try {
             isLoading.value=true;
             const res = await API.games.getGames();
-            const data = await res.data.data;
+            const data = await res.data;
             if (res.status === 200 && data) {
                 initGames(data)
                 return {
@@ -85,8 +85,8 @@ export const useGamesStore = defineStore('gamesStore', () => {
             };
         } finally{
             isLoading.value=false
+            saveToLocalStorage()
         }
-        saveToLocalStorage()
         return {
             success: false,
             content: null,
@@ -142,19 +142,16 @@ export const useGamesStore = defineStore('gamesStore', () => {
             };
         } finally{
             isLoading.value=false
+            saveToLocalStorage()
         }
-        saveToLocalStorage()
         return {
             success: false,
             content: null,
             status: 400,
         }
-        
-
     }
-
     loadFromLocalStorage()
-
+    
     return {
         games,
         isLoading,

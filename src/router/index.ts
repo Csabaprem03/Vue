@@ -40,19 +40,19 @@ const router = createRouter({
     ]
 
 })
-router.beforeEach((to, from, next) => {
-    const authStore = useAuthStore();
-    const isAuthenticated = !!authStore.token;
+// router.beforeEach((to, from, next) => {
+//     const authStore = useAuthStore();
+//     const isAuthenticated = !!authStore.token;
 
-    if (to.meta.requiresAuth && !isAuthenticated) {
-        next({ name: 'login' });
-    }
-    else if (to.meta.requiresGuest && isAuthenticated) {
-        next({ name: 'home' });
-    }
-    else {
-        next();
-    }
-});
+//     if (to.meta.requiresAuth && !isAuthenticated) {
+//         next({ name: 'login' });
+//     }
+//     else if (to.meta.requiresGuest && isAuthenticated) {
+//         next({ name: 'home' });
+//     }
+//     else {
+//         next();
+//     }
+// });
 
 export default router

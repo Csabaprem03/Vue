@@ -1,8 +1,8 @@
 <template>
     <div v-if="store.isLoading">
-        <List :items="store.collectibles.length" class="my-4 mx-4 gtid grid-rows-4">
+        <div v-for="n in store.collectibles.length" class="my-4 mx-4 gtid grid-rows-4" :key="n">
             <SkeletonLoading />
-        </List>
+        </div>
     </div>
     <div v-else>
         <CollectibleGrid :data="store.collectibles" />
@@ -10,16 +10,19 @@
 </template>
 
 <script setup lang="ts">
-import CollectibleGrid from '../components/pages/collectibleGrid.vue';
-import List from '../components/pages/List.vue';
+
+import { onMounted } from 'vue';
+import CollectibleGrid from '../components/pages/CollectibleGrid.vue';
 import SkeletonLoading from '../components/pages/SkeletonLoading.vue';
 import { useGamesStore } from '../stores/gamesStore';
 
 const store=useGamesStore()
 
 
+onMounted(()=>{
 
-store.GETallcollectibles();
+    store.GETallcollectibles()
+})
 
 </script>
 

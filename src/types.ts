@@ -36,7 +36,7 @@ export interface Collectible {
     game_id: number,
     type: string,
     description: number,
-    images: string[],
+    images: Array<string>,
     map_location: Array<string>,
 }
 

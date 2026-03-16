@@ -11,7 +11,6 @@
         </div>
         <div >
             <button>
-
                 <slot name="fileredButton" />
             </button>
         </div>
