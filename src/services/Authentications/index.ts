@@ -3,14 +3,14 @@ import http from '../api'
 import type { APIResponse } from "../types";
 
 
-async function Login(credentials: LoginCredentials) {
-    return http.post<APIResponse<{ user: User, token: string }>>("login",credentials)
-}
 
 async function Register(register: RegisterData) {
     return http.post<APIResponse<null>>("register",register)
 }
 
+async function Login(credentials: LoginCredentials) {
+    return http.post<APIResponse<{ user: User, token: string }>>("login",credentials)
+}
 async function Logout() {
     return http.post<APIResponse<null>>('logout');
 }

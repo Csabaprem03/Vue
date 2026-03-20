@@ -17,18 +17,16 @@ const { FilteredGamesOrder, allGenre, filteredActive, resetGame, applyFiltered }
 
 applyFiltered(filteredActive.value)
 
-onMounted(()=>{
-    store.GETallgames()
-})
-
-
+store.GETallgames()
 </script>
 
 <template>
     <div class="w-mx-auto">
-        <GamesFiltered :settings="setting" :genres="allGenre" v-model="filteredActive" @reset="resetGame" @apply="applyFiltered"/>
-        
-        <div v-if="store.isLoading" class="my-4 mx-4 grid grid-cols-7 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-4">
+        <GamesFiltered :settings="setting" :genres="allGenre" v-model="filteredActive" @reset="resetGame"
+            @apply="applyFiltered" />
+
+        <div v-if="store.isLoading"
+            class="my-4 mx-4 grid grid-cols-7 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-4">
             <SkeletonLoading v-for="n in store.games.length" :key="n" />
         </div>
 

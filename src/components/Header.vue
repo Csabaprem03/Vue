@@ -62,6 +62,12 @@ const authStore=useAuthStore()
                                 </template>
                                 <template v-else>
                                     <li>
+                                        <a>{{ authStore.user }}</a>
+                                    </li>
+                                    <li>
+                                        <RouterLink to="/favorites">Kedvencek</RouterLink>
+                                    </li>
+                                    <li>
                                         <button @click="authStore.logout">Kijelentkezés</button>
                                     </li>
                                 </template>

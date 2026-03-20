@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 
-import { onMounted } from 'vue';
+import { onMounted, watch, watchEffect } from 'vue';
 import CollectibleGrid from '../components/pages/CollectibleGrid.vue';
 import SkeletonLoading from '../components/pages/SkeletonLoading.vue';
 import { useGamesStore } from '../stores/gamesStore';
@@ -23,6 +23,10 @@ onMounted(()=>{
 
     store.GETallcollectibles()
 })
+console.log(store.collectibles);
+
+
+
 
 </script>
 

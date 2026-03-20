@@ -6,12 +6,12 @@ const instance=axios.create({
         Accept:"application/json"
     }
 });
-instance.interceptors.request.use(request=>{
+instance.interceptors.request.use(config=>{
     const accessToken=localStorage.getItem('accessToken')
-    if (accessToken) {
-        request.headers['Authorization']=`Bearer ${accessToken}`;
+    if (accessToken && accessToken !== "undefined") {
+        config.headers['Authorization']=`Bearer ${accessToken}`;
     }
-    return request;
+    return config;
     },error=>{
         return Promise.reject(error)
     })

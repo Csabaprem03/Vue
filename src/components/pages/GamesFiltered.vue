@@ -5,7 +5,7 @@
                     <Icon icon="material-symbols-light:flex-wrap" height="40" width="40" />
                 </template>
                 <template v-else>
-                    <Icon icon="gridicons:grid" height="40" width="40" />
+                    <Icon icon="line-md:grid-3-filled" height="40" width="40" />
                 </template>
             </button>
             <form @submit.prevent="handleSubmit">
