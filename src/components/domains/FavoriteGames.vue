@@ -1,12 +1,23 @@
 <template>
     <div v-if="favStore.isLoading || gamesStore.isLoading">betöltés...</div>
-    <div v-else-if="favStore.Favorites.length===0">nincs</div>
+    <div v-else-if="favStore.Favorites.length === 0">{{ favStore.isMessage }}</div>
     <div v-else>
-        <div v-for="fav in FilteredGameList">
-            <div>
+        <draggable v-model="favStore.Favorites" v-bind="dragOptions" item-key="game_id">
+            <template #item="{ element }">
+                <div class="table-row-group">
+                    <div class="table-row" v-if="FoundGame(element.game_id)">
+                        <div class="table-cell"><img :src="FoundGame(element.game_id)?.cover" /></div>
+                        <div class="table-cell">{{ FoundGame(element.game_id)?.name }}</div>
+                        <div class="table-cell">
+                            <button @click="favStore.ToggleFavorite(element.game_id)">
+                                <Icon icon="line-md:close-small" class="text-red-500 w-10 h-10" />
+                            </button>
+                        </div>
+                    </div>
 
-            </div>
-        </div>
+                </div>
+            </template>
+        </draggable>
     </div>
 </template>
 
@@ -14,28 +25,44 @@
 import { computed, onMounted } from 'vue';
 import { useFavoriteStore } from '../../stores/favoriteStore';
 import { useGamesStore } from '../../stores/gamesStore';
+import draggable from 'vuedraggable'
+import { Icon } from '@iconify/vue';
 
+const favStore = useFavoriteStore()
+const gamesStore = useGamesStore()
 
+const dragOptions = computed(() => ({
+    animation: 200,
+    group: "description",
+    disabled: false,
+    ghostClass: "ghost",
+    tag: 'div'
+}))
 
-const favStore=useFavoriteStore()
-const gamesStore=useGamesStore()
-
-const FilteredGameList=computed(()=>{
-    return gamesStore.games.filter(game=>
-        favStore.Favorites.some(fav=>Number(fav.game_id)===Number(game.id))
+const FoundGame = (gameId: number) => {
+    return gamesStore.games.find(game => Number(game.id) === Number(gameId)
     )
-})
+}
 
-
-
-onMounted(async ()=>{
-    if (gamesStore.games.length===0) {
-        await gamesStore.GETallgames()
+onMounted(() => {
+    if (gamesStore.games.length === 0) {
+        gamesStore.GETallgames()
     }
-    await favStore.GETallFavorites()
+    favStore.GETallFavorites()
 })
 </script>
 
 <style scoped>
+.table-row-group {
+    transition: all 0.5s ease;
+}
 
+.ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+}
+
+.fade-move {
+    transition: all 0.5s ease;
+}
 </style>

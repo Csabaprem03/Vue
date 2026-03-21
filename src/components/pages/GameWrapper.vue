@@ -14,8 +14,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue';
 
-import { useGamesStore } from '../../stores/gamesStore';
-
 defineProps<{ slug: string }>()
 
 const GameDetails = defineAsyncComponent({

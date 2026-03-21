@@ -9,16 +9,25 @@ export const useFavoriteStore = defineStore('Favorites', () => {
 
     const Favorites = ref<Favorite[]>([])
     const isLoading = ref<boolean>(false)
+    const isMessage=ref<string | null>(null)
 
 
 
     async function GETallFavorites() {
         try {
             isLoading.value = true;
+            isMessage.value=null;
             const res = await API.favorite.getFavorites();
-            Favorites.value = res.data;
+            if (Array.isArray(res.data)) {
+                Favorites.value = res.data;
+            }else{
+                Favorites.value=[]
+                isMessage.value=res.data.message || 'Ismeretlen hiba'
+            }
         } catch (error) {
-            const _error = error as AxiosError<string>;
+
+            const _error = error as AxiosError<{message:string}>;
+            isMessage.value=_error?.response?.data.message || "Hiba a kapcsolódás során";
             return {
                 success: false,
                 status: _error.response?.status,
@@ -34,7 +43,6 @@ export const useFavoriteStore = defineStore('Favorites', () => {
         try {
             isLoading.value = true;
             const res = await API.favorite.getFavoritesById(favoriteID);
-
             Favorites.value = res.data;
         } catch (error) {
             const _error = error as AxiosError<string>;
@@ -55,12 +63,11 @@ export const useFavoriteStore = defineStore('Favorites', () => {
             if (index !==-1) {
                 await API.favorite.deleteFavorite(gameId)
                 Favorites.value.splice(index,1)
-                await GETallFavorites()
             } else {
-                await API.favorite.postFavorite(gameId)
+                await API.favorite.postFavorite(gameId);
                 Favorites.value.push({ game_id: gameId, user_id: 0 })
-                await GETallFavorites()
             }
+            await GETallFavorites()
         } catch (error) {
             const _error = error as AxiosError<string>;
             return {
@@ -76,6 +83,8 @@ export const useFavoriteStore = defineStore('Favorites', () => {
 
     return {
         Favorites,
+        isLoading,
+        isMessage,
         GETallFavorites,
         GETFavorite,
         ToggleFavorite,

@@ -7,7 +7,7 @@
         <template v-else>
             <Icon icon="line-md:heart" class="text-gray-200" height="30" width="30" />
         </template>
-        <slot name="FavoriteButton" />
+        <slot  />
     </button>
 </template>
 

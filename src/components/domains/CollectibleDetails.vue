@@ -36,6 +36,7 @@
 <script setup lang="ts">
 import { ref, computed, watchEffect } from 'vue';
 import { useGamesStore } from '../../stores/gamesStore';
+import NotFound from '../pages/NotFound.vue';
 
 const props = defineProps<{ id: number }>();
 const store = useGamesStore();

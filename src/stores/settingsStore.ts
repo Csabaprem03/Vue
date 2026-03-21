@@ -1,12 +1,20 @@
+import { useDark, useToggle } from "@vueuse/core";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useSettingStore=defineStore('settings',(()=>{
     const isOpen=ref<boolean>(false)
     const isGrid=ref<boolean>(false)
-
     const userAccount =ref<boolean>(false)
 
+    const isDark=useDark({
+        selector:'body',
+        attribute:'color-schema',
+        valueDark:'dark',
+        valueLight:'light'
+    })
+
+    const ToggleDark=useToggle(isDark)
     
 
     function toggleMenu() {
