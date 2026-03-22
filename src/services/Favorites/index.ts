@@ -9,7 +9,7 @@ async function getFavoritesById(id:number) {
     return await http.get<APIResponse<Favorite[]>>(`favorites/${id}`);
 }
 async function postFavorite(gameId:number) {
-    return await http.post<APIResponse<Favorite[]>>(`favorites/${gameId}`, null);
+    return await http.post<APIResponse<Favorite[]>>(`favorites/${gameId}`, {});
 }
 async function deleteFavorite(gameId:number) {
     return await http.delete<APIResponse<Favorite[]>>(`favorites/${gameId}`);

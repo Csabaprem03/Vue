@@ -2,15 +2,28 @@
 import { RouterLink } from 'vue-router';
 import { useSettingStore } from '../stores/settingsStore';
 import { useAuthStore } from '../stores/authStore';
+import { Icon } from '@iconify/vue';
 
 const store = useSettingStore()
-const authStore=useAuthStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
     <header>
-        <nav class="bg-neutral-600 w-full">
+        <nav class="bg-neutral-600 w-full dark:bg-gray-900">
+
+            <h1 class="text-black dark:text-white">Most már működnie kell!</h1>
             <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3.5">
+                <button class="hover:scale-110 transition-transform p-2" @click.="store.ToggleDark()">
+                    <template v-if="store.isDark">
+                        <Icon icon="line-md:sun-rising-filled-loop" class="text-red-500" height="30"
+                            width="30" />
+                    </template>
+                    <template v-else>
+                        <Icon icon="line-md:moon-rising-alt-filled-loop" class="text-gray-200" height="30" width="30" />
+                    </template>
+                    <slot />
+                </button>
                 <button @click="store.toggleMenu" data-collapse-toggle="navbar-default" type="button"
                     class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading"
                     aria-controls="navbar-default" aria-expanded="false">
@@ -62,7 +75,7 @@ const authStore=useAuthStore()
                                 </template>
                                 <template v-else>
                                     <li>
-                                        <a>{{ authStore.user }}</a>
+                                        <a>Név: {{ authStore.user?.name }}</a>
                                     </li>
                                     <li>
                                         <RouterLink to="/favorites">Kedvencek</RouterLink>

@@ -8,14 +8,14 @@ export const useSettingStore=defineStore('settings',(()=>{
     const userAccount =ref<boolean>(false)
 
     const isDark=useDark({
-        selector:'body',
-        attribute:'color-schema',
+        selector:'html',
+        attribute:'class',
         valueDark:'dark',
         valueLight:'light'
     })
 
     const ToggleDark=useToggle(isDark)
-    
+
 
     function toggleMenu() {
         isOpen.value=!isOpen.value
@@ -55,7 +55,9 @@ export const useSettingStore=defineStore('settings',(()=>{
     return{
         isOpen,
         isGrid,
+        isDark,
         userAccount,
+        ToggleDark,
         toggleUserAccount,
         toggleButton,
         toggleMenu

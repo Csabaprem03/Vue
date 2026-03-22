@@ -62,10 +62,10 @@ export const useFavoriteStore = defineStore('Favorites', () => {
             const index = Favorites.value.findIndex((f) => Number(f.game_id) === gameId)
             if (index !==-1) {
                 await API.favorite.deleteFavorite(gameId)
-                Favorites.value.splice(index,1)
+                // Favorites.value.splice(index,1)
             } else {
                 await API.favorite.postFavorite(gameId);
-                Favorites.value.push({ game_id: gameId, user_id: 0 })
+                // Favorites.value.push({ game_id: gameId, user_id: 0 })
             }
             await GETallFavorites()
         } catch (error) {

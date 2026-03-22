@@ -2,9 +2,9 @@
 
 import type { Config } from 'tailwindcss'
 
-module.exports = {
-    darkmode:"class",
-    content: ['./index.html', 'src/**/*.{vue,,js,ts,jsx,tsx}'],
+export default {
+    darkMode:'class',
+    content: ['./index.html', 'src/**/*.{vue,,js,ts,jsx,tsx}',],
     theme: {
         extend: {},
     },

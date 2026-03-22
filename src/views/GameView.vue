@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { onMounted, watch, watchEffect } from 'vue';
 import GameGrid from '../components/pages/GameGrid.vue';
 import GameCard from '../components/pages/GameCard.vue';
 import { useSettingStore } from '../stores/settingsStore';
 import { useGamesStore } from '../stores/gamesStore';
-import { Icon } from '@iconify/vue'
-import FilterPanel from '../components/pages/FilterPanel.vue';
 import { useGamesFilterPanel } from '../components/composables/useGamesFilterPanel';
 import GamesFiltered from '../components/pages/GamesFiltered.vue';
 import SkeletonLoading from '../components/pages/SkeletonLoading.vue';
+import MessagePanel from '../components/validators/MessagePanel.vue';
+import { useFavoriteStore } from '../stores/favoriteStore';
+
 
 const store = useGamesStore()
 const setting = useSettingStore()
+const favStore = useFavoriteStore()
 const { FilteredGamesOrder, allGenre, filteredActive, resetGame, applyFiltered } = useGamesFilterPanel(store.games)
 
 
@@ -24,6 +25,7 @@ store.GETallgames()
     <div class="w-mx-auto">
         <GamesFiltered :settings="setting" :genres="allGenre" v-model="filteredActive" @reset="resetGame"
             @apply="applyFiltered" />
+        <MessagePanel :show="!!favStore.isMessage" :message="favStore.isMessage" @close="favStore.isMessage=null"/>
 
         <div v-if="store.isLoading"
             class="my-4 mx-4 grid grid-cols-7 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-4">

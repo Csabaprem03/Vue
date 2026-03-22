@@ -1,5 +1,5 @@
 
-import { computed, ref } from "vue";
+import { computed, isRef, ref } from "vue";
 import type { FilteredGames, Game } from "../../types";
 
 /**
@@ -9,6 +9,7 @@ import type { FilteredGames, Game } from "../../types";
 
 
 export function useGamesFilterPanel(gamesData:Game[]) {
+
     const filteredActive=ref<FilteredGames>({
         nameGenre:"__osszes__",
         title:"",
@@ -33,7 +34,7 @@ export function useGamesFilterPanel(gamesData:Game[]) {
         return [...FilteredGames.value].sort((a,b)=>{
             switch (filteredActive.value.order) {
                 case "a-z":return a.name.localeCompare(b.name);
-                case "z-a":return b.name.localeCompare(b.name);
+                case "z-a":return b.name.localeCompare(a.name);
                 default: return 0
             }
         })
