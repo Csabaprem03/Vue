@@ -11,8 +11,6 @@ export const useFavoriteStore = defineStore('Favorites', () => {
     const isLoading = ref<boolean>(false)
     const isMessage=ref<string | null>(null)
 
-
-
     async function GETallFavorites() {
         try {
             isLoading.value = true;

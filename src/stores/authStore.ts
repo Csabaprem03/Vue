@@ -47,7 +47,6 @@ export const useAuthStore = defineStore('Authentication', () => {
     async function Login(credentails: LoginCredentials): Promise<APIResponse<any>> {
         try {
             isLoading.value = true;
-            const FavStore=useFavoriteStore()
             const res = await API.auth.Login(credentails);
             const data = res.data;
             if ((res.status === 200 || res.status === 201) && data) {

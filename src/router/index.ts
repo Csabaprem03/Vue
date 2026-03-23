@@ -7,7 +7,7 @@ const router = createRouter({
     history: createWebHashHistory(),
     routes: [
         {
-            path: '/', redirect:'/games'
+            path: '/', redirect: '/games'
         },
         {
             path: '/user/login', name: 'login', component: () => import('../views/Login.vue'), meta: {
@@ -15,6 +15,21 @@ const router = createRouter({
                 enterClass: 'animate__animated animate__fadeInRight',
                 leaveClass: 'animate__animated animate__fadeOutLeft',
             }
+        },
+        {
+            path: '/user/account', name: 'account', component: () => import('../views/Account.vue'), meta: {
+                requiresAuth: true,
+            }, children: [
+                {
+                    path: "/user/publisher", name: 'publisher', component: () => import('../components/pages/Publisher.vue')
+                },
+                {
+                    path: "/user/games", name: 'games.post', component: () => import('../components/pages/GamesPost.vue'),
+                },
+                {
+                    path: "/user/collectibles", name: 'collectible.post', component: () => import('../components/pages/CollectiblePost.vue')
+                },
+            ]
         },
         {
             path: '/favorites', name: 'favorite', component: () => import('../components/domains/FavoriteGames.vue'), meta: {
@@ -48,10 +63,10 @@ router.beforeEach((to) => {
     const isAuthenticated = !!authStore.token;
 
     if (to.meta.requiresAuth && !isAuthenticated) {
-        return{ name: 'login' };
+        return { name: 'login' };
     }
     else if (to.meta.requiresGuest && isAuthenticated) {
-        return{ name: 'game.list' };
+        return { name: 'game.list' };
     }
     else {
         return;

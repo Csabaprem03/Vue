@@ -18,8 +18,6 @@ import { useAuthStore } from '../../stores/authStore';
 import { useFavoriteStore } from '../../stores/favoriteStore';
 import { Icon } from '@iconify/vue';
 
-
-
 const authStore = useAuthStore()
 const favStore = useFavoriteStore()
 const props = defineProps<{ gameId: number }>()
