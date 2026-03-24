@@ -81,7 +81,7 @@ const authStore = useAuthStore()
                                         <RouterLink to="/favorites">Kedvencek</RouterLink>
                                     </li>
                                     <li>
-                                        <RouterLink to="/user/account">Fiók</RouterLink>
+                                        <RouterLink to="/user">Fiók</RouterLink>
                                     </li>
                                     <li>
                                         <button @click="authStore.logout">Kijelentkezés</button>

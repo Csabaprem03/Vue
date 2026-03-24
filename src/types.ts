@@ -6,7 +6,7 @@ export interface User {
     password: string,
 }
 
-export interface Publish {
+export interface Publisher {
     id: number,
     name: string,
     headquarters: string | null,  

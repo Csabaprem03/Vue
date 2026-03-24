@@ -17,17 +17,17 @@ const router = createRouter({
             }
         },
         {
-            path: '/user/account', name: 'account', component: () => import('../views/Account.vue'), meta: {
+            path: '/user', name: 'account', component: () => import('../views/Account.vue'), meta: {
                 requiresAuth: true,
             }, children: [
                 {
-                    path: "/user/publisher", name: 'publisher', component: () => import('../components/pages/Publisher.vue')
+                    path: "publisher", name: 'publisher', component: () => import('../components/pages/Publisher.vue')
                 },
                 {
-                    path: "/user/games", name: 'games.post', component: () => import('../components/pages/GamesPost.vue'),
+                    path: "games", name: 'games.post', component: () => import('../components/pages/GamesPost.vue'),
                 },
                 {
-                    path: "/user/collectibles", name: 'collectible.post', component: () => import('../components/pages/CollectiblePost.vue')
+                    path: "collectibles", name: 'collectibles.post', component: () => import('../components/pages/CollectiblePost.vue')
                 },
             ]
         },
