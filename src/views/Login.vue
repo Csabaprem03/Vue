@@ -9,7 +9,6 @@ import { useSettingStore } from '../stores/settingsStore';
 import { useRouter } from 'vue-router';
 
 const authStore = useAuthStore()
-const settingStore = useSettingStore()
 const route = useRouter()
 
 const handleSubmit = async (values: any) => {

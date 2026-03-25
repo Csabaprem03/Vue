@@ -1,6 +1,6 @@
 <template>
     <div>
-        <select v-if="props.type==='string'" :name="props.name"  @blur="handleBlur" v-model="value">
+        <select  :name="props.name"  @blur="handleBlur" v-model="value">
             <option value="" selected>Válassz egy videójátékot...</option>
             <option v-for="item in options" :key="item.value" :value="item.value">{{ item.label }}</option>
         </select>
@@ -13,12 +13,17 @@ import { useField } from 'vee-validate';
 import { ref,  watch, } from 'vue';
 import type { StringSchema } from 'yup';
 
+interface Option{
+    value:string|number,
+    label:string
+}
+
 interface Props {
     label: string,
-    type: string,
+
     name: string,
-    options?:{label:string,value:number|string},
-    validator?: StringSchema<string> | undefined,
+    options:Array<Option>,
+    validator:any,
     rules?: any
 }
 
@@ -26,7 +31,7 @@ const props = defineProps<Props>()
 const labelClass = ref<string>('text-zinc-600')
 const inputClass = ref<string>('text-zinc-600')
 
-const { value, errorMessage, validate } = useField(props.name, props.rules)
+const { value, errorMessage, validate } = useField(props.name, props.validator)
 
 watch(errorMessage, (error) => {
     if (error) {

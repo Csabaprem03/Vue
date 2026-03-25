@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import FromWrapper from '../Forms/FromWrapper.vue';
-import yup from 'yup';
+import * as yup from 'yup';
 
 const imageValidator = yup.mixed()
     .required('Kép megadása kötelező!')

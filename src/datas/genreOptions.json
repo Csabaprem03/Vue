@@ -1,0 +1,7 @@
+[
+
+    { "label": "RPG", "value": "RPG" },
+    { "label": "Action", "value": "Action" },
+    { "label": "Strategy", "value": "Strategy" },
+    { "label": "Horror", "value": "Horror" }
+]

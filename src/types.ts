@@ -10,7 +10,7 @@ export interface Publisher {
     id: number,
     name: string,
     headquarters: string | null,  
-    is_active: boolean,
+    is_active: number,
 }
 
 export interface Game {

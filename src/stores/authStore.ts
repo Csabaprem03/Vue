@@ -88,8 +88,6 @@ export const useAuthStore = defineStore('Authentication', () => {
         }
     }
 
-
-
     return {
         user,
         token,

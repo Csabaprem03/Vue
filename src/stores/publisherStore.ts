@@ -8,10 +8,10 @@ import type { AxiosError } from "axios";
 
 export const usepublishersStore = defineStore('pubisherStore', () => {
 
-    const publishers = ref<Game[]>([])
+    const publishers = ref<Publisher[]>([])
     const isLoading = ref<boolean>(false)
 
-    function initpublishers(data: Game[]) {
+    function initpublishers(data: Publisher[]) {
         publishers.value = data || [];
     }
 
@@ -41,7 +41,7 @@ export const usepublishersStore = defineStore('pubisherStore', () => {
             const res = await API.publishers.getPublisher();
             const data = await res.data;
             if (res.status === 200 && data) {
-                initpublishers(data)
+                initpublishers(data.content)
                 return {
                     success: true,
                     content: null,
@@ -66,7 +66,7 @@ export const usepublishersStore = defineStore('pubisherStore', () => {
 
     }
 
-    async function POSTpublishers(name:string,headquarters:string,is_active:boolean): Promise<APIResponse<null>> {
+    async function POSTpublishers(name:string,headquarters:string,is_active:number): Promise<APIResponse<null>> {
         const addItem:Omit<Publisher,'id'>={
             name,
             headquarters,
@@ -74,9 +74,12 @@ export const usepublishersStore = defineStore('pubisherStore', () => {
         }
         try {
             isLoading.value = true;
-            const res = await API.publishers.postPublisher(a,{});
-            if (res.status === 200 && data) {
-                publishers.value.push(addItem)
+            const res = await API.publishers.postPublisher(addItem);
+            if ((res.status === 200 || res.status===201)) {
+                if (res.data.content && !Array.isArray(res.data.content)) {
+                    publishers.value.push(res.data.content)
+                }
+                await GETallpublishers()
                 return {
                     success: true,
                     content: null,
@@ -101,17 +104,13 @@ export const usepublishersStore = defineStore('pubisherStore', () => {
 
     }
 
- 
-
-
     loadFromLocalStorage()
-
-    
 
     return {
         publishers,
         isLoading,
         GETallpublishers,
+        POSTpublishers,
 
     }
 })

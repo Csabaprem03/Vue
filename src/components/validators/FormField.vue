@@ -1,7 +1,7 @@
 <template>
     <div>
         <label :class="labelClass">{{ props.label }}</label>
-        <input @blur="handleBlur" :type="props.type" :class="inputClass" :name="props.name"
+        <input :placeholder="props.placeholder ?? ''" @blur="handleBlur" :type="props.type" :class="inputClass" :name="props.name"
             class="outline-none border rounded-md block w-[400px] h-[45px] text-sm text-zinc-600 pl-4" v-model="value">
     </div>
     <div class="text-red-500 text-sm mt-1">
@@ -16,6 +16,7 @@ import { StringSchema } from 'yup';
 interface Props {
     label: string,
     type: 'text' | 'email' | 'password',
+    placeholder:string|null,
     name: string,
     validator?: StringSchema<string> | undefined,
     validateOnChange?: boolean,

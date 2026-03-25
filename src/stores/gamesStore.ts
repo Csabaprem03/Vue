@@ -123,6 +123,44 @@ export const useGamesStore = defineStore('gamesStore', () => {
         }
     }
 
+    async function POSTgames(gameData: Omit<Game, 'id'>): Promise<APIResponse<null>> {
+            const addItem:Omit<Game,'id'>={
+                ...gameData,
+                created_at:new Date(),
+                updated_at:new Date(),
+            }
+            try {
+                isLoading.value = true;
+                const res = await API.games.postGame(addItem);
+                if ((res.status === 200 || res.status===201)) {
+                    if (res.data.content && !Array.isArray(res.data.content)) {
+                        games.value.push(res.data.content)
+                    }
+                    await GETallgames()
+                    return {
+                        success: true,
+                        content: null,
+                    };
+                }
+            } catch (error) {
+                const _error = error as AxiosError<string>;
+                return {
+                    success: false,
+                    status: _error.response?.status,
+                    content: null,
+                };
+            } finally {
+                isLoading.value = false
+                saveToLocalStorage()
+            }
+            return {
+                success: false,
+                content: null,
+                status: 400,
+            }
+    
+        }
+
     async function GETallcollectibles(): Promise<APIResponse<null>> {
         try {
             isLoading.value = true;
@@ -166,6 +204,7 @@ export const useGamesStore = defineStore('gamesStore', () => {
         GETById,
         GETallgames,
         GETallcollectibles,
+        POSTgames,
 
     }
 })
