@@ -1,20 +1,18 @@
 <template>
     <div>
         <select  :name="props.name"  @blur="handleBlur" v-model="value">
-            <option value="" selected>Válassz egy videójátékot...</option>
+            <option value="" disabled>Válassz egy videójátékot...</option>
             <option v-for="item in options" :key="item.value" :value="item.value">{{ item.label }}</option>
         </select>
-        <span v-if="errorMessage">{{ errorMessage }}</span>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useField } from 'vee-validate';
 import { ref,  watch, } from 'vue';
-import type { StringSchema } from 'yup';
 
 interface Option{
-    value:string|number,
+    value:number,
     label:string
 }
 

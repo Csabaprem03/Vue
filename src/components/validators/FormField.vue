@@ -15,7 +15,7 @@ import { StringSchema } from 'yup';
 
 interface Props {
     label: string,
-    type: 'text' | 'email' | 'password',
+    type: 'text' | 'email' | 'password'|'number',
     placeholder:string|null,
     name: string,
     validator?: StringSchema<string> | undefined,

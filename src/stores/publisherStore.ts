@@ -41,10 +41,11 @@ export const usepublishersStore = defineStore('pubisherStore', () => {
             const res = await API.publishers.getPublisher();
             const data = await res.data;
             if (res.status === 200 && data) {
-                initpublishers(data.content)
+                const items=data.content || data
+                initpublishers(items)
                 return {
                     success: true,
-                    content: null,
+                    content: items,
                 };
             }
         } catch (error) {

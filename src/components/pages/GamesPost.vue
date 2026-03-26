@@ -1,15 +1,22 @@
 <template>
     <div>
         <FromWrapper>
-            <SelectField label="Melyik játékodhoz van a gyűjthető?" name="publisher_id" :options="gamesWithCompanyNames.map(game=>({label:game.display_name,value:game.id}))" />
-            <SelectField label="Válassz játékot a gyűjthető tárgyhoz" name="game_id"
+            <FormField placeholder="" type="text" label="Név" name="name"
+                :validator="yup.string().required('Kötelező mező')" />
+            <FormField placeholder="" type="number" label="Év kiadó" name="release_year"
+                :validator="yup.number().required('Kötelező mező')" />
+            <SelectField label="Válassz játékot a gyűjthető tárgyhoz" name="genre"
                 :validator="yup.number().required('Választani kell egy játékot!')" :options="genreOptions" />
+            <SelectField label="Válassz egy játékot" name="publisher_id"
+                :validator="yup.number().required('Választani kell egy játékot!')" :options="publishersName" />
+                <UploadField label="Kép" name="cover" type="file" :validator="imageValidator"/>
+                <UploadField label="Url" name="freetogame_url" type="url" :validator="imageValidator"/>
         </FromWrapper>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useAuthStore } from '../../stores/authStore';
 import { useGamesStore } from '../../stores/gamesStore';
 import { usepublishersStore } from '../../stores/publisherStore';
@@ -17,23 +24,17 @@ import FromWrapper from '../Forms/FromWrapper.vue';
 import * as yup from 'yup';
 import SelectField from '../validators/SelectField.vue';
 import genreOptions from '../../datas/genreOptions.json'
+import FormField from '../validators/FormField.vue';
+import UploadField from '../validators/UploadField.vue';
 
 const gamesStore = useGamesStore()
 const authStore = useAuthStore()
 const publishersStore = usepublishersStore()
 
-
-const gamesWithCompanyNames = computed(() => {
-    return gamesStore.games.map(game => {
-        if (!gamesStore.games.length || !publishersStore.publishers.length) return [];
-        const company = publishersStore.publishers.find(p => Number(p.id) === Number(game.publisher_id));
-        return {
-            ...game,
-            company_name: company ? company.name : 'Ismeretlen cég'
-        };
-    });
-});
-
+const publishersName = computed(() => {
+    if (!publishersStore.publishers.length) return []
+    return publishersStore.publishers.map(pub => ({ label: pub.name, value: pub.id }))
+})
 
 
 const imageValidator = yup.mixed()
@@ -53,6 +54,23 @@ const imageValidator = yup.mixed()
         }
     })
 
+const handleSubmit=async (values:any)=>{
+        const result=await gamesStore.POSTgames(values.name,values.release_year,values.genre,values.publisher_id,values.cover,values.freetogame_url)
+    if (result.success) {
+        alert('sikeres mentés')
+    } else{
+        alert('sikertelen mentés')
+    }
+    console.log(values);
+}
+
+onMounted(async () => {
+    await publishersStore.GETallpublishers()
+    await gamesStore.GETallgames()
+    console.log('Betöltött kiadók:', publishersStore.publishers);
+    console.log('Betöltött játékok:', gamesStore.games);
+
+})
 </script>
 
 <style scoped></style>
