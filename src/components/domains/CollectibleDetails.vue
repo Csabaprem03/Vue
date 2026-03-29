@@ -61,9 +61,7 @@ const initMap = async () => {
         maxZoom: 18
     }).setView(coords, 13);
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
-    	attribution: '© CartoDB'
-    }).addTo(map);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png').addTo(map);
 
   } else {
     map.setView(coords, 13);

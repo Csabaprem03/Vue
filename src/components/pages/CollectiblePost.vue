@@ -4,6 +4,7 @@
             <SelectField name="game_id" label="Név játék" :options="collectibleNames" :validator="yup.number().required('Választani kell egy játékot!')"/>
             <FormField placeholder="" type="text" name="type" label="Típus" :validator="yup.string().max(100,'A 100 betű karakter').required('Kötelező mező')"/>
             <UploadField type="url" label="Kép URL" name="images" :validator="imageValidator"/>
+            <MapPicker name="map_location" label="Válaszd ki a lelőhelyet a térképen!" :validator="yup.array().min(2, 'Kattints a térképre a helyszín megjelöléséhez!').required()" />
         </FromWrapper>
     </div>
 </template>
@@ -16,6 +17,8 @@ import { useGamesStore } from '../../stores/gamesStore';
 import SelectField from '../validators/SelectField.vue';
 import FormField from '../validators/FormField.vue';
 import UploadField from '../validators/UploadField.vue';
+import MapPicker from '../validators/MapPicker.vue';
+
 
 const gamesStore=useGamesStore()
 
