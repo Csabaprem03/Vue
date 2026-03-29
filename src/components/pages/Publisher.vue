@@ -7,7 +7,7 @@
                 <RadioField label="Aktív" name="is_active" :radio-value="1" :validator="boolean().required('Válassz státuszt')"/>
                 <RadioField label="Inaktív" name="is_active" :radio-value="0" :validator="boolean().required('Válassz státuszt')"/>
             </div>
-            <SubmitButton :disabled="store.isLoading">{{ store.isLoading ?'Bejelentkezés...' : 'Küldés' }}</SubmitButton>
+            <SubmitButton :loading="store.isLoading">{{ store.isLoading ?'Bejelentkezés...' : 'Küldés' }}</SubmitButton>
         </FromWrapper>
     </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
     <div>
         <label :class="labelClass">{{ props.label }}</label>
-        <input @blur="handleBlur" @change="handleChange" :type="props.type" :name="props.name" :class="inputClass" v-model="value"/>
+        <input @blur="handleBlur" @change="handleChange" :type="props.type" :name="props.name" :class="inputClass"/>
         <span v-if="errorMessage">{{ errorMessage }}</span>
     </div>
 </template>
@@ -13,17 +13,17 @@ import type { StringSchema } from 'yup';
 
 interface Props {
     label: string,
-    type: 'file' | 'url',
+    type: 'file' | 'url'|'text',
     name: string,
-    validator?: StringSchema<string> | undefined,
-    rules?: any
+    validator?: any,
+
 }
 
 const props = defineProps<Props>()
 const labelClass = ref<string>('text-zinc-600')
 const inputClass = ref<string>('text-zinc-600')
 
-const { value, errorMessage,handleChange: vhandleChange, validate } = useField(props.name, props.rules)
+const { value, errorMessage,handleChange: vhandleChange, validate } = useField(props.name, props.validator)
 
 watch(errorMessage, (error) => {
     if (error) {

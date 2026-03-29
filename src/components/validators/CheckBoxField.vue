@@ -1,15 +1,17 @@
 <template>
     <div>
-        <select  :name="props.name"  @blur="handleBlur" v-model="value">
-            <option value="" disabled>Válassz egy videójátékot...</option>
-            <option v-for="item in options" :key="item.value" :value="item.value">{{ item.label }}</option>
-        </select>
+        <ul  :name="props.name"  >
+            <li v-for="item in sortedOptions" :key="item.value">
+                <input @blur="handleBlur" :id="item.label" type="checkbox" v-model="value" :value="item.value" />
+                <label :for="item.label">{{ item.label }}</label>
+        </li>
+        </ul>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useField } from 'vee-validate';
-import { ref,  watch, } from 'vue';
+import { computed, ref,  watch, } from 'vue';
 
 interface Option{
     value:number,
@@ -18,18 +20,21 @@ interface Option{
 
 interface Props {
     label: string,
-
     name: string,
     options:Array<Option>,
     validator:any,
-    rules?: any
 }
+
 
 const props = defineProps<Props>()
 const labelClass = ref<string>('text-zinc-600')
 const inputClass = ref<string>('text-zinc-600')
 
-const { value, errorMessage, validate } = useField(props.name, props.validator,{initialValue:""})
+const { value, errorMessage, validate } = useField<Array<string>>(props.name, props.validator,{initialValue:[]})
+
+const sortedOptions=computed(()=>{
+    return [...props.options].sort((a,b)=>a.label.localeCompare(b.label))
+})
 
 watch(errorMessage, (error) => {
     if (error) {

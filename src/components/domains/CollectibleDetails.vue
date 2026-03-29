@@ -23,6 +23,7 @@
 
         <div v-if="item.map_location" class="p-4 ">
           <h4 class="text-gray-400 text-xs uppercase mb-3">Lelőhely (Koordináták)</h4>
+          <div id="map" class="h-64 w-full rounded-lg mb-4 z-0"></div>
           <p class="font-mono text-xl">Lat: {{ item.map_location[0] }}</p>
           <p class="font-mono text-xl">Lng: {{ item.map_location[1] }}</p>
         </div>
@@ -34,16 +35,49 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watchEffect } from 'vue';
+import { ref, computed, watchEffect, onMounted } from 'vue';
 import { useGamesStore } from '../../stores/gamesStore';
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 
 const props = defineProps<{ id: number }>();
 const store = useGamesStore();
 const activeImage = ref('');
 
+
+let map:L.map| null=null
 const item = computed(() => {
   return store.collectibles.find(c => c.id === Number(props.id));
 });
+
+const initMap = async () => {
+  if (!item.value?.map_location) return;
+
+  const coords = item.value.map_location as [number, number];
+
+  if (!map) {
+    map = L.map('map', {
+        minZoom: 3,
+        maxZoom: 18
+    }).setView(coords, 13);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png', {
+    	attribution: '© CartoDB'
+    }).addTo(map);
+
+  } else {
+    map.setView(coords, 13);
+  }
+
+  L.marker(coords)
+    .addTo(map)
+    .bindPopup(`${item.value.description} helyszíne`)
+    .openPopup();
+};
+
+onMounted(async ()=>{
+   await initMap()
+})
 
 watchEffect(() => {
   if (!item.value) {
@@ -56,3 +90,8 @@ watchEffect(() => {
 
 })
 </script>
+<style scoped>
+.leaflet-default-icon-path {
+  background-image: url(https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png);
+}
+</style>

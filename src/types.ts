@@ -35,9 +35,9 @@ export interface Collectible {
     id: number,
     game_id: number,
     type: string,
-    description: number,
+    description: string,
     images: Array<string>,
-    map_location: Array<string>,
+    map_location: Array<string | null>,
 }
 
 export interface FilteredGames{

@@ -2,6 +2,7 @@
 
     { "label": "RPG", "value": "RPG" },
     { "label": "Action", "value": "Action" },
+    { "label": "Action-adventure", "value": "Action-adventure" },
     { "label": "Strategy", "value": "Strategy" },
     { "label": "Horror", "value": "Horror" }
 ]

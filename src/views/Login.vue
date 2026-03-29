@@ -35,11 +35,11 @@ const handleSubmit = async (values: any) => {
 <template>
     <FromWrapper @submit="handleSubmit">
         <h1>Bejelentkezés</h1>
-        <FormField label="Email" type="email" name="email"
+        <FormField placeholder="" label="Email" type="email" name="email"
             :validator="string().required('köletező az email!').email('Email érvényes')"  />
-        <FormField label="Jelszó" type="password" name="password"
+        <FormField placeholder="..." label="Jelszó" type="password" name="password"
             :validator="string().required('köletező a jelszó!').min(8, 'Minimum 8 karakter')" />
-        <SubmitButton :disabled="authStore.isLoading">{{ authStore.isLoading ? 'Bejelentkezés...' : 'Küldés' }}
+        <SubmitButton :loading="authStore.isLoading">{{ authStore.isLoading ? 'Bejelentkezés...' : 'Küldés' }}
         </SubmitButton>
     </FromWrapper>
 </template>

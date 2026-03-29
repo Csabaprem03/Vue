@@ -1,0 +1,14 @@
+[
+    { "label": "PS(1)", "value": "PS(1)" },
+    { "label": "PS2", "value": "PS2" },
+    { "label": "PS3", "value": "PS3" },
+    { "label": "PS4", "value": "PS4" },
+    { "label": "PS5", "value": "PS5" },
+    { "label": "Xbox", "value": "Xbox" },
+    { "label": "Xbox 360", "value": "Xbox 360" },
+    { "label": "Xbox One", "value": "Xbox One" },
+    { "label": "Xbox Series X", "value": "Xbox Series X" },
+    { "label": "PC", "value": "PC" },
+    { "label": "Nintendo Switch", "value": "Nintendo Switch" },
+    { "label": "Nintendo Switch 2", "value": "Nintendo Switch 2" }
+]

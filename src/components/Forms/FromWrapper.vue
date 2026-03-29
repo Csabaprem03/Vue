@@ -13,7 +13,14 @@ const emit = defineEmits<{
 }>()
 
 const { handleSubmit } = useForm()
-const onSubmit = handleSubmit(values => {
-    emit('submit', values)
-})
+const onSubmit = handleSubmit(
+    (values) => {
+        console.log("VALID: Küldés indul...", values);
+        emit('submit', values);
+    },
+    ({ errors }) => {
+        console.error("INVALID FORM! Ezek a hibák:", errors);
+        alert("Nézd meg a piros mezőket, valami hiányzik!");
+    }
+)
 </script>
