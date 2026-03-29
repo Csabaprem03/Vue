@@ -14,9 +14,16 @@ async function getGameById(id:number) {
 async function postGame(game:Omit<Game,'id'>) {
     return await http.post<APIResponse<Game[]>>('games',game);
 }
-
+async function patchGame(id:number,game:Partial<Game>) {
+    return await http.patch<APIResponse<Game[]>>(`games/${id}`,game);
+}
+async function deleteGame(id:number) {
+    return await http.delete<APIResponse<Game[]>>(`games/${id}`);
+}
 export default{
     getGames,
     getGameById,
     postGame,
+    patchGame,
+    deleteGame,
 }
