@@ -166,45 +166,6 @@ export const useGamesStore = defineStore('gamesStore', () => {
         }
 
     }
-    async function PATCHgames(id:number,updates:Partial<Game>): Promise<APIResponse<null>> {
-        const item=games.value.find(item=>Number(item.id)===Number(id))
-        if(!item) return
-
-        const originalItem={...item}
-
-        Object.assign(item,updates)
-
-        try {
-            isLoading.value = true;
-            const res = await API.games.patchGame(id,updates);
-            if ((res.status === 200 || res.status === 201)) {
-                if (res.data.content && !Array.isArray(res.data.content)) {
-                    Object.assign(item,{...res.data,created_at:new Date(),})
-                }
-                await GETallgames()
-                return {
-                    success: true,
-                    content: null,
-                };
-            }
-        } catch (error) {
-            const _error = error as AxiosError<string>;
-            return {
-                success: false,
-                status: _error.response?.status,
-                content: null,
-            };
-        } finally {
-            isLoading.value = false
-            saveToLocalStorage()
-        }
-        return {
-            success: false,
-            content: null,
-            status: 400,
-        }
-
-    }
 
     async function POSTCollectibles(game_id: number, type: string, description: string,images:Array<string>,map_location:Array<string>): Promise<APIResponse<null>> {
         const addItem: Omit<Collectible, 'id'> = {

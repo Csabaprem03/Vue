@@ -13,17 +13,9 @@ async function getCollectibleById(id:number) {
 async function postCollectible(collectible:Omit<Collectible,'id'>) {
     return await http.post<APIResponse<Collectible[]>>('collectibles',collectible);
 }
-async function patchCollectible(id:number,collectible:Partial<Collectible>) {
-return await http.patch<APIResponse<Collectible[]>>(`collectibles/${id}`,collectible);
-}
-async function deleteCollectible(id:number) {
-    return await http.delete<APIResponse<Collectible[]>>(`collectibles/${id}`);
-}
 
 export default{
     getColectibles,
     getCollectibleById,
     postCollectible,
-    patchCollectible,
-    deleteCollectible,
 }
