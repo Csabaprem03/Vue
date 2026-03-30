@@ -7,20 +7,30 @@
 </template>
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
+import { watch, watchEffect } from 'vue';
+
+const props=defineProps<{intialValue?:any}>()
 
 const emit = defineEmits<{
     (e: 'submit', value: any): void
 }>()
 
-const { handleSubmit } = useForm()
+const { handleSubmit,setValues } = useForm({initialValues:props.intialValue})
+
+watch(()=>props.intialValue,(newValues)=>{
+    if (newValues) {
+        setValues(newValues)
+    }
+})
+
 const onSubmit = handleSubmit(
     (values) => {
-        console.log("VALID: Küldés indul...", values);
+        console.log("Küldés indul...", values);
         emit('submit', values);
     },
     ({ errors }) => {
-        console.error("INVALID FORM! Ezek a hibák:", errors);
-        alert("Nézd meg a piros mezőket, valami hiányzik!");
+        console.error("hiba:", errors);
+        alert("Hibás kitöltés!");
     }
 )
 </script>

@@ -167,20 +167,20 @@ export const useGamesStore = defineStore('gamesStore', () => {
 
     }
 
-    async function PATCHgames(id:number,updates:Partial<Game>): Promise<APIResponse<null>> {
-        const item=games.value.find(item=>Number(item.id)===Number(id))
-        if(!item) return
+    async function PATCHgames(id: number, updates: Partial<Game>): Promise<APIResponse<null>> {
+        const item = games.value.find(item => Number(item.id) === id)
+        if (!item) return { success: false, status: 404, content: null }
 
-        const originalItem={...item}
+        const originalItem = { ...item }
 
-        Object.assign(item,updates)
+        Object.assign(item, updates)
 
         try {
             isLoading.value = true;
-            const res = await API.games.patchGame(id,updates);
+            const res = await API.games.patchGame(id, updates);
             if ((res.status === 200 || res.status === 201)) {
                 if (res.data.content && !Array.isArray(res.data.content)) {
-                    Object.assign(item,{...res.data,created_at:new Date(),})
+                    Object.assign(item, { ...res.data, created_at: new Date(), updated_at: new Date() })
                 }
                 await GETallgames()
                 return {
@@ -189,6 +189,7 @@ export const useGamesStore = defineStore('gamesStore', () => {
                 };
             }
         } catch (error) {
+            Object.assign(item, originalItem)
             const _error = error as AxiosError<string>;
             return {
                 success: false,
@@ -207,7 +208,40 @@ export const useGamesStore = defineStore('gamesStore', () => {
 
     }
 
-    async function POSTCollectibles(game_id: number, type: string, description: string,images:Array<string>,map_location:Array<string>): Promise<APIResponse<null>> {
+    async function DELETEgames(id: number): Promise<APIResponse<null>> {
+        const index = games.value.findIndex(item => Number(item.id) === id)
+        const removedItem = index !== -1 ? games.value[index] : null
+        if (index !== -1) {
+            games.value.splice(index, 1)
+        }
+        try {
+            isLoading.value = true;
+            const res = await API.games.deleteGame(id);
+            if ((res.status === 200 || res.status === 204)) {
+                return { success: true, content: null }
+            } else {
+                
+                throw new Error("Sikertelen törlés")
+            }
+        } catch (error) {
+            if (removedItem && index != -1) {
+                games.value.splice(index, 0, removedItem as Game)
+            }
+            const _error = error as AxiosError<string>;
+            return {
+                success: false,
+                status: _error.response?.status,
+                content: null,
+            };
+        } finally {
+            isLoading.value = false
+            saveToLocalStorage()
+        }
+
+    }
+
+
+    async function POSTCollectibles(game_id: number, type: string, description: string, images: Array<string>, map_location: Array<string>): Promise<APIResponse<null>> {
         const addItem: Omit<Collectible, 'id'> = {
             game_id,
             type,
@@ -246,6 +280,82 @@ export const useGamesStore = defineStore('gamesStore', () => {
         }
 
     }
+
+    async function PATCHcollectible(id: number, updates: Partial<Collectible>): Promise<APIResponse<null>> {
+        const item = collectibles.value.find(item => Number(item.id) === id)
+        if (!item) return { success: false, status: 404, content: null }
+
+        const originalItem = { ...item }
+
+        Object.assign(item, updates)
+
+        try {
+            isLoading.value = true;
+            const res = await API.collectibles.patchCollectible(id, updates);
+            if ((res.status === 200 || res.status === 201)) {
+                if (res.data.content && !Array.isArray(res.data.content)) {
+                    Object.assign(item, res.data.content)
+                }
+                await GETallcollectibles()
+                return {
+                    success: true,
+                    content: null,
+                };
+            }
+        } catch (error) {
+            Object.assign(item, originalItem)
+            const _error = error as AxiosError<string>;
+            return {
+                success: false,
+                status: _error.response?.status,
+                content: null,
+            };
+        } finally {
+            isLoading.value = false
+            saveToLocalStorage()
+        }
+        return {
+            success: false,
+            content: null,
+            status: 400,
+        }
+
+    }
+
+    async function DELETEcollectible(id: number): Promise<APIResponse<null>> {
+        const index = collectibles.value.findIndex(item => Number(item.id) === id)
+        const removedItem = index !== -1 ? collectibles.value[index] : null
+        if (index !== -1) {
+            collectibles.value.splice(index, 1)
+        }
+
+        try {
+            isLoading.value = true;
+            const res = await API.collectibles.deleteCollectible(id);
+            if ((res.status === 200 || res.status === 204)) {
+                
+                return { success: true, content: null }
+            } else {
+                throw new Error("Sikertelen törlés")
+            }
+
+        } catch (error) {
+            if (removedItem && index !== -1) {
+                collectibles.value.splice(index, 0, removedItem as Collectible)
+            }
+            const _error = error as AxiosError<string>;
+            return {
+                success: false,
+                status: _error.response?.status,
+                content: null,
+            };
+        } finally {
+            isLoading.value = false
+            saveToLocalStorage()
+        }
+
+    }
+
 
     async function GETallcollectibles(): Promise<APIResponse<null>> {
         try {
@@ -291,6 +401,10 @@ export const useGamesStore = defineStore('gamesStore', () => {
         GETallgames,
         GETallcollectibles,
         POSTgames,
-
+        POSTCollectibles,
+        PATCHgames,
+        PATCHcollectible,
+        DELETEgames,
+        DELETEcollectible
     }
 })

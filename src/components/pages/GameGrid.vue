@@ -1,18 +1,33 @@
 <script setup lang="ts">
+import { useAuthStore } from '../../stores/authStore';
 import { useGamesStore } from '../../stores/gamesStore';
 import { slugify } from '../../stores/slugfiy';
+import type { Game } from '../../types';
 import Card from './Card.vue';
 import FavoriteButton from './FavoriteButton.vue';
 import List from './List.vue';
 
-const props = defineProps<{ data: any[] }>()
+const props = defineProps<{ data: Game[] }>()
 
 const store = useGamesStore()
+const authStore = useAuthStore()
 
 const getFirstType = (id: number) => {
     const found = store.collectibles.find((c) => c.game_id === Number(id))
     return found ? slugify(found.type) : 'all'
 }
+
+function handleDelete(id: number, name: string): void {
+    if (!authStore.token) {
+        alert("A játékhez be kell jelentkezni");
+        return;
+    }
+
+    if (confirm(`Biztosan törölni szeretnéd: ${name}`)) {
+        store.DELETEgames(id)
+    }
+}
+
 </script>
 
 
@@ -30,7 +45,13 @@ const getFirstType = (id: number) => {
                 </div>
                 <h1 class="text-xl font-bold break-all">{{ item.name }}</h1>
                 <p class="text-sm text-gray-500">{{ item.genre }}</p>
-                <FavoriteButton :game-id="item.id" />
+                <div class="grid grid-cols-2">
+                    <RouterLink :to="{name:'games.edit',params:{id:Number(item.id)}}">Szerkezetés</RouterLink>
+                    <button @click="handleDelete(item.id, item.name)">Törlés</button>
+                </div>
+                <div class="mt-auto">
+                    <FavoriteButton :game-id="item.id"/>
+                </div>
             </Card>
         </template>
     </List>

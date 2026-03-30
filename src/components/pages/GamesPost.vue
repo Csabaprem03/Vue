@@ -1,6 +1,6 @@
 <template>
     <div>
-        <FromWrapper @submit="handleSubmit">
+        <FromWrapper @submit="handleSubmit" :intial-value="initialValue">
             <FormField placeholder="" type="text" label="Név" name="name"
                 :validator="yup.string().required('Kötelező mező')" />
             <FormField placeholder="" type="number" label="Év kiadó" name="release_year"
@@ -21,8 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { useAuthStore } from '../../stores/authStore';
+import { computed, onMounted, ref } from 'vue';
 import { useGamesStore } from '../../stores/gamesStore';
 import { usepublishersStore } from '../../stores/publisherStore';
 import FromWrapper from '../Forms/FromWrapper.vue';
@@ -34,11 +33,22 @@ import UploadField from '../validators/UploadField.vue';
 import CheckBoxField from '../validators/CheckBoxField.vue';
 import Platforms from '../../datas/platforms.json'
 import SubmitButton from '../Forms/SubmitButton.vue';
+import { useRoute, useRouter } from 'vue-router';
 
 
 const gamesStore = useGamesStore()
-const authStore = useAuthStore()
 const publishersStore = usepublishersStore()
+
+const route = useRoute()
+const router = useRouter()
+const props = defineProps<{ id: number }>()
+
+const gameId = computed(() => {
+    return route.params.id ? Number(route.params.id) : null
+})
+const isEditMode = computed(() => !!gameId.value)
+
+const initialValue = ref<any>(null)
 
 const publishersName = computed(() => {
     if (!publishersStore.publishers.length) return []
@@ -50,6 +60,7 @@ const publishersName = computed(() => {
 const imageValidator = yup.mixed()
     .required('Kép megadása kötelező!')
     .test('file or url', 'Érvénytelen formátum vagy túl nagy fájl', (values: any) => {
+        if (!isEditMode.value && typeof values==='string') return true
         if (!values) return false;
 
         if (typeof values === 'string') {
@@ -58,7 +69,7 @@ const imageValidator = yup.mixed()
         }
 
         if (values instanceof File) {
-            const maxSize = 5 * 1024 * 1024; 
+            const maxSize = 5 * 1024 * 1024;
             const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
             return values.size <= maxSize && allowedTypes.includes(values.type);
         }
@@ -66,9 +77,15 @@ const imageValidator = yup.mixed()
     });
 
 const handleSubmit = async (values: any) => {
-    const result = await gamesStore.POSTgames(values.name, values.release_year, values.genre, values.publisher_id, values.platforms, values.cover, values.freetogame_url)
+    let result
+    if (isEditMode.value && gameId.value) {
+        result = await gamesStore.PATCHgames(gameId.value, values)
+    } else {
+        result = await gamesStore.POSTgames(values.name, values.release_year, values.genre, values.publisher_id, values.platforms, values.cover, values.freetogame_url)
+    }
     if (result.success) {
-        alert('sikeres mentés')
+        alert(isEditMode.value ? 'sikeres frissítés!' : 'sikeres mentés')
+        router.push({ name: 'games.list' })
     } else {
         alert('sikertelen mentés')
     }
@@ -78,6 +95,12 @@ const handleSubmit = async (values: any) => {
 onMounted(async () => {
     await publishersStore.GETallpublishers()
     await gamesStore.GETallgames()
+    const gameToEdit = gamesStore.games.find((g) => Number(g.id) === gameId.value)
+
+    if (gameToEdit) {
+        initialValue.value = { ...gameToEdit }
+    }
+
     console.log('Betöltött kiadók:', publishersStore.publishers);
     console.log('Betöltött játékok:', gamesStore.games);
 

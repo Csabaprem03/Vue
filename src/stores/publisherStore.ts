@@ -45,7 +45,7 @@ export const usepublishersStore = defineStore('pubisherStore', () => {
                 initpublishers(items)
                 return {
                     success: true,
-                    content: items,
+                    content: items ,
                 };
             }
         } catch (error) {

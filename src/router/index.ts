@@ -27,6 +27,9 @@ const router = createRouter({
                     path: "games", name: 'games.post', component: () => import('../components/pages/GamesPost.vue'),
                 },
                 {
+                    path: "games/:id", name: 'games.edit', component: () => import('../components/pages/GamesPost.vue'),props: route => ({id: Number(route.params.id)})
+                },
+                {
                     path: "collectibles", name: 'collectibles.post', component: () => import('../components/pages/CollectiblePost.vue')
                 },
             ]

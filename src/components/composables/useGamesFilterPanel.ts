@@ -1,6 +1,7 @@
 
-import { computed,  ref } from "vue";
+import { computed,  ref, unref, type Ref } from "vue";
 import type { FilteredGames, Game } from "../../types";
+
 
 /**
  * @param gamesData
@@ -8,7 +9,7 @@ import type { FilteredGames, Game } from "../../types";
  */
 
 
-export function useGamesFilterPanel(gamesData:Game[]) {
+export function useGamesFilterPanel(gamesData:Game[] | Ref<Game[]>) {
 
     const filteredActive=ref<FilteredGames>({
         nameGenre:"__osszes__",
@@ -17,14 +18,16 @@ export function useGamesFilterPanel(gamesData:Game[]) {
     })
 
     const allGenre=computed(()=>{
-        const set=new Set(gamesData.map((a)=>a.genre));
+        const data=unref(gamesData)
+        const set=new Set(data.map((a)=>a.genre));
         return Array.from(set).sort()
     })
 
     const FilteredGames=computed<Array<Game>>(()=>{
-        return gamesData.filter(data=>{
-            const genreAppropriate=filteredActive.value.nameGenre=="__osszes__" || data.genre===filteredActive.value.nameGenre
-            const titelApproprate=filteredActive.value.title=="" || data.name.toLowerCase().includes(filteredActive.value.title)
+        const data=unref(gamesData)
+        return data.filter(item=>{
+            const genreAppropriate=filteredActive.value.nameGenre=="__osszes__" || item.genre===filteredActive.value.nameGenre
+            const titelApproprate=filteredActive.value.title=="" || item.name.toLowerCase().includes(filteredActive.value.title)
 
             return genreAppropriate && titelApproprate
         })

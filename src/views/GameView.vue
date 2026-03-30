@@ -8,6 +8,7 @@ import GamesFiltered from '../components/pages/GamesFiltered.vue';
 import SkeletonLoading from '../components/pages/SkeletonLoading.vue';
 import MessagePanel from '../components/validators/MessagePanel.vue';
 import { useFavoriteStore } from '../stores/favoriteStore';
+import { watchEffect } from 'vue';
 
 
 const store = useGamesStore()
@@ -16,9 +17,12 @@ const favStore = useFavoriteStore()
 const { FilteredGamesOrder, allGenre, filteredActive, resetGame, applyFiltered } = useGamesFilterPanel(store.games)
 
 
-applyFiltered(filteredActive.value)
+// watchEffect(()=>
+//     applyFiltered(filteredActive.value)
+// )
 
 store.GETallgames()
+// applyFiltered(filteredActive.value)
 </script>
 
 <template>

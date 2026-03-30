@@ -2,14 +2,14 @@
     <div>
         <select  :name="props.name"  @blur="handleBlur" v-model="value">
             <option value="" disabled>Válassz egy videójátékot...</option>
-            <option v-for="item in options" :key="item.value" :value="item.value">{{ item.label }}</option>
+            <option v-for="item in sortedOptions" :key="item.value" :value="item.value">{{ item.label }}</option>
         </select>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useField } from 'vee-validate';
-import { ref,  watch, } from 'vue';
+import { computed, ref,  watch, } from 'vue';
 
 interface Option{
     value:number,
@@ -30,6 +30,10 @@ const labelClass = ref<string>('text-zinc-600')
 const inputClass = ref<string>('text-zinc-600')
 
 const { value, errorMessage, validate } = useField(props.name, props.validator,{initialValue:""})
+
+const sortedOptions=computed(()=>{
+    return [...props.options].sort((a,b)=>a.label.localeCompare(b.label))
+})
 
 watch(errorMessage, (error) => {
     if (error) {

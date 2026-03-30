@@ -6,14 +6,28 @@ import { slugify } from '../../stores/slugfiy';
 import { useGamesStore } from '../../stores/gamesStore';
 import FavoriteGames from '../domains/FavoriteGames.vue';
 import FavoriteButton from './FavoriteButton.vue';
+import type { Game } from '../../types';
+import { useAuthStore } from '../../stores/authStore';
 
-const props = defineProps<{ data: any[] }>()
+const props = defineProps<{ data: Game[] }>()
 
 const store = useGamesStore()
+const authStore=useAuthStore()
 
 const getFirstType = (id: number) => {
     const found = store.collectibles.find((c) => Number(c.game_id) === Number(id))
     return found ? slugify(found.type) : 'all'
+}
+
+function handleDelete(id: number, name: string): void {
+    if (!authStore.token) {
+        alert("A játékhez be kell jelentkezni");
+        return;
+    }
+
+    if (confirm(`Biztosan törölni szeretnéd: ${name}`)) {
+        store.DELETEgames(id)
+    }
 }
 
 </script>
@@ -31,6 +45,7 @@ const getFirstType = (id: number) => {
                 </div>
                 <h1 class="text-xl font-bold break-all">{{ item.name }}</h1>
                 <p class="text-sm text-gray-500">{{ item.genre }}</p>
+                <button @click="handleDelete(item.id, item.name)">Törlés</button>
                 <div class="mt-auto">
                     <FavoriteButton :game-id="item.id"/>
                 </div>
