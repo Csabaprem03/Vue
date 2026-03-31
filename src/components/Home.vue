@@ -1,10 +1,7 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <h1>saaohd</h1>
-
 </template>
 
 <style scoped>

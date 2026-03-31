@@ -1,13 +1,9 @@
 <template>
-    <footer class="my-30">
-        <h2>dasdas</h2>
-    </footer>
+  <footer class="my-30">
+    <h2>dasdas</h2>
+  </footer>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts"></script>
 
-</script>
-
-<style scoped>
-
-</style>
+<style scoped></style>

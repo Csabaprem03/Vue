@@ -1,66 +1,69 @@
-
-import { computed,  ref, unref, type Ref } from "vue";
+import { computed, ref, unref, type Ref } from "vue";
 import type { FilteredGames, Game } from "../../types";
-
 
 /**
  * @param gamesData
  * @returns
  */
 
+export function useGamesFilterPanel(gamesData: Game[] | Ref<Game[]>) {
+  const filteredActive = ref<FilteredGames>({
+    nameGenre: "__osszes__",
+    title: "",
+    order: "a-z",
+  });
 
-export function useGamesFilterPanel(gamesData:Game[] | Ref<Game[]>) {
+  const allGenre = computed(() => {
+    const data = unref(gamesData);
+    const set = new Set(data.map((a) => a.genre));
+    return Array.from(set).sort();
+  });
 
-    const filteredActive=ref<FilteredGames>({
-        nameGenre:"__osszes__",
-        title:"",
-        order:"a-z"
-    })
+  const FilteredGames = computed<Array<Game>>(() => {
+    const data = unref(gamesData);
+    return data.filter((item) => {
+      const genreAppropriate =
+        filteredActive.value.nameGenre == "__osszes__" ||
+        item.genre === filteredActive.value.nameGenre;
+      const titelApproprate =
+        filteredActive.value.title == "" ||
+        item.name.toLowerCase().includes(filteredActive.value.title);
 
-    const allGenre=computed(()=>{
-        const data=unref(gamesData)
-        const set=new Set(data.map((a)=>a.genre));
-        return Array.from(set).sort()
-    })
+      return genreAppropriate && titelApproprate;
+    });
+  });
 
-    const FilteredGames=computed<Array<Game>>(()=>{
-        const data=unref(gamesData)
-        return data.filter(item=>{
-            const genreAppropriate=filteredActive.value.nameGenre=="__osszes__" || item.genre===filteredActive.value.nameGenre
-            const titelApproprate=filteredActive.value.title=="" || item.name.toLowerCase().includes(filteredActive.value.title)
+  const FilteredGamesOrder = computed<Game[]>(() => {
+    return [...FilteredGames.value].sort((a, b) => {
+      switch (filteredActive.value.order) {
+        case "a-z":
+          return a.name.localeCompare(b.name);
+        case "z-a":
+          return b.name.localeCompare(a.name);
+        default:
+          return 0;
+      }
+    });
+  });
 
-            return genreAppropriate && titelApproprate
-        })
-    })
+  function applyFiltered(appropriate: FilteredGames): void {
+    filteredActive.value = { ...appropriate };
+  }
 
-    const FilteredGamesOrder=computed<Game[]>(()=>{
-        return [...FilteredGames.value].sort((a,b)=>{
-            switch (filteredActive.value.order) {
-                case "a-z":return a.name.localeCompare(b.name);
-                case "z-a":return b.name.localeCompare(a.name);
-                default: return 0
-            }
-        })
-    })
-    
-    function applyFiltered(appropriate: FilteredGames):void {
-        filteredActive.value={...appropriate}
-    }
+  function resetGame(): void {
+    filteredActive.value = {
+      nameGenre: "__osszes__",
+      title: "",
+      order: "a-z",
+    };
+  }
 
-    function resetGame():void {
-        filteredActive.value={
-            nameGenre:"__osszes__",
-            title:"",
-            order:"a-z"
-        }
-    }
-
-    return{
-        filteredActive,
-        allGenre,
-        FilteredGames,
-        FilteredGamesOrder,
-        applyFiltered,
-        resetGame,
-    }
+  return {
+    filteredActive,
+    allGenre,
+    FilteredGames,
+    FilteredGamesOrder,
+    applyFiltered,
+    resetGame,
+  };
 }

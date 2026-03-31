@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import CollectibleView from './CollectibleView.vue';
-
+import CollectibleView from "./CollectibleView.vue";
 </script>
 
 <template>
-    <CollectibleView/>
+  <CollectibleView />
 </template>

@@ -1,12 +1,12 @@
-// A tailwindcss-ben konfigurálás 
+// A tailwindcss-ben konfigurálás
 
-import type { Config } from 'tailwindcss'
+import type { Config } from "tailwindcss";
 
 export default {
-    darkMode:'class',
-    content: ['./index.html', 'src/**/*.{vue,,js,ts,jsx,tsx}',],
-    theme: {
-        extend: {},
-    },
-    plugins: [],
-} satisfies Config
+  darkMode: "class",
+  content: ["./index.html", "src/**/*.{vue,,js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+} satisfies Config;

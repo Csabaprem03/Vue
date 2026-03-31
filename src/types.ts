@@ -1,58 +1,58 @@
 // Az interfészek tipusa az adatbázishoz
 export interface User {
-    id: number,
-    name: string,
-    registered_at: Date,
-    password: string,
+  id: number;
+  name: string;
+  registered_at: Date;
+  password: string;
 }
 
 export interface Publisher {
-    id: number,
-    name: string,
-    headquarters: string | null,  
-    is_active: number,
+  id: number;
+  name: string;
+  headquarters: string | null;
+  is_active: number;
 }
 
 export interface Game {
-    id: number,
-    name: string,
-    release_year: number,
-    genre: string,
-    publisher_id: number, 
-    platforms: Array<string>, // a string[] tömbök ugyanaz
-    cover: string | null,
-    freetogame_url: string | null,
-    created_at: Date, // lehet a string,ha Date a dátum és az idő (időzóna)
-    updated_at: Date,
+  id: number;
+  name: string;
+  release_year: number;
+  genre: string;
+  publisher_id: number;
+  platforms: Array<string>; // a string[] tömbök ugyanaz
+  cover: string | null;
+  freetogame_url: string | null;
+  created_at: Date; // lehet a string,ha Date a dátum és az idő (időzóna)
+  updated_at: Date;
 }
 
 export interface Favorite {
-    user_id: number,
-    game_id: number,
+  user_id: number;
+  game_id: number;
 }
 
 export interface Collectible {
-    id: number,
-    game_id: number,
-    type: string,
-    description: string,
-    images: Array<string>,
-    map_location: Array<string | null>,
+  id: number;
+  game_id: number;
+  type: string;
+  description: string;
+  images: Array<string>;
+  map_location: Array<string | null>;
 }
 
-export interface FilteredGames{
-    nameGenre:string,
-    title:string,
-    order:string
+export interface FilteredGames {
+  nameGenre: string;
+  title: string;
+  order: string;
 }
 
-export interface LoginCredentials{
-    email:string,
-    password:string,
+export interface LoginCredentials {
+  email: string;
+  password: string;
 }
 
-export interface RegisterData{
-    name:string,
-    email:string,
-    password:string,
+export interface RegisterData {
+  name: string;
+  email: string;
+  password: string;
 }

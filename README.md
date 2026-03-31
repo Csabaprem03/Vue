@@ -1,6 +1,5 @@
 ## Vue frontend - Gamelibrary
 
-
 ```
 Amikor frissíted a kódot, ezeket add ki:
 
