@@ -9,6 +9,22 @@ export const useFavoriteStore = defineStore("Favorites", () => {
   const isLoading = ref<boolean>(false);
   const isMessage = ref<string | null>(null);
 
+  function saveToLocalStorage(): void {
+    const datas = {
+      games: Favorites.value,
+    };
+    localStorage.setItem("favoriteStore", JSON.stringify(datas));
+  }
+
+  function loadFromLocalStorage(): void {
+    const saved = localStorage.getItem("favoriteStore");
+
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      Favorites.value = parsed.games;
+    }
+  }
+
   async function GETallFavorites() {
     try {
       isLoading.value = true;
@@ -31,6 +47,7 @@ export const useFavoriteStore = defineStore("Favorites", () => {
       };
     } finally {
       isLoading.value = false;
+      saveToLocalStorage();
     }
   }
 
@@ -48,6 +65,7 @@ export const useFavoriteStore = defineStore("Favorites", () => {
       };
     } finally {
       isLoading.value = false;
+      saveToLocalStorage();
     }
   }
 
@@ -74,8 +92,10 @@ export const useFavoriteStore = defineStore("Favorites", () => {
       };
     } finally {
       isLoading.value = false;
+      saveToLocalStorage();
     }
   }
+  loadFromLocalStorage();
 
   return {
     Favorites,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <FromWrapper @submit="handleSubmit">
+    <FromWrapper @submit="handleSubmit" :intial-value="initialValue">
       <SelectField
         name="game_id"
         label="Név játék"
@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import FromWrapper from "../Forms/FromWrapper.vue";
 import * as yup from "yup";
 import { useGamesStore } from "../../stores/gamesStore";
@@ -134,7 +134,18 @@ const handleSubmit = async (values: any) => {
   console.log("sikeres mentés: ", values);
 };
 
-console.log("Betöltött játékok:", gamesStore.collectibles);
+onMounted(async () => {
+  await gamesStore.GETallcollectibles();
+  const collectibleToEdit = gamesStore.collectibles.find(
+    (g) => Number(g.id) === collectibleId.value,
+  );
+
+  if (collectibleToEdit) {
+    initialValue.value = { ...collectibleToEdit };
+  }
+
+  console.log("Betöltött játékok:", gamesStore.collectibles);
+});
 </script>
 
 <style scoped></style>

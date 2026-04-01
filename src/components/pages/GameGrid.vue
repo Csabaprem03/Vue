@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { useAuthStore } from "../../stores/authStore";
 import { useGamesStore } from "../../stores/gamesStore";
 import { slugify } from "../../stores/slugfiy";
@@ -6,6 +7,11 @@ import type { Game } from "../../types";
 import Card from "./Card.vue";
 import FavoriteButton from "./FavoriteButton.vue";
 import List from "./List.vue";
+import {
+  getPlatforms,
+  getPlatformsColor,
+  parsePlatform,
+} from "../../stores/platforms";
 
 const props = defineProps<{ data: Game[] }>();
 
@@ -53,6 +59,14 @@ function handleDelete(id: number, name: string): void {
         </div>
         <h1 class="text-xl font-bold break-all">{{ item.name }}</h1>
         <p class="text-sm text-gray-500">{{ item.genre }}</p>
+
+        <span
+          v-for="(icon, index) in parsePlatform(item.platforms)"
+          :key="index"
+        >
+          <Icon :icon="getPlatforms(icon)" :class="getPlatformsColor(icon)" />
+        </span>
+
         <div class="grid grid-cols-2">
           <RouterLink
             :to="{ name: 'games.edit', params: { id: Number(item.id) } }"

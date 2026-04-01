@@ -9,7 +9,7 @@
           />
         </div>
 
-        <div class="grid grid-cols-4 grid-rows-4 gap-2">
+        <div class="grid grid-cols-4 grid-cols-4 gap-2">
           <div
             v-for="(img, index) in item.images"
             :key="index"
