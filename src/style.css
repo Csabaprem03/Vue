@@ -5,9 +5,81 @@
 
 @layer base {
   body {
-    @apply bg-white text-black transition-colors duration-300;
+    @apply bg-[#fff] text-black transition-colors duration-300;
   }
   .dark body {
-    @apply bg-neutral-900 text-white;
+    @apply bg-[#0C0519] text-white;
+  }
+}
+@theme {
+  --animate-background: background-move ease infinite;
+
+  @keyframes background-move {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}
+@theme {
+  @keyframes border-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  --animate-background: background-move ease infinite;
+  --animate-border-spin: border-spin 7s linear infinite;
+}
+
+@layer utilities {
+  .card-wrapper {
+    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow dark:shadow-neutral-200 dark:shadow-2xl/20  flex items-center justify-center;
+    width: 215px;
+    height: 470px;
+  }
+
+  .card-wrapper::before {
+    content: "";
+    @apply absolute w-[200%] h-[200%] animate-border-spin;
+    background: conic-gradient(
+      rgba(189, 183, 107, 1) 0deg,
+      rgba(50, 23, 77, 1) 90deg,
+      transparent 180deg
+    );
+    top: -50%;
+    left: -50%;
+  }
+
+  .card-content {
+    @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519]  flex flex-col items-center;
+  }
+  .card-flex-wrapper {
+    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519] rounded-2xl flex items-center justify-center;
+    width: 215px;
+    height: 450px;
+  }
+
+  .card-flex-wrapper::before {
+    content: "";
+    @apply absolute w-[200%] h-[200%] animate-border-spin;
+    background: conic-gradient(
+      rgba(189, 183, 107, 1) 0deg,
+      rgba(50, 23, 77, 1) 90deg,
+      transparent 180deg
+    );
+    top: -50%;
+    left: -50%;
+  }
+
+  .card-flex-content {
+    @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 rounded-[calc(1rem-0.75px)] flex flex-col items-center;
   }
 }

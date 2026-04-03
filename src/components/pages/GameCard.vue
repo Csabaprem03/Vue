@@ -63,13 +63,14 @@ function handleDelete(id: number, name: string): void {
         </div>
         <h1 class="text-xl font-bold break-all">{{ item.name }}</h1>
         <p class="text-sm text-gray-500">{{ item.genre }}</p>
-
-        <span
-          v-for="(icon, index) in parsePlatform(item.platforms)"
-          :key="index"
-        >
-          <Icon :icon="getPlatforms(icon)" :class="getPlatformsColor(icon)" />
-        </span>
+        <div class="flex flex-wrap justify-center p-2">
+          <span
+            v-for="(icon, index) in parsePlatform(item.platforms)"
+            :key="index"
+          >
+            <Icon :icon="getPlatforms(icon)" :class="getPlatformsColor(icon)" />
+          </span>
+        </div>
         <button @click="handleDelete(item.id, item.name)">Törlés</button>
         <div class="mt-auto">
           <FavoriteButton :game-id="item.id" />

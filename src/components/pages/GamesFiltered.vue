@@ -13,18 +13,33 @@
         class="w-150 rounded-2xl flex flex-row justify-evenly py-1.5"
       >
         <template #filteredSelect>
-          <div class="flex flex-col items-start">
-            <label>Műfaj</label>
-            <select name="__osszes__" v-model="localGenre">
-              <option value="__osszes__">Összes</option>
-              <option
-                v-for="(genre, index) in genres"
-                :key="index"
-                :value="genre"
-              >
-                {{ genre }}
-              </option>
-            </select>
+          <div class="grid grid-cols-2">
+            <div class="flex flex-col items-start">
+              <label>Műfaj</label>
+              <select name="__osszes__" v-model="localGenre">
+                <option value="__osszes__">Összes</option>
+                <option
+                  v-for="(genre, index) in genres"
+                  :key="index"
+                  :value="genre"
+                >
+                  {{ genre }}
+                </option>
+              </select>
+            </div>
+            <div class="flex flex-col items-start">
+              <label>platformok</label>
+              <select name="__osszes__" v-model="localPlatform">
+                <option value="__osszes__">Összes</option>
+                <option
+                  v-for="(platform, index) in platforms"
+                  :key="index"
+                  :value="platform"
+                >
+                  {{ platform }}
+                </option>
+              </select>
+            </div>
           </div>
         </template>
         <template #fileredInput>
@@ -55,12 +70,13 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import { FilteredGames } from "../../types";
+import type { FilteredGames } from "../../types";
 import FilterPanel from "./FilterPanel.vue";
 import { Icon } from "@iconify/vue";
 
 interface Props {
   genres: Array<string>;
+  platforms: Array<string>;
   modelValue: FilteredGames;
   settings: any;
 }
@@ -72,12 +88,14 @@ const emits = defineEmits<{
 }>();
 
 const localGenre = ref<string>(props.modelValue.nameGenre);
+const localPlatform = ref<string>(props.modelValue.namePlatform);
 const localTitle = ref<string>(props.modelValue.title);
 const localOrder = ref<string>(props.modelValue.order);
 
 function handleSubmit(): void {
   const appropriate: FilteredGames = {
     nameGenre: localGenre.value,
+    namePlatform: localPlatform.value,
     title: localTitle.value,
     order: localOrder.value,
   };
@@ -86,10 +104,12 @@ function handleSubmit(): void {
 }
 function handleReset(): void {
   localGenre.value = "__osszes__";
+  localPlatform.value = "__osszes__";
   localTitle.value = "";
   localOrder.value = "a-z";
   const appropriate: FilteredGames = {
     nameGenre: "__osszes__",
+    namePlatform: "__osszes__",
     title: "",
     order: "a-z",
   };
@@ -101,6 +121,7 @@ watch(
   () => props.modelValue,
   (newValue) => {
     localGenre.value = newValue.nameGenre;
+    localPlatform.value = newValue.namePlatform;
     localTitle.value = newValue.title;
     localOrder.value = newValue.order;
   },

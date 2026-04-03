@@ -8,13 +8,14 @@ export const getPlatforms = (platform: string): string => {
 };
 export const getPlatformsColor = (platform: string): string => {
   const p = platform.toLocaleLowerCase();
-  if (p.includes("pc") || p.includes("windows"))
-    return "bg-neutral-500 text-zinc-100 w-10 rounded rounded-full ";
+  const base = "w-12 h-6 rounded rounded-full text-zinc-100 p-1 ";
+
+  if (p.includes("pc") || p.includes("windows")) return base + "bg-neutral-500";
   if (p.includes("playstation") || p.includes("ps"))
-    return "bg-blue-500 text-zinc-100";
-  if (p.includes("xbox")) return "bg-green-500 text-zinc-100";
-  if (p.includes("switch")) return "bg-red-500 text-zinc-100";
-  return "bg-neutral-0 text-zinc-100";
+    return base + "bg-blue-500";
+  if (p.includes("xbox")) return base + "bg-green-500 ";
+  if (p.includes("switch")) return base + "bg-red-500 ";
+  return base + "bg-neutral-100";
 };
 
 export const parsePlatform = (platforms: any): Array<string> => {

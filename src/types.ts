@@ -42,6 +42,7 @@ export interface Collectible {
 
 export interface FilteredGames {
   nameGenre: string;
+  namePlatform: string;
   title: string;
   order: string;
 }

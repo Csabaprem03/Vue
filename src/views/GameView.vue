@@ -15,6 +15,7 @@ const favStore = useFavoriteStore();
 const {
   FilteredGamesOrder,
   allGenre,
+  allplatform,
   filteredActive,
   resetGame,
   applyFiltered,
@@ -33,6 +34,7 @@ store.GETallgames();
     <GamesFiltered
       :settings="setting"
       :genres="allGenre"
+      :platforms="allplatform"
       v-model="filteredActive"
       @reset="resetGame"
       @apply="applyFiltered"
@@ -53,11 +55,11 @@ store.GETallgames();
     <template v-else>
       <div
         v-if="setting.isOpen"
-        class="my-4 mx-4 grid grid-cols-6 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2"
+        class="my-4 mx-4 grid grid-cols-6 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-3"
       >
         <GameGrid :data="FilteredGamesOrder" />
       </div>
-      <div v-else class="my-4 mx-4 flex flex-column flex-wrap order-6 gap-5">
+      <div v-else class="my-4 mx-5 flex flex-column flex-wrap order-6 gap-5">
         <GameCard :data="FilteredGamesOrder" />
       </div>
     </template>
