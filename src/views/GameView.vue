@@ -30,7 +30,7 @@ store.GETallgames();
 </script>
 
 <template>
-  <div class="w-mx-auto">
+  <div class="w-full mx-w-[1480px] mx-auto py-4 px-4">
     <GamesFiltered
       :settings="setting"
       :genres="allGenre"
@@ -55,11 +55,11 @@ store.GETallgames();
     <template v-else>
       <div
         v-if="setting.isOpen"
-        class="my-4 mx-4 grid grid-cols-6 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-3"
+        class="my-4 mx-4 grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 gap-3"
       >
         <GameGrid :data="FilteredGamesOrder" />
       </div>
-      <div v-else class="my-4 mx-5 flex flex-column flex-wrap order-6 gap-5">
+      <div v-else class="my-4 mx-5 flex flex-column flex-wrap order-5 gap-5">
         <GameCard :data="FilteredGamesOrder" />
       </div>
     </template>

@@ -8,7 +8,7 @@ export const getPlatforms = (platform: string): string => {
 };
 export const getPlatformsColor = (platform: string): string => {
   const p = platform.toLocaleLowerCase();
-  const base = "w-12 h-6 rounded rounded-full text-zinc-100 p-1 ";
+  const base = "w-7 h-[16.20px] rounded rounded-full text-zinc-100 p-1 ";
 
   if (p.includes("pc") || p.includes("windows")) return base + "bg-neutral-500";
   if (p.includes("playstation") || p.includes("ps"))

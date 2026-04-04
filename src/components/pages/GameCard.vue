@@ -42,40 +42,74 @@ function handleDelete(id: number, name: string): void {
 <template>
   <List :items="props.data">
     <template #default="{ item }">
-      <Card
-        class="flex flex-col items-center justify-center my-4 rounded-2xl border border-neutral-800 p-3 py-4 h-80 w-[198px]"
+      <div
+        class="card-flex-wrapper mx-auto my-auto hover:outline-2 hover:outline-offset-2 hover:outline-[#24252b] dark:hover:outline-2 dark:hover:outline-offset-2 dark:hover:outline-[#133b43] shadow-lg dark:hover:shadow-blue-950/90 hover:shadow-gray-950/90 transition-shadow duration-300"
       >
-        <div class="my-1">
-          <RouterLink
-            :key="item.id"
-            :to="{
-              name: 'game.collectibles.type',
-              params: { slug: slugify(item.name), type: getFirstType(item.id) },
-            }"
+        <Card class="card-flex-content py-4 px-2">
+          <div
+            class="grid grid-cols-2 py-3 gap-2 my-auto absolute z-30 top-[-1%] right-0 animate-none *:hover:animate-wiggle"
           >
-            <img
-              v-if="item.cover"
-              :src="item.cover"
-              :alt="item.name"
-              class="w-43 max-h-54 object-cover rou"
-            />
-          </RouterLink>
-        </div>
-        <h1 class="text-xl font-bold break-all">{{ item.name }}</h1>
-        <p class="text-sm text-gray-500">{{ item.genre }}</p>
-        <div class="flex flex-wrap justify-center p-2">
-          <span
-            v-for="(icon, index) in parsePlatform(item.platforms)"
-            :key="index"
+            <RouterLink
+              :to="{ name: 'games.edit', params: { id: Number(item.id) } }"
+              class=""
+            >
+              <Icon
+                icon="line-md:edit-filled"
+                class="text-gray-950/100 dark:text-blue-950/90"
+                height="30"
+                width="30"
+            /></RouterLink>
+            <button class="" @click="handleDelete(item.id, item.name)">
+              <Icon
+                icon="line-md:trash"
+                class="text-red-950/100"
+                height="30"
+                width="30"
+              />
+            </button>
+          </div>
+          <div class="my-1 mt-10">
+            <RouterLink
+              :key="item.id"
+              :to="{
+                name: 'game.collectibles.type',
+                params: {
+                  slug: slugify(item.name),
+                  type: getFirstType(item.id),
+                },
+              }"
+            >
+              <img
+                v-if="item.cover"
+                :src="item.cover"
+                :alt="item.name"
+                class="w-45 max-h-50 object-fill hover:box-border shadow hover:shadow-xl/40 transition-transform duration-300 rotate-0 hover:rotate-12 rounded motion-reduce:transition-none"
+              />
+            </RouterLink>
+          </div>
+          <div
+            class="flex flex-wrap justify-center gap-y-1 gap-x-0.5 my-auto mx-auto"
           >
-            <Icon :icon="getPlatforms(icon)" :class="getPlatformsColor(icon)" />
-          </span>
-        </div>
-        <button @click="handleDelete(item.id, item.name)">Törlés</button>
-        <div class="mt-auto">
-          <FavoriteButton :game-id="item.id" />
-        </div>
-      </Card>
+            <span
+              v-for="(icon, index) in parsePlatform(item.platforms)"
+              :key="index"
+            >
+              <Icon
+                :icon="getPlatforms(icon)"
+                :class="getPlatformsColor(icon)"
+              />
+            </span>
+          </div>
+          <h1 class="text-xl font-bold break-all text-center">
+            {{ item.name }}
+          </h1>
+          <p class="text-sm text-gray-500">{{ item.genre }}</p>
+
+          <div class="mt-auto">
+            <FavoriteButton :game-id="item.id" />
+          </div>
+        </Card>
+      </div>
     </template>
   </List>
 </template>

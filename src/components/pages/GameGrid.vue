@@ -38,11 +38,33 @@ function handleDelete(id: number, name: string): void {
 <template>
   <List :items="props.data">
     <template #default="{ item }">
-      <div class="card-wrapper mx-auto my-2">
-        <Card
-          class="card-content py-4 px-2 transform transition hover:-translate-y-1"
-        >
-          <div class="my-1">
+      <div
+        class="card-wrapper mx-auto my-2 hover:outline-2 hover:outline-offset-2 hover:outline-[#24252b] dark:hover:outline-2 dark:hover:outline-offset-2 dark:hover:outline-[#133b43] shadow-lg dark:hover:shadow-blue-950/90 hover:shadow-gray-950/90 transition-shadow duration-300"
+      >
+        <Card class="card-content py-4 px-2">
+          <div
+            class="grid grid-cols-2 py-3 gap-2 my-auto absolute z-30 top-[-1%] right-0 animate-none *:hover:animate-wiggle"
+          >
+            <RouterLink
+              :to="{ name: 'games.edit', params: { id: Number(item.id) } }"
+              class=""
+            >
+              <Icon
+                icon="line-md:edit-filled"
+                class="text-gray-950/100 dark:text-blue-950/90"
+                height="30"
+                width="30"
+            /></RouterLink>
+            <button class="" @click="handleDelete(item.id, item.name)">
+              <Icon
+                icon="line-md:trash"
+                class="text-red-950/100"
+                height="30"
+                width="30"
+              />
+            </button>
+          </div>
+          <div class="my-1 mt-10">
             <RouterLink
               :key="item.id"
               :to="{
@@ -61,8 +83,6 @@ function handleDelete(id: number, name: string): void {
               />
             </RouterLink>
           </div>
-          <h1 class="text-xl font-bold break-all">{{ item.name }}</h1>
-          <p class="text-sm text-gray-500">{{ item.genre }}</p>
           <div
             class="flex flex-wrap justify-center gap-y-1 gap-x-0.5 my-auto mx-auto"
           >
@@ -76,19 +96,10 @@ function handleDelete(id: number, name: string): void {
               />
             </span>
           </div>
-          <div class="grid grid-cols-2 py-3 gap-2 my-auto mx-auto">
-            <RouterLink
-              :to="{ name: 'games.edit', params: { id: Number(item.id) } }"
-              class="bg-[#b6cbd5] rounded-full p-1 transiton delay-150 duration-300 hover:-translate-y-1 ease-in-out hover:scale-112 hover:bg-[#cedce3]"
-              >Szerkezetés</RouterLink
-            >
-            <button
-              class="bg-[#b6cbd5] rounded-full transiton delay-150 duration-300 hover:-translate-y-1 ease-in-out hover:scale-112 hover:bg-[#cedce3]"
-              @click="handleDelete(item.id, item.name)"
-            >
-              Törlés
-            </button>
-          </div>
+          <h1 class="text-xl font-bold break-all text-center">
+            {{ item.name }}
+          </h1>
+          <p class="text-sm text-gray-500">{{ item.genre }}</p>
           <div class="mt-auto">
             <FavoriteButton :game-id="item.id" />
           </div>

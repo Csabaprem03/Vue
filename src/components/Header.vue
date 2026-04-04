@@ -3,20 +3,58 @@ import { RouterLink } from "vue-router";
 import { useSettingStore } from "../stores/settingsStore";
 import { useAuthStore } from "../stores/authStore";
 import { Icon } from "@iconify/vue";
+import { onMounted, ref } from "vue";
 
 const store = useSettingStore();
 const authStore = useAuthStore();
+const darkBtn = ref<HTMLButtonElement | null>(null);
+
+onMounted(() => {
+  const btn = darkBtn.value;
+  if (!btn) return;
+
+  btn.addEventListener("mousemove", (e: MouseEvent) => {
+    const rect = btn.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const offsetX = x - centerX;
+    const offsetY = y - centerY;
+
+    const shadowX = offsetX / 5;
+    const shadowY = offsetY / 5;
+    const insetX = offsetX / 10;
+    const insetY = offsetY / 10;
+
+    btn.style.boxShadow = `
+    ${shadowX}px ${shadowY}px 15px rgba(0,0,0,0.2),
+    inset ${insetX}px ${insetY}px 10px rgba(255,255,255,0.1)
+    `;
+
+    btn.style.transform = `perspective(1000px) rotate(${-offsetY / 2}deg) rotate(${offsetX / 2}deg) scale(1.1)`;
+
+    btn.addEventListener("mouseleave", () => {
+      btn.style.boxShadow = "";
+      btn.style.transform =
+        "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
+    });
+  });
+});
 </script>
 
 <template>
-  <header>
-    <nav class="bg-neutral-600 w-full dark:bg-gray-900">
-      <h1 class="text-black dark:text-white">Most már működnie kell!</h1>
+  <header class="w-full card-navbar-wrapper">
+    <nav class="card-navbar-content">
       <div
         class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3.5"
       >
         <button
-          class="hover:scale-110 transition-transform p-2"
+          ref="darkBtn"
+          class="button-dark-mode p-2 rounded-3xl"
           @click.="store.ToggleDark()"
         >
           <template v-if="store.isDark">
@@ -87,72 +125,110 @@ const authStore = useAuthStore();
             </li>
           </ul>
         </div>
-        <div
-          class="z-10 bg-neutral-primary-medium border-default-medium rounderd-base shadow-g w-44"
-        >
-          <ul class="relative">
-            <li class="relative group">
-              <button
-                type="button"
-                class="flex items-center py-2 px-3 text-heading hover:text-fg-brand"
-              >
-                <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-              <ul
-                class="absolute right-0 hidden group-hover:block bg-white shadow-lg rounded w-40"
-                aria-labelledby="user-menu-drop-button"
-              >
-                <template v-if="!authStore.token">
-                  <li>
-                    <RouterLink
-                      to="/user/register"
-                      class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded"
-                    >
-                      Regisztráció</RouterLink
-                    >
-                  </li>
-                  <li>
-                    <RouterLink
-                      to="/user/login"
-                      class="inline-flex items-center w-full p-2 hover:bg-neutrall-ertiary-medium hover:text-heading rounded"
-                    >
-                      Bejelentkezés</RouterLink
-                    >
-                  </li>
-                </template>
-                <template v-else>
-                  <li>
-                    <a>Név: {{ authStore.user?.name }}</a>
-                  </li>
-                  <li>
-                    <RouterLink to="/favorites">Kedvencek</RouterLink>
-                  </li>
-                  <li>
-                    <RouterLink to="/user">Fiók</RouterLink>
-                  </li>
-                  <li>
-                    <button @click="authStore.logout">Kijelentkezés</button>
-                  </li>
-                </template>
-              </ul>
-            </li>
-          </ul>
+        <div class="relative group user-menu-container z-50">
+          <button
+            class="flex items-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <Icon
+              icon="line-md:account"
+              height="28"
+              width="28"
+              class="dark:text-white text-gray-800"
+            />
+          </button>
+
+          <div
+            class="absolute right-0 top-full mt-2 hidden group-hover:block w-48 bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[100] overflow-hidden"
+          >
+            <div v-if="authStore.token" class="user-name-display">
+              <p class="opacity-70 text-[10px]">Felhasználó</p>
+              <p class="text-sm font-medium truncate dark:text-white">
+                {{ authStore.user?.name }}
+              </p>
+            </div>
+
+            <ul class="py-1">
+              <template v-if="!authStore.token">
+                <li>
+                  <RouterLink to="/user/register" class="dropdown-item"
+                    >Regisztráció</RouterLink
+                  >
+                </li>
+                <li>
+                  <RouterLink to="/user/login" class="dropdown-item"
+                    >Bejelentkezés</RouterLink
+                  >
+                </li>
+              </template>
+              <template v-else>
+                <li>
+                  <RouterLink to="/favorites" class="dropdown-item"
+                    >Kedvencek</RouterLink
+                  >
+                </li>
+                <li>
+                  <RouterLink to="/user" class="dropdown-item">Fiók</RouterLink>
+                </li>
+                <li>
+                  <button
+                    @click="authStore.logout"
+                    class="dropdown-item text-red-500 w-full text-left"
+                  >
+                    Kijelentkezés
+                  </button>
+                </li>
+              </template>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
   </header>
 </template>
+<style scoped>
+@reference "../style.css";
+
+.button.dark.mode {
+  position: relative;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.1s ease;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-dark-mode {
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+}
+.nav-link {
+  @apply font-bold px-3 py-2 rounded-lg transition-colors hover:text-yellow-600 dark:text-white;
+}
+.dropdown-item {
+  @apply block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors;
+  white-space: nowrap;
+  min-width: max-content;
+}
+.user-menu-container {
+  display: flex;
+  align-items: center;
+}
+.card-navbar-wrapper {
+  overflow: visible !important;
+  position: relative;
+  z-index: 50;
+}
+.card-navbar-content {
+  overflow: visible !important;
+  position: relative;
+  z-index: 10;
+}
+.user-name-display {
+  @apply block px-4 py-3 border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-[#252545] font-bold text-xs uppercase tracking-wider text-gray-500;
+  min-width: 100%;
+}
+</style>
