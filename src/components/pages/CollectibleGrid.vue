@@ -1,8 +1,8 @@
 <template>
   <List :items="props.data">
     <template #default="{ item }">
-      <div class="my-4 mx-4 grid grid-cols-4 grid-rows-4">
-        <div v-for="(img, index) in item.images" :key="index">
+      <div class="my-4 mx-4 grid grid-cols-2 md:grid-cols-3">
+        <div v-for="(img, index) in ImageSplit(item.images)" :key="index">
           <RouterLink
             :to="{ name: 'collectible.id', params: { id: Number(item.id) } }"
           >

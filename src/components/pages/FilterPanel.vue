@@ -1,5 +1,7 @@
 <template>
-  <div class="border border-2 border-neutral-950/50">
+  <div
+    class="border border-2 border-neutral-950/50 bg-neutral-50 dark:bg-[#0C0519]"
+  >
     <div>
       <slot name="filteredSelect" />
     </div>

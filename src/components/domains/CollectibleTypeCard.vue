@@ -1,18 +1,46 @@
 <template>
-  <div v-if="filteredCollectibles.length === 0">
+  <div
+    v-if="store.isLoading"
+    class="my-15 dark:text-neutral-50/90 text-gray-950/90 flex flex-col flex-wrap items-center"
+  >
+    <img
+      src="../../svg/vecteezy_cute-illustration-designs-for-the-characters-in-the-super_27969806.svg"
+      class="h-10 w-10 animate-bounce"
+      alt=""
+    />
+    <div class="flex flex-row flex-wrap">
+      <p>Betöltés</p>
+      <span class="loading loading-dots loading-sm ml-0.5 my-1"></span>
+    </div>
+  </div>
+  <div v-else-if="filteredCollectibles.length === 0">
     <Icon
       icon="line-md:emoji-cry"
-      class="dark:text-gray-200/[95.0%] text-gray-950/[95.4%]"
-      height="30"
-      width="30"
+      class="dark:text-gray-200/[95.2%] text-gray-950/[95.4%] my-[150px]"
+      height="50"
+      width="50"
     />
-
-    <RouterLink to="/games">Vissza a listához</RouterLink>
+    <p
+      class="text-2xl/10 font-extrabold italic text-shadow-lg/20 dark:text-shadow-blue-950/90 text-shadow-yellow-700/80"
+    >
+      Nincs találat a gyűjthető dolgot!
+    </p>
+    <RouterLink
+      class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 my-[48.23px]"
+      to="/games"
+      >Vissza a listához</RouterLink
+    >
   </div>
-  <div v-else class="game">
-    <div v-for="item in filteredCollectibles" :key="item.id">
-      <h3>{{ item.description }}</h3>
-      <div v-if="getImages(item.images).length === 0 && !item.images">
+  <div v-else class="m-w-auto">
+    <div
+      v-for="item in filteredCollectibles"
+      :key="item.id"
+      class="mt-10 rounded-2xl flex flex-col gap-y-[30px] items-center w-4/8 bg-[#e2d4c1]/30 shadow-2xl/30 dark:shadow-neutral-50 shadow-gray-950 dark:inset-shadow-emerald-600/80 inset-shadow-emerald-950/80 inset-shadow-sm inset-0.5"
+    >
+      <h3 class="font-extrabold mt-[5%] font-sans text-2xl/9 break-normal">
+        {{ item.description }}
+      </h3>
+      <div v-if="item.images.length === 0 && !item.images">
         <Icon
           icon="line-md:image-twotone"
           class="text-gray-200"
@@ -20,22 +48,47 @@
           width="30"
         />
       </div>
-      <div v-else class="flex flex-wrap gap-2">
+      <div v-else class="flex flex-wrap gap-5">
         <div
-          v-for="img in getImages(item.images)"
-          class="grid grid-rows-5"
+          v-for="img in item.images"
+          class="flex flex-wrap md:flex-col mx-auto md:mx-auto order-1 sm:items-center sm:justify-center md:order-2 transition-all duration-300"
           :key="img"
         >
-          <img :src="img" class="w-20" />
+          <div class="hover-3d">
+            <figure class="w-50 max-h-40 rounded-2xl">
+              <img :src="img" class="w-full h-full object-cover" />
+            </figure>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </div>
       <RouterLink
         :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"
-        >Szerkezetés</RouterLink
+        class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
       >
+        <div class="flex flex-row flex-wrap">
+          <Icon
+            icon="line-md:edit-filled"
+            class="text-gray-950/100 dark:text-blue-950/90 mr-1.5"
+            height="20"
+            width="20"
+          />
+          <h1>Szerkezetés</h1>
+        </div>
+      </RouterLink>
     </div>
-
-    <RouterLink to="/games">Vissza a listához</RouterLink>
+    <RouterLink
+      class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 my-[48.23px]"
+      to="/games"
+      >Vissza a listához</RouterLink
+    >
   </div>
 </template>
 

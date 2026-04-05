@@ -18,8 +18,15 @@ const game = computed(() => {
 
 <template>
   <div v-if="game">
-    <h2>{{ game.name }}</h2>
-    <RouterView :gameId="game?.id" />
+    <h2
+      class="text-center text-5xl mt-5 font-extralight text-shadow-lg/20 dark:text-shadow-blue-950/90 text-shadow-yellow-700/80"
+    >
+      {{ game.name }}
+    </h2>
+    <RouterView
+      :gameId="game?.id"
+      class="mx-auto flex flex-col items-center h-dvh"
+    />
   </div>
   <div v-else>
     <NotFound />

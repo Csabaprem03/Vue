@@ -50,8 +50,8 @@ function handleDelete(id: number, name: string): void {
             class="grid grid-cols-2 py-3 gap-2 my-auto absolute z-30 top-[-1%] right-0 animate-none *:hover:animate-wiggle"
           >
             <RouterLink
+              class="animate-none hover:animate-wiggle transition-all duration-100"
               :to="{ name: 'games.edit', params: { id: Number(item.id) } }"
-              class=""
             >
               <Icon
                 icon="line-md:edit-filled"
@@ -106,7 +106,10 @@ function handleDelete(id: number, name: string): void {
           <p class="text-sm text-gray-500">{{ item.genre }}</p>
 
           <div class="mt-auto">
-            <FavoriteButton :game-id="item.id" />
+            <FavoriteButton
+              :game-id="item.id"
+              class="animate-none hover:animate-wiggle transition-all duration-100"
+            />
           </div>
         </Card>
       </div>

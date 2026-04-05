@@ -96,12 +96,15 @@ function handleDelete(id: number, name: string): void {
               />
             </span>
           </div>
-          <h1 class="text-xl font-bold break-all text-center">
+          <h1 class="text-xl font-bold break-normal text-center">
             {{ item.name }}
           </h1>
           <p class="text-sm text-gray-500">{{ item.genre }}</p>
           <div class="mt-auto">
-            <FavoriteButton :game-id="item.id" />
+            <FavoriteButton
+              :game-id="item.id"
+              class="animate-none hover:animate-wiggle transition-all duration-100"
+            />
           </div>
         </Card>
       </div>

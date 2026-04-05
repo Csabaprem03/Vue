@@ -6,7 +6,7 @@ import Main from "./components/Main.vue";
 
 <template>
   <Header />
-  <Main />
+  <Main class="min-h-dvh" />
   <Footer />
 </template>
 
