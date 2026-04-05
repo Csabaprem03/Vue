@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row justify-between my-4 mx-4">
-    <button @click="settings.toggleMenu">
-      <template v-if="settings.isOpen">
+    <button @click="settings.toggleButton">
+      <template v-if="settings.isGrid">
         <Icon icon="material-symbols-light:flex-wrap" height="40" width="40" />
       </template>
       <template v-else>

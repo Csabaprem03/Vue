@@ -47,19 +47,24 @@ store.GETallgames();
 
     <div
       v-if="store.isLoading"
-      class="my-4 mx-4 grid grid-cols-7 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 gap-4"
+      :class="[
+        'my-4 mx-4',
+        setting.isGrid
+          ? 'grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 gap-3'
+          : 'flex flex-column flex-wrap order-5 gap-5',
+      ]"
     >
       <SkeletonLoading v-for="n in store.games.length" :key="n" />
     </div>
 
     <template v-else>
       <div
-        v-if="setting.isOpen"
+        v-if="setting.isGrid"
         class="my-4 mx-4 grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 gap-3"
       >
         <GameGrid :data="FilteredGamesOrder" />
       </div>
-      <div v-else class="my-4 mx-5 flex flex-column flex-wrap order-5 gap-5">
+      <div v-else class="my-4 mx-4 flex flex-column flex-wrap order-5 gap-5">
         <GameCard :data="FilteredGamesOrder" />
       </div>
     </template>

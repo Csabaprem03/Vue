@@ -1,5 +1,15 @@
 <template>
-  <div class="game">
+  <div v-if="filteredCollectibles.length === 0">
+    <Icon
+      icon="line-md:emoji-cry"
+      class="dark:text-gray-200/[95.0%] text-gray-950/[95.4%]"
+      height="30"
+      width="30"
+    />
+
+    <RouterLink to="/games">Vissza a listához</RouterLink>
+  </div>
+  <div v-else class="game">
     <div v-for="item in filteredCollectibles" :key="item.id">
       <h3>{{ item.description }}</h3>
       <div v-if="getImages(item.images).length === 0 && !item.images">

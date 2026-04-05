@@ -60,7 +60,7 @@ onMounted(() => {
           <template v-if="store.isDark">
             <Icon
               icon="line-md:sun-rising-filled-loop"
-              class="text-red-500"
+              class="text-gray-200/[95.0%]"
               height="30"
               width="30"
             />
@@ -68,7 +68,7 @@ onMounted(() => {
           <template v-else>
             <Icon
               icon="line-md:moon-rising-alt-filled-loop"
-              class="text-gray-200"
+              class="text-gray-950/[95.4%]"
               height="30"
               width="30"
             />
