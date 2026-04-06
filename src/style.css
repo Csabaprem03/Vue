@@ -106,7 +106,26 @@ body {
   }
 
   .card-flex-content {
-    @apply relative rounded-2xl z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519]  flex flex-col items-center;
+    @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519]  flex flex-col items-center;
+  }
+  .card-grid-collectible-wrapper {
+    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 dark:shadow-neutral-200 dark:shadow-2xl/20  flex items-center justify-center;
+    width: 150px;
+    height: 150px;
+  }
+  .card-grid-collectible-wrapper::before {
+    content: "";
+    @apply absolute w-[200%] h-[200%] animate-border-spin;
+    background: conic-gradient(
+      rgba(189, 183, 107, 1) 0deg,
+      rgba(50, 23, 77, 1) 90deg,
+      transparent 180deg
+    );
+    top: -50%;
+    left: -50%;
+  }
+  .card-grid-collectible-content {
+    @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519]  flex flex-col items-center;
   }
 
   .card-navbar-wrapper {

@@ -93,6 +93,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
 
   async function GETCollectibleById(id: number): Promise<APIResponse<null>> {
     try {
+      isLoading.value = true;
       const res = await API.collectibles.getCollectibleById(id);
       const data = await res.data;
       if (res.status == 200 && data) {
@@ -108,6 +109,8 @@ export const useGamesStore = defineStore("gamesStore", () => {
         status: _error.response?.status,
         content: null,
       };
+    } finally {
+      isLoading.value = false;
     }
     return {
       success: false,

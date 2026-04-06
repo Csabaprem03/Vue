@@ -5,13 +5,6 @@
     <div
       class="skeleton w-45 h-50 bg-neutral-300 dark:bg-neutral-700 rounded-lg mb-4"
     ></div>
-    <div class="flex flex-wrap justify-center gap-y-1 gap-x-0.5">
-      <div v-for="index in 5" :key="index" class="flex flex-col flex-wrap">
-        <div
-          class="skeleton w-7 h-[16.20px] rounded rounded-full bg-neutral-700 mb-2"
-        ></div>
-      </div>
-    </div>
     <div
       class="skeleton h-4 w-[131.50px] bg-neutral-700 rounded mt-2 mb-2"
     ></div>

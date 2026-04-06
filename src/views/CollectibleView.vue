@@ -1,11 +1,11 @@
 <template>
   <div v-if="store.isLoading">
     <div
-      v-for="n in store.collectibles.length"
-      class="my-4 mx-4 gtid grid-rows-4"
-      :key="n"
+      class="my-4 mx-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mx-auto"
     >
-      <SkeletonLoading />
+      <div v-for="n in store.collectibles.length" :key="n">
+        <SkeletonLoadingCollectible />
+      </div>
     </div>
   </div>
   <div v-else>
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import CollectibleGrid from "../components/pages/CollectibleGrid.vue";
 import SkeletonLoading from "../components/pages/SkeletonLoading.vue";
+import SkeletonLoadingCollectible from "../components/pages/SkeletonLoadingCollectible.vue";
 import { useGamesStore } from "../stores/gamesStore";
 
 const store = useGamesStore();

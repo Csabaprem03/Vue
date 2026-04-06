@@ -1,48 +1,102 @@
 <template>
-  <div v-if="item" class="max-w-6xl mx-auto p-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <div class="space-y-4">
-        <div class="">
-          <img
-            :src="activeImage || item.images[0]"
-            class="w-full h-full object-contain"
-          />
-        </div>
+  <div>
+    <div
+      v-if="store.isLoading"
+      class="my-15 dark:text-neutral-50/90 text-gray-950/90 flex flex-col flex-wrap items-center"
+    >
+      <img
+        src="../../svg/vecteezy_cute-illustration-designs-for-the-characters-in-the-super_27969806.svg"
+        class="h-10 w-10 animate-bounce"
+        alt=""
+      />
+      <div class="flex flex-row flex-wrap">
+        <p>Betöltés</p>
+        <span class="loading loading-dots loading-sm ml-0.5 my-1"></span>
+      </div>
+    </div>
+    <div v-else-if="item" class="max-w-6xl mx-auto p-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="space-y-4">
+          <div class="hover-3d">
+            <figure
+              class="h-100 rounded-2xl shadow-2xl shadow-gray-950/30 dark:shadow-neutral-50/20"
+            >
+              <img
+                :src="activeImage || item.images[0]"
+                class="w-full h-full object-contain"
+              />
+            </figure>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
 
-        <div class="grid grid-cols-4 grid-cols-4 gap-2">
-          <div
-            v-for="(img, index) in item.images"
-            :key="index"
-            @click="activeImage = img"
-            :class="[
-              'cursor-pointer rounded-lg overflow-hidden border-2 transition',
-              activeImage === img ? 'border-blue-500' : 'border-transparent',
-            ]"
-          >
-            <img
-              :src="img"
-              class="w-full h-20 object-cover opacity-70 hover:opacity-100"
-            />
+          <div class="grid grid-cols-4 gap-2">
+            <div
+              v-for="(img, index) in item.images"
+              :key="index"
+              @click="activeImage = img"
+              :class="[
+                'cursor-pointer rounded-lg appearance-none overflow-hidden border-2 transition',
+                activeImage === img
+                  ? 'shadow-lg border-gray-950/80 shadow-gray-950/20 dark:shadow-neutral-50/20 dark:border-blue-950/90'
+                  : 'border-transparent',
+              ]"
+            >
+              <img
+                :src="img"
+                class="w-full h-20 object-cover opacity-70 hover:opacity-100"
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="space-y-6">
-        <div>
-          <span class="text-blue-500">{{ item.type }}</span>
-          <h1 class="text-4xl font-black mt-2">{{ item.description }}</h1>
+        <div
+          class="p-4 space-y-6 dark:bg-blue-950/20 rounded-3xl shadow-2xl shadow-gray-950/30 dark:shadow-neutral-50/20 inset-shadow-2xs dark:inset-shadow-emerald-700/80 inset-shadow-emerald-950/70"
+        >
+          <div>
+            <span
+              class="text-yellow-700/50 font-bold text-shadow-2xs text-shadow-amber-600/20 dark:text-shadow-blue-950/40"
+              >{{ item.type }}</span
+            >
+            <h1 class="text-4xl font-black mt-2">{{ item.description }}</h1>
+          </div>
+
+          <div v-if="item.map_location" class="p-4">
+            <h4 class="text-gray-400 text-xs uppercase mb-3">
+              Lelőhely (Koordináták)
+            </h4>
+            <div id="map" class="h-64 w-full rounded-lg mb-1 z-0"></div>
+            <p class="font-mono text-xl">
+              Szelesség: {{ item.map_location[0] }}
+            </p>
+            <p class="font-mono text-xl">
+              Hosszúság: {{ item.map_location[1] }}
+            </p>
+          </div>
+          <div v-else>
+            <img
+              src="../../svg/no-map-svgrepo-com.svg"
+              class="w-60 h-60 mx-auto p-2"
+            />
+            <p
+              class="text-center text-3xl/4 italic font-extralight text-shadow-2xs dark:text-shadow-blue-950/20 text-shadow-yellow-600"
+            >
+              Nincs térképet!
+            </p>
+          </div>
+
+          <RouterLink
+            to="/collectibles"
+            class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 px-6 py-3"
+            >Vissza</RouterLink
+          >
         </div>
-
-        <div v-if="item.map_location" class="p-4">
-          <h4 class="text-gray-400 text-xs uppercase mb-3">
-            Lelőhely (Koordináták)
-          </h4>
-          <div id="map" class="h-64 w-full rounded-lg mb-4 z-0"></div>
-          <p class="font-mono text-xl">Lat: {{ item.map_location[0] }}</p>
-          <p class="font-mono text-xl">Lng: {{ item.map_location[1] }}</p>
-        </div>
-
-        <RouterLink to="/collectibles" class="px-6 py-3">Vissza</RouterLink>
       </div>
     </div>
   </div>
@@ -88,6 +142,7 @@ const initMap = async () => {
 };
 
 onMounted(async () => {
+  await store.GETallcollectibles();
   await initMap();
 });
 
