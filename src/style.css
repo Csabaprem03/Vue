@@ -87,6 +87,7 @@ body {
   .card-content {
     @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519]  flex flex-col items-center;
   }
+
   .card-flex-wrapper {
     @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 rounded-2xl shadow-2xl/20 shadow-yellow-800/90 dark:shadow-neutral-200 dark:shadow-2xl/20  flex items-center justify-center;
     width: 215px;
@@ -152,5 +153,22 @@ body {
     @apply relative z-10 bg-neutral-50 dark:bg-[#0C0519] w-[calc(100%-2px)] h-[calc(100%-2px)];
     overflow: visible !important;
     margin-bottom: 1px;
+  }
+  .card-favorite-wrapper {
+    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 dark:shadow-neutral-200 dark:shadow-2xl/20  flex  items-center justify-center;
+    width: 320px;
+    height: 102px;
+  }
+  .card-favorite-wrapper::before {
+    content: "";
+    @apply absolute w-[250%] h-[250%] animate-border-spin;
+    background: conic-gradient(
+      rgba(189, 183, 107, 1) 0deg,
+      rgba(50, 23, 77, 1) 90deg,
+      transparent 180deg
+    );
+  }
+  .card-favorite-content {
+    @apply relative z-10 overflow-hidden w-[calc(100%-2px)] h-[calc(100%-2px)]  bg-neutral-50 dark:bg-[#0C0519] rounded-2xl flex flex-row  items-center;
   }
 }

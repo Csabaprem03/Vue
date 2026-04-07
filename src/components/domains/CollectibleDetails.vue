@@ -67,11 +67,11 @@
             <h1 class="text-4xl font-black mt-2">{{ item.description }}</h1>
           </div>
 
-          <div v-if="item.map_location" class="p-4">
+          <div v-if="item.map_location" class="p-2">
             <h4 class="text-gray-400 text-xs uppercase mb-3">
               Lelőhely (Koordináták)
             </h4>
-            <div id="map" class="h-64 w-full rounded-lg mb-1 z-0"></div>
+            <div id="map" class="h-64 w-full rounded-lg z-0"></div>
             <p class="font-mono text-xl">
               Szelesség: {{ item.map_location[0] }}
             </p>
@@ -94,7 +94,7 @@
           <RouterLink
             to="/collectibles"
             class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 px-6 py-3"
-            >Vissza</RouterLink
+            >Vissza a gyűjthetői dolgokhoz</RouterLink
           >
         </div>
       </div>

@@ -1,19 +1,21 @@
 <template>
-  <div>
-    <label :class="labelClass">{{ props.label }}</label>
-    <input
-      :placeholder="props.placeholder ?? ''"
-      @blur="handleBlur"
-      :type="props.type"
-      :class="inputClass"
-      :name="props.name"
-      class="outline-none border rounded-md block w-[400px] h-[45px] text-sm text-zinc-600 pl-4"
-      v-model="value"
-    />
-  </div>
-  <div class="text-red-500 text-sm mt-1">
-    {{ errorMessage }}
-  </div>
+  <section class="my-3">
+    <div class="grid grid-rows-3 -my-6.5">
+      <label :class="labelClass">{{ props.label }}</label>
+      <input
+        :placeholder="props.placeholder ?? ''"
+        @blur="handleBlur"
+        :type="props.type"
+        :class="inputClass"
+        :name="props.name"
+        class="outline-none border rounded-md block w-[400px] h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4"
+        v-model="value"
+      />
+      <div class="text-red-500 font-bold text-sm mt-1 ml-1">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </section>
 </template>
 <script setup lang="ts">
 import { defineRule, useField } from "vee-validate";

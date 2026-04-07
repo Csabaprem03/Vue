@@ -2,7 +2,7 @@
   <button
     type="submit"
     :disabled="props.loading"
-    class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+    class="btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50 mt-2.5"
   >
     <span v-if="props.loading"> betöltés... </span>
     <span v-else>

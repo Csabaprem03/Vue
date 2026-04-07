@@ -1,7 +1,8 @@
 <template>
   <FromWrapper @submit="handleSubmit">
-    <h1>Regisztráció</h1>
+    <h1 class="text-lg mb-8 font-semibold">Regisztráció</h1>
     <FormField
+      :placeholder="null"
       label="Név"
       type="text"
       name="name"
@@ -10,6 +11,7 @@
       "
     />
     <FormField
+      :placeholder="null"
       label="Email"
       type="email"
       name="email"
@@ -18,6 +20,7 @@
       "
     />
     <FormField
+      :placeholder="null"
       label="Jelszó"
       type="password"
       name="password"
@@ -27,7 +30,9 @@
     />
     <!-- <FormField label="Jelszó Megerősítés" type="password" name="confirmPassword" rules="confirmed:@password"
             :validator="string().required('köletező az megérősítés!')" /> -->
-    <SubmitButton>Küldés</SubmitButton>
+    <SubmitButton :loading="authStore.isLoading">{{
+      authStore.isLoading ? "mentés..." : "Küldés"
+    }}</SubmitButton>
   </FromWrapper>
 </template>
 <script setup lang="ts">

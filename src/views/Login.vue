@@ -4,7 +4,6 @@ import FromWrapper from "../components/Forms/FromWrapper.vue";
 import FormField from "../components/validators/FormField.vue";
 import SubmitButton from "../components/Forms/SubmitButton.vue";
 import { useAuthStore } from "../stores/authStore";
-import { useSettingStore } from "../stores/settingsStore";
 import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
@@ -31,7 +30,7 @@ const handleSubmit = async (values: any) => {
 
 <template>
   <FromWrapper @submit="handleSubmit">
-    <h1>Bejelentkezés</h1>
+    <h1 class="text-lg mb-8 font-semibold">Bejelentkezés</h1>
     <FormField
       placeholder=""
       label="Email"
