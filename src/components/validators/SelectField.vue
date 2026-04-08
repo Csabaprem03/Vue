@@ -1,8 +1,27 @@
 <template>
-  <div>
-    <select :name="props.name" @blur="handleBlur" v-model="value">
-      <option value="" disabled>Válassz egy videójátékot...</option>
+  <div class="grid grid-rows-3">
+    <label
+      :class="['text-sm font-black transition-colors duration-300', labelClass]"
+      >{{ props.label }}</label
+    >
+    <select
+      :class="[
+        'outline-none border rounded-md block bg-yellow-700/10 dark:bg-blue-950/20 w-[400px] h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4',
+        inputClass,
+      ]"
+      :name="props.name"
+      @blur="handleBlur"
+      v-model="value"
+    >
       <option
+        class="bg-yellow-700/10 dark:bg-blue-950/50 text-gray-950/60 dark:text-neutral-50/80"
+        value=""
+        disabled
+      >
+        Válassz egy videójátékot...
+      </option>
+      <option
+        class="bg-yellow-700/10 dark:bg-blue-950/50 text-gray-950/60 dark:text-neutral-50/80"
         v-for="item in sortedOptions"
         :key="item.value"
         :value="item.value"
@@ -10,12 +29,15 @@
         {{ item.label }}
       </option>
     </select>
+    <div class="text-red-500 dark:text-red-950 font-bold text-sm mt-1 ml-1">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useField } from "vee-validate";
-import { computed, ref, watch } from "vue";
+import { computed, ref, toRef, watch } from "vue";
 
 interface Option {
   value: number;
@@ -28,37 +50,51 @@ interface Props {
   name: string;
   options: Array<Option>;
   validator: any;
-  rules?: any;
+  validateOnChange?: boolean;
 }
 
-const props = defineProps<Props>();
-const labelClass = ref<string>("text-zinc-600");
-const inputClass = ref<string>("text-zinc-600");
+const props = withDefaults(defineProps<Props>(), {
+  validator: undefined,
+  validateOnChange: false,
+});
+
+const labelClass = ref<string>("text-zinc-600 dark:text-zinc-200");
+const inputClass = ref<string>("text-zinc-600 dark:text-zinc-200");
+
+const validateOnChange = toRef(props, "validateOnChange");
 
 const { value, errorMessage, validate } = useField(
   props.name,
   props.validator,
-  { initialValue: "" },
+  { initialValue: "", validateOnValueUpdate: props.validateOnChange },
 );
 
 const sortedOptions = computed(() => {
   return [...props.options].sort((a, b) => a.label.localeCompare(b.label));
 });
 
-watch(errorMessage, (error) => {
-  if (error) {
-    labelClass.value = "text-red-500";
-    inputClass.value = "border-red-500 bg-red-50";
-  } else if (value.value) {
-    labelClass.value = "text-green-700";
-    inputClass.value = "border-green-500 bg-green-50";
-  } else {
-    labelClass.value = "text-zinc-600";
-    inputClass.value = "border-zinc-300";
+watch(errorMessage, (newError) => {
+  if (newError) {
+    labelClass.value = "text-red-500 dark:text-red-950";
+    inputClass.value = "border-red-500 dark:border-red-900";
+  } else if (value.value !== undefined) {
+    labelClass.value = "text-green-700 dark:text-emerald-950";
+    inputClass.value = "border-green-500 dark:border-emerald-900";
   }
 });
 
-const handleBlur = () => validate();
+async function handleBlur() {
+  if (!validateOnChange.value) {
+    const { valid } = await validate();
+    if (valid) {
+      labelClass.value = "text-green-700 dark:text-emerald-950";
+      inputClass.value = "border-green-500 dark:border-emerald-900";
+    } else {
+      labelClass.value = "text-red-500 dark:text-red-950";
+      inputClass.value = "border-red-500 dark:border-red-900";
+    }
+  }
+}
 </script>
 
 <style scoped></style>

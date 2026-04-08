@@ -77,7 +77,6 @@ onMounted(() => {
         </button>
         <button
           @click="store.toggleMenu"
-          data-collapse-toggle="navbar-default"
           type="button"
           class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading"
         >
@@ -94,11 +93,13 @@ onMounted(() => {
             store.isOpen ? 'block' : 'hidden',
           ]"
         >
-          <ul class="font-medium flex flex-col md:flex-row md:space-x-4">
+          <ul
+            class="font-medium flex flex-col *:dark:hover:bg-blue-950/20 p-0 *:hover:p-2.5 shadow-none *:hover:shadow-md *:hover:shadow-neutral-50/20 rounded-nones inset-shadow-none *:hover:inset-shadow-sm *:dark:hover:inset-shadow-emerald-950/80 ring-0 *:hover:ring-1 *:dark:hover:ring-blue-950/50 *:hover:inset-shadow-yellow-800/80 *:hover:bg-gray-800/10 *:hover:ring-amber-600/20 *:hover:rounded-2xl md:flex-row md:space-x-4"
+          >
             <li>
               <RouterLink
                 to="/games"
-                class="block py-2 px-3 text-dark rounded md:bg-neutral-300 md:text-fg-brand md:p-0"
+                class="block py-2 px-3 text-dark md:text-fg-brand md:p-0"
               >
                 Játékok listája</RouterLink
               >
@@ -106,9 +107,9 @@ onMounted(() => {
             <li>
               <RouterLink
                 to="/collectibles"
-                class="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-neutral-300 md:border-0 md:hover:text-fg-brand md:p-0"
+                class="block py-2 px-3 text-heading md:text-fg-brand md:p-0"
               >
-                Gyűjthető</RouterLink
+                Gyűjthető dolgok</RouterLink
               >
             </li>
           </ul>

@@ -1,5 +1,7 @@
 <template>
-  <div class="my-4 mx-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 mx-auto">
+  <div
+    class="my-2 mx-2 md:my-4 md:mx-4 gap-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
+  >
     <List :items="props.data">
       <template #default="{ item }">
         <div class="card-grid-collectible-wrapper">

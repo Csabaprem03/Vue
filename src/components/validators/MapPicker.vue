@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="flex flex-col gap-y-2.5">
     <label>{{ props.label }}</label>
-    <div id="picker-map" class="h-64 w-full rounded-lg mb-4 z-0"></div>
+    <div id="picker-map" class="h-64 w-[400px] rounded-lg mb-4 z-0"></div>
     <input type="hidden" :name="props.name" v-model="coords" />
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-rows-2 gap-4">
       <div class="space-y-2">
         <label>Szelesség:</label>
         <input
@@ -11,6 +11,7 @@
           v-model="manualLat"
           step="any"
           @input="updateFormInput"
+          class="outline-none border rounded-md block bg-yellow-700/10 dark:bg-blue-950/20 h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4"
         />
       </div>
       <div class="space-y-2">
@@ -20,18 +21,19 @@
           v-model="manualLng"
           step="any"
           @input="updateFormInput"
+          class="outline-none border rounded-md block bg-yellow-700/10 dark:bg-blue-950/20 h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4"
         />
       </div>
     </div>
-    <p v-if="errorMessage" class="text-red-500 text-xs mt-1">
+    <div class="text-red-500 dark:text-red-950 font-bold text-sm mt-1 ml-1">
       {{ errorMessage }}
-    </p>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useField } from "vee-validate";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, toRef, watch } from "vue";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 interface Props {
@@ -39,13 +41,21 @@ interface Props {
   name: string;
   modelValue?: Array<[number, number]>;
   validator?: any;
+  validateOnChange?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  validator: undefined,
+  validateOnChange: false,
+});
 const manualLat = ref<number | string>("");
 const manualLng = ref<number | string>("");
-const labelClass = ref<string>("text-zinc-600");
-const inputClass = ref<string>("text-zinc-600");
+
+const labelClass = ref<string>("text-zinc-600 dark:text-zinc-200");
+const inputClass = ref<string>("text-zinc-600 dark:text-zinc-200");
+
+const validateOnChange = toRef(props, "validateOnChange");
+
 const emit = defineEmits<{
   (e: "update:modelValue", value: [number, number] | null): void;
 }>();
@@ -57,7 +67,9 @@ const {
   value: coords,
   errorMessage,
   validate,
-} = useField<[number, number] | null>(props.name, props.validator);
+} = useField<[number, number] | null>(props.name, props.validator, {
+  validateOnValueUpdate: props.validateOnChange,
+});
 
 const updateMarker = (lat: number, lng: number) => {
   if (!map) return;
@@ -136,7 +148,18 @@ watch(errorMessage, (error) => {
   }
 });
 
-const handleBlur = () => validate();
+async function handleBlur() {
+  if (!validateOnChange.value) {
+    const { valid } = await validate();
+    if (valid) {
+      labelClass.value = "text-green-700 dark:text-emerald-950";
+      inputClass.value = "border-green-500 dark:border-emerald-900";
+    } else {
+      labelClass.value = "text-red-500 dark:text-red-950";
+      inputClass.value = "border-red-500 dark:border-red-900";
+    }
+  }
+}
 </script>
 
 <style scoped>

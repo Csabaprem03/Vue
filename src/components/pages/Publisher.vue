@@ -1,6 +1,7 @@
 <template>
   <div>
     <FromWrapper @submit="handleSubmit">
+      <h1 class="text-lg mb-8 font-semibold">Videójáték-kiadó</h1>
       <FormField
         placeholder=""
         label="Cégnév"
@@ -20,13 +21,13 @@
           label="Aktív"
           name="is_active"
           :radio-value="1"
-          :validator="boolean().required('Válassz státuszt')"
+          :validator="number().required('Válassz státuszt')"
         />
         <RadioField
           label="Inaktív"
           name="is_active"
           :radio-value="0"
-          :validator="boolean().required('Válassz státuszt')"
+          :validator="number().required('Válassz státuszt')"
         />
       </div>
       <SubmitButton :loading="store.isLoading">{{
@@ -37,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { boolean, string } from "yup";
+import { boolean, string, number } from "yup";
 import FromWrapper from "../Forms/FromWrapper.vue";
 import SubmitButton from "../Forms/SubmitButton.vue";
 import FormField from "../validators/FormField.vue";

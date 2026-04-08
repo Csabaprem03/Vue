@@ -1,6 +1,7 @@
 <template>
   <div>
     <FromWrapper @submit="handleSubmit" :intial-value="initialValue">
+      <h1 class="text-lg mb-8 font-semibold">Játék</h1>
       <FormField
         placeholder=""
         type="text"
@@ -30,7 +31,7 @@
       <SelectField
         label="Válassz egy cégnév"
         name="publisher_id"
-        :validator="yup.number().required('Választani kell egy játékot!')"
+        :validator="yup.string().required('Választani kell egy játékot!')"
         :options="publishersName"
       />
       <CheckBoxField
@@ -42,13 +43,14 @@
         :options="Platforms"
       />
       <UploadField
-        label="Kép (borító)"
+        class="mt-10"
+        label="Kép URL (borító)"
         name="cover"
         type="url"
         :validator="imageValidator"
       />
       <UploadField
-        label="kép URL (optionális) "
+        label="kép URL (optionális)"
         name="freetogame_url"
         type="url"
         :validator="

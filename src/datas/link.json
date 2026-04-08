@@ -1,0 +1,38 @@
+{
+  "linkcolumns": [
+    [
+      {
+        "title": "platformok",
+        "links": [
+          {
+            "to": "https://www.playstation.com/hu-hu/",
+            "text": "PlayStation"
+          },
+          {
+            "to": "https://www.xbox.com/hu-HU/",
+            "text": "Xbox"
+          },
+          {
+            "to": "https://www.nintendo.com/us/?srsltid=AfmBOooC_pBc6h1jJiGGTOybK37NEcjbtr1pco_RJ3YXQGUwR-dj_kx9",
+            "text": "Nintendo"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "title": "Windows és PC, Apple MAC",
+        "links": [
+          {
+            "to": "https://store.steampowered.com/",
+            "text": "Steam"
+          },
+          {
+            "to": "https://store.epicgames.com/hu",
+            "text": "Epic Games"
+          }
+        ]
+      }
+    ]
+  ]
+}

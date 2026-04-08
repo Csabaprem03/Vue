@@ -1,11 +1,12 @@
 <template>
   <div>
     <FromWrapper @submit="handleSubmit" :intial-value="initialValue">
+      <h1 class="text-lg mb-8 font-semibold">Gyűjthető dolog</h1>
       <SelectField
         name="game_id"
         label="Név játék"
         :options="collectibleNames"
-        :validator="yup.number().required('Választani kell egy játékot!')"
+        :validator="yup.string().required('Választani kell egy játékot!')"
       />
       <FormField
         placeholder=""
@@ -17,7 +18,7 @@
         "
       />
       <FormField
-        placeholder="rövid írj le!!!"
+        placeholder="Rövid írj le!!!"
         type="text"
         name="description"
         label="Leírás"

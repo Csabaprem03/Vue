@@ -40,6 +40,12 @@ export interface Collectible {
   map_location: Array<string | null>;
 }
 
+export interface FilteredCollectibles {
+  nameType: string;
+  nameDescription: string;
+  order: string;
+}
+
 export interface FilteredGames {
   nameGenre: string;
   namePlatform: string;

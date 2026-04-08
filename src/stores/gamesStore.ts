@@ -29,9 +29,21 @@ export const useGamesStore = defineStore("gamesStore", () => {
     const saved = localStorage.getItem("gamesStore");
 
     if (saved) {
-      const parsed = JSON.parse(saved);
-      games.value = parsed.games;
-      collectibles.value = parsed.collectibles;
+      try {
+        const parsed = JSON.parse(saved);
+        games.value = parsed.games || [];
+        collectibles.value = parsed.collectibles || [];
+        console.log(
+          "Adatok játékoknak betöltve a tárból: ",
+          games.value.length,
+        );
+        console.log(
+          "Adatok gyűjthetői dolgoknak betöltve a tárból: ",
+          collectibles.value.length,
+        );
+      } catch (error) {
+        console.log("Hiba a LocatStorage olvasásakor");
+      }
     }
   }
 
@@ -77,7 +89,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
       const _error = error as AxiosError<string>;
       return {
         success: false,
-        status: _error.response?.status,
+        status: _error.response?.status || 500,
         content: null,
       };
     } finally {

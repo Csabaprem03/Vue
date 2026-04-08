@@ -8,6 +8,7 @@ import GamesFiltered from "../components/pages/GamesFiltered.vue";
 import SkeletonLoading from "../components/pages/SkeletonLoading.vue";
 import MessagePanel from "../components/validators/MessagePanel.vue";
 import { useFavoriteStore } from "../stores/favoriteStore";
+import { Icon } from "@iconify/vue";
 
 const store = useGamesStore();
 const setting = useSettingStore();
@@ -46,12 +47,50 @@ store.GETallgames();
     />
 
     <div
-      v-if="store.isLoading"
+      v-if="!store.isLoading && store.games.length === 0"
+      class="flex flex-col justify-center items-center"
+    >
+      <div class="card my-1.5 mx-auto">
+        <div class="card-body my-3">
+          <Icon icon="mdi:server" class="w-20 h-20" />
+          <p class="text-sm dark:text-neutral-50 text-gray-950">
+            A szerver nem válaszol
+          </p>
+          <button
+            @click="store.GETallgames"
+            class="btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+          >
+            Töltsd újra!!!
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      v-if="store.games.length > 0 && FilteredGamesOrder.length === 0"
+      class="flex flex-col justify-center items-center"
+    >
+      <div class="card my-1.5 mx-auto">
+        <div class="card-body my-3">
+          <Icon icon="line-md:filter-off" class="w-20 h-20 my-4 mx-auto" />
+          <p class="my-4 text-sm dark:text-neutral-50 text-gray-950">
+            Nem a szűrésnek megfelelője játék
+          </p>
+          <button
+            @click="resetGame"
+            class="my-0.5 btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+          >
+            Szűrések törlése
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      v-else-if="store.isLoading"
       :class="[
-        'my-4 mx-4',
+        'my-2 mx-0.5',
         setting.isGrid
-          ? 'grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 gap-3'
-          : 'flex flex-column flex-wrap order-5 gap-5',
+          ? 'grid grid-cols-1 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5'
+          : ' flex flex-column flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5',
       ]"
     >
       <SkeletonLoading v-for="n in store.games.length" :key="n" />
@@ -60,11 +99,14 @@ store.GETallgames();
     <template v-else>
       <div
         v-if="setting.isGrid"
-        class="my-4 mx-4 grid grid-cols-2 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 gap-3"
+        class="my-2 mx-0.5 grid grid-cols-1 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5"
       >
         <GameGrid :data="FilteredGamesOrder" />
       </div>
-      <div v-else class="my-4 mx-4 flex flex-column flex-wrap order-5 gap-5">
+      <div
+        v-else
+        class="my-2 mx-0.5 flex flex-column flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5"
+      >
         <GameCard :data="FilteredGamesOrder" />
       </div>
     </template>
