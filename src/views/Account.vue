@@ -18,6 +18,8 @@
           >Videojáték-kiadó: Gyűjthető dolog</RouterLink
         >
       </div>
+    </Card>
+    <div class="mt-5.5">
       <RouterView v-slot="{ Component, route }">
         <Transition
           name="fade"
@@ -28,7 +30,7 @@
           <component :is="Component" :key="route.path" />
         </Transition>
       </RouterView>
-    </Card>
+    </div>
   </div>
 </template>
 

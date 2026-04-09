@@ -63,3 +63,12 @@ export interface RegisterData {
   email: string;
   password: string;
 }
+
+export type LinkItem = {
+  to: string;
+  text: string;
+};
+export type LinkColumn = {
+  title: string;
+  links: Array<LinkItem>;
+};

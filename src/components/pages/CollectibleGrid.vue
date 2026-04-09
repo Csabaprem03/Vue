@@ -61,6 +61,7 @@
               @click="handleDelete(item.id, item.type)"
             >
               <Icon
+                :class="[!authStore.token ? 'hidden' : 'block']"
                 icon="line-md:trash"
                 class="text-red-950/100"
                 height="30"

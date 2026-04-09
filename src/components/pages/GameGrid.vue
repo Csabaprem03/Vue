@@ -43,6 +43,7 @@ function handleDelete(id: number, name: string): void {
       >
         <Card class="card-content py-4 px-2">
           <div
+            :class="[!authStore.token ? 'hidden' : 'block']"
             class="grid grid-cols-2 py-3 gap-2 my-auto absolute z-30 top-[-1%] right-0 animate-none *:hover:animate-wiggle"
           >
             <RouterLink

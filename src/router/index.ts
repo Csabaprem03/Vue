@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import "animate.css";
 import { useAuthStore } from "../stores/authStore";
+import { useGamesStore } from "../stores/gamesStore";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -14,9 +15,9 @@ const router = createRouter({
       name: "login",
       component: () => import("../views/Login.vue"),
       meta: {
-        requiresGuest: true,
+        // requiresGuest: true,
         enterClass: "animate__animated animate__fadeInRight",
-        leaveClass: "animate__animated animate__fadeOutLeft",
+        leaveClass: "animate__animated animate__fadeOutRight",
       },
     },
     {
@@ -24,18 +25,28 @@ const router = createRouter({
       name: "account",
       component: () => import("../views/Account.vue"),
       meta: {
-        requiresAuth: true,
+        // requiresAuth: true,
+        enterClass: "animate__animated animate__fadeInRight",
+        leaveClass: "animate__animated animate__fadeOutRight",
       },
       children: [
         {
           path: "publisher",
           name: "publisher",
           component: () => import("../components/pages/Publisher.vue"),
+          meta: {
+            enterClass: "animate__animated animate__fadeInRight",
+            leaveClass: "animate__animated animate__fadeOutRight",
+          },
         },
         {
           path: "games",
           name: "games.post",
           component: () => import("../components/pages/GamesPost.vue"),
+          meta: {
+            enterClass: "animate__animated animate__fadeInRight",
+            leaveClass: "animate__animated animate__fadeOutRight",
+          },
         },
         {
           path: "games/:id",
@@ -47,12 +58,20 @@ const router = createRouter({
           path: "collectibles",
           name: "collectibles.post",
           component: () => import("../components/pages/CollectiblePost.vue"),
+          meta: {
+            enterClass: "animate__animated animate__fadeInRight",
+            leaveClass: "animate__animated animate__fadeOutRight",
+          },
         },
         {
           path: "collectibles/:id",
           name: "collectibles.edit",
           component: () => import("../components/pages/CollectiblePost.vue"),
           props: (route) => ({ id: Number(route.params.id) }),
+          meta: {
+            enterClass: "animate__animated animate__fadeInRight",
+            leaveClass: "animate__animated animate__fadeOutRight",
+          },
         },
       ],
     },
@@ -61,8 +80,17 @@ const router = createRouter({
       name: "favorite",
       component: () => import("../components/domains/FavoriteGames.vue"),
       meta: {
-        enterClass: "animate__animated animate__fadeInRight",
-        leaveClass: "animate__animated animate__fadeOutLeft",
+        enterClass: "animate__animated animate__zoomInDown",
+        leaveClass: "animate__animated animate__zoomOutDown",
+      },
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: () => import("../components/pages/NotFound.vue"),
+      meta: {
+        enterClass: "animate__animated animate__zoomInDown",
+        leaveClass: "animate__animated animate__zoomOutDown",
       },
     },
     {
@@ -72,18 +100,26 @@ const router = createRouter({
       meta: {
         requiresGuest: true,
         enterClass: "animate__animated animate__fadeInRight",
-        leaveClass: "animate__animated animate__fadeOutLeft",
+        leaveClass: "animate__animated animate__fadeOutRight",
       },
     },
     {
       path: "/games",
       name: "games.list",
       component: () => import("../views/Game.vue"),
+      meta: {
+        enterClass: "animate__animated animate__zoomInRight",
+        leaveClass: "animate__animated animate__zoomOutRight",
+      },
     },
     {
       path: "/collectibles",
       name: "gyujtheto",
       component: () => import("../views/Collectible.vue"),
+      meta: {
+        enterClass: "animate__animated animate__zoomInLeft",
+        leaveClass: "animate__animated animate__zoomOutLeft",
+      },
     },
     {
       path: "/games/:slug",
@@ -97,6 +133,10 @@ const router = createRouter({
           component: () =>
             import("../components/domains/CollectibleTypeCard.vue"),
           props: true,
+          meta: {
+            enterClass: "animate__animated animate__zoomInUp",
+            leaveClass: "animate__animated animate__zoomOutDown",
+          },
         },
       ],
     },
@@ -105,6 +145,23 @@ const router = createRouter({
       name: "collectible.id",
       component: () => import("../components/domains/CollectibleDetails.vue"),
       props: (route) => ({ ...route.params, id: Number(route.params.id) }),
+      beforeEnter(to, from) {
+        const stores = useGamesStore();
+        const exists = stores.collectibles.find(
+          (f) => Number(f.id) === Number(to.params.id),
+        );
+        if (!exists)
+          return {
+            name: "NotFound",
+            params: { pathMatch: to.path.split("/").splice(1) },
+            query: to.query,
+            hash: to.hash,
+          };
+      },
+      meta: {
+        enterClass: "animate__animated animate__zoomInUp",
+        leaveClass: "animate__animated animate__zoomOutDown",
+      },
     },
   ],
 });

@@ -3,18 +3,20 @@
     <Transition name="modal">
       <div v-if="show" class="modal-mask" @click.stop="$emit('close')">
         <div class="modal-container">
-          <div class="modal-header">
-            <slot name="header">default header</slot>
+          <div class="modal-header text-center font-black italic my-2.5">
+            <slot name="header" />
           </div>
 
-          <div class="modal-body">
+          <div class="modal-body text-center">
             <slot name="body">{{ message }}</slot>
           </div>
 
-          <div class="modal-footer">
+          <div class="modal-footer flex justify-center my-3.5">
             <slot name="footer">
-              default footer
-              <button class="modal-default-button" @click="$emit('close')">
+              <button
+                class="modal-default-button animate-none hover:animate-wiggle"
+                @click="$emit('close')"
+              >
                 <Icon
                   icon="line-md:close-small"
                   class="text-red-500 w-10 h-10"
@@ -55,12 +57,19 @@ defineEmits(["close"]);
 }
 .modal-container {
   width: 90%;
+  padding: 1%;
   max-width: 400px;
-  background-color: #fff;
+  background-color: #ebe3e3;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgb(0, 0, 0, 0.3);
-  color: #333;
+  color: #0c0808;
   transition: all 0.3s ease;
+}
+.dark .modal-container {
+  background-color: rgb(1, 3, 27);
+  color: #d1c9c9;
+  box-shadow: 0 10px 30px rgba(190, 186, 186, 0.3);
+  border: 1px #0c0c0c solid;
 }
 .modal-enter-from {
   opacity: 0;
