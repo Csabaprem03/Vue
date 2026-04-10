@@ -15,9 +15,11 @@ import {
 
 const props = defineProps<{ data: Game[] }>();
 
+// a pinia-k használat
 const store = useGamesStore();
 const authStore = useAuthStore();
 
+// a slug vizsgálata és találat
 const getFirstType = (id: number) => {
   const found = store.collectibles.find((c) => c.game_id === Number(id));
   return found ? slugify(found.type) : "all";
@@ -34,10 +36,13 @@ function handleDelete(id: number, name: string): void {
   }
 }
 </script>
-
 <template>
+  <!-- újrahasznosítás: List.vue, Card.ve és slot használat  -->
+
+  <!-- prophoz ez a GameView.vue komponensnek -->
   <List :items="props.data">
     <template #default="{ item }">
+      <!-- a Grid formája  -->
       <div
         class="card-wrapper mx-auto my-2 hover:outline-2 hover:outline-offset-2 hover:outline-[#24252b] dark:hover:outline-2 dark:hover:outline-offset-2 dark:hover:outline-[#133b43] shadow-lg dark:hover:shadow-blue-950/90 hover:shadow-gray-950/90 transition-shadow duration-300"
       >

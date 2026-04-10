@@ -4,7 +4,7 @@
       <h1 class="text-lg mb-8 font-semibold">Gyűjthető dolog</h1>
       <SelectField
         name="game_id"
-        label="Név játék"
+        label="Játék név"
         :options="collectibleNames"
         :validator="yup.string().required('Választani kell egy játékot!')"
       />

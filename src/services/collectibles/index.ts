@@ -2,6 +2,8 @@ import http from "../api";
 import type { Collectible } from "../../types";
 import type { APIResponse } from "../types";
 
+// az útvonalak és a crud-ok
+
 async function getColectibles() {
   return await http.get<APIResponse<Collectible[]>>("collectibles");
 }

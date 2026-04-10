@@ -4,7 +4,6 @@ import Card from "./Card.vue";
 import List from "./List.vue";
 import { slugify } from "../../stores/slugfiy";
 import { useGamesStore } from "../../stores/gamesStore";
-import FavoriteGames from "../domains/FavoriteGames.vue";
 import FavoriteButton from "./FavoriteButton.vue";
 import type { Game } from "../../types";
 import { useAuthStore } from "../../stores/authStore";
@@ -17,9 +16,11 @@ import { Icon } from "@iconify/vue";
 
 const props = defineProps<{ data: Game[] }>();
 
+// a pinia-k használat
 const store = useGamesStore();
 const authStore = useAuthStore();
 
+// a slug vizsgálat és találat
 const getFirstType = (id: number) => {
   const found = store.collectibles.find(
     (c) => Number(c.game_id) === Number(id),
@@ -38,10 +39,12 @@ function handleDelete(id: number, name: string): void {
   }
 }
 </script>
-
+// újrahasznosítás: List.vue, Card.ve és slot használat // prophoz ez a
+GameView.vue komponensnek
 <template>
   <List :items="props.data">
     <template #default="{ item }">
+      <!-- A kártya formája  -->
       <div
         class="card-flex-wrapper mx-auto my-auto hover:outline-2 hover:outline-offset-2 hover:outline-[#24252b] dark:hover:outline-2 dark:hover:outline-offset-2 dark:hover:outline-[#133b43] shadow-lg dark:hover:shadow-blue-950/90 hover:shadow-gray-950/90 transition-shadow duration-300"
       >

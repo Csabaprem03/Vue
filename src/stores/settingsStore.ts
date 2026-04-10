@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useSettingStore = defineStore("settings", () => {
+  // konstansok használata
   const isOpen = ref<boolean>(false);
   const isGrid = ref<boolean>(false);
   const userAccount = ref<boolean>(false);
@@ -16,6 +17,7 @@ export const useSettingStore = defineStore("settings", () => {
 
   const ToggleDark = useToggle(isDark);
 
+  // saját függvények használata
   function toggleMenu() {
     isOpen.value = !isOpen.value;
     saveToLocalStorage();
@@ -49,7 +51,7 @@ export const useSettingStore = defineStore("settings", () => {
   }
 
   loadFromLocalStorage();
-
+  // visszatéresek konstans és függvény
   return {
     isOpen,
     isGrid,

@@ -6,10 +6,12 @@ import type { APIResponse } from "../services/types";
 import type { AxiosError } from "axios";
 
 export const useGamesStore = defineStore("gamesStore", () => {
+  // konstansok használata
   const games = ref<Game[]>([]);
   const collectibles = ref<Collectible[]>([]);
   const isLoading = ref<boolean>(false);
 
+  // minden adat, értekhez kapcsolódik
   function initGames(data: Game[]) {
     games.value = data || [];
   }
@@ -46,7 +48,11 @@ export const useGamesStore = defineStore("gamesStore", () => {
       }
     }
   }
+  // klasszikus API és modern az Axios
+  //állapotkód: 200 küldés sikeres és 400 kliens hiba, 500 szerver hiba
 
+  //az Id azonosító
+  //Id alapján függvényt hív
   async function GETById(id: number): Promise<APIResponse<null>> {
     try {
       const res = await API.games.getGameById(id);
@@ -72,10 +78,11 @@ export const useGamesStore = defineStore("gamesStore", () => {
       status: 400,
     };
   }
-
+  // minden GET adatbázishoz ad
   async function GETallgames(): Promise<APIResponse<null>> {
     try {
       isLoading.value = true;
+      // services és Axios hasonló Nodejs-hez
       const res = await API.games.getGames();
       const data = await res.data;
       if (res.status === 200 && data) {
@@ -411,6 +418,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
   }
   loadFromLocalStorage();
 
+  // visszatéresek konstans és függvény
   return {
     games,
     isLoading,

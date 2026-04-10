@@ -1,6 +1,8 @@
 <template>
+  <!-- FromWrapper.vue komponenshez és slot-hoz, az űrlappal, saját függvénnyel -->
   <FromWrapper @submit="handleSubmit">
     <h1 class="text-lg mb-8 font-semibold">Regisztráció</h1>
+    <!-- FromWrapper komponenshez és propokhoz, kötelező validáció és hibaüzentek  -->
     <FormField
       :placeholder="null"
       label="Név"
@@ -30,6 +32,7 @@
     />
     <!-- <FormField label="Jelszó Megerősítés" type="password" name="confirmPassword" rules="confirmed:@password"
             :validator="string().required('köletező az megérősítés!')" /> -->
+    <!-- SubmitButton.vue komponenshez és slot-hoz  -->
     <SubmitButton :loading="authStore.isLoading">{{
       authStore.isLoading ? "mentés..." : "Küldés"
     }}</SubmitButton>
@@ -37,6 +40,7 @@
 </template>
 <script setup lang="ts">
 import FromWrapper from "../components/Forms/FromWrapper.vue";
+// a yup (veevalidate) sémák importálása
 import { string } from "yup";
 import FormField from "../components/validators/FormField.vue";
 import SubmitButton from "../components/Forms/SubmitButton.vue";

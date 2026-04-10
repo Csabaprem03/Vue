@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// a yup sémák importálása
 import { string } from "yup";
 import FromWrapper from "../components/Forms/FromWrapper.vue";
 import FormField from "../components/validators/FormField.vue";
@@ -29,8 +30,10 @@ const handleSubmit = async (values: any) => {
 </script>
 
 <template>
+  <!-- FromWrapper.vue komponenshez és slot-hoz, az űrlappal, saját függvénnyel -->
   <FromWrapper @submit="handleSubmit">
     <h1 class="text-lg mb-8 font-semibold">Bejelentkezés</h1>
+    <!-- FromWrapper komponenshez és propokhoz, kötelező validáció és hibaüzentek  -->
     <FormField
       placeholder=""
       label="Email"
@@ -49,6 +52,7 @@ const handleSubmit = async (values: any) => {
         string().required('köletező a jelszó!').min(8, 'Minimum 8 karakter')
       "
     />
+    <!-- SubmitButton.vue komponenshez és slot-hoz kapcsolja -->
     <SubmitButton :loading="authStore.isLoading"
       >{{ authStore.isLoading ? "Bejelentkezés..." : "Küldés" }}
     </SubmitButton>

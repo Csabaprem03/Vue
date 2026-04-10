@@ -1,8 +1,10 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+// az animate.css animált komponensek
 import "animate.css";
 import { useAuthStore } from "../stores/authStore";
 import { useGamesStore } from "../stores/gamesStore";
 
+// bejelentkezés, regisztráció, játékok listája, gyűjthető dolgok (Collectible)
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -15,7 +17,7 @@ const router = createRouter({
       name: "login",
       component: () => import("../views/Login.vue"),
       meta: {
-        // requiresGuest: true,
+        requiresGuest: true,
         enterClass: "animate__animated animate__fadeInRight",
         leaveClass: "animate__animated animate__fadeOutRight",
       },
@@ -25,7 +27,7 @@ const router = createRouter({
       name: "account",
       component: () => import("../views/Account.vue"),
       meta: {
-        // requiresAuth: true,
+        requiresAuth: true,
         enterClass: "animate__animated animate__fadeInRight",
         leaveClass: "animate__animated animate__fadeOutRight",
       },
@@ -121,6 +123,7 @@ const router = createRouter({
         leaveClass: "animate__animated animate__zoomOutLeft",
       },
     },
+    // az útvonalon /games/:slug beágyazott komponens a propnak /collectibles/:type
     {
       path: "/games/:slug",
       name: "games.detail",

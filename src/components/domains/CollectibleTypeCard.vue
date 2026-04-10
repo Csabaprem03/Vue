@@ -31,11 +31,12 @@
       >Vissza a listához</RouterLink
     >
   </div>
+  <!-- ciklus v-for a pinia-t games és collectible, -->
   <div v-else class="m-w-auto">
     <div
       v-for="item in filteredCollectibles"
       :key="item.id"
-      class="mt-10 rounded-2xl flex flex-col gap-y-[30px] items-center w-4/8 bg-[#e2d4c1]/30 shadow-2xl/30 dark:shadow-neutral-50 shadow-gray-950 dark:inset-shadow-emerald-600/80 inset-shadow-emerald-950/80 inset-shadow-sm inset-0.5"
+      class="relative mt-10 px-3 pt-5 pb-[25%] md:pb-[10%] sm:pb-[16%] lg:pb-[10%] xl:pb-[7%] rounded-2xl flex flex-col gap-y-[30px] items-center w-4/8 bg-[#e2d4c1]/30 shadow-2xl/30 dark:shadow-neutral-50 shadow-gray-950 dark:inset-shadow-emerald-600/80 inset-shadow-emerald-950/80 inset-shadow-sm inset-0.5"
     >
       <h3 class="font-extrabold mt-[5%] font-sans text-2xl/9 break-normal">
         {{ item.description }}
@@ -69,10 +70,11 @@
           </div>
         </div>
       </div>
+
       <RouterLink
         :class="[!authStore.token ? 'hidden' : 'block']"
         :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"
-        class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+        class="absolute bottom-5.5 md:bottom-2.5 xl:bottom-2.5 right-auto animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
       >
         <div class="flex flex-row flex-wrap">
           <Icon
@@ -85,6 +87,7 @@
         </div>
       </RouterLink>
     </div>
+    <!-- RouterLink vissza az útvonalhoz  -->
     <RouterLink
       class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 my-10"
       to="/games"
@@ -101,7 +104,10 @@ import { RouterLink } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { useAuthStore } from "../../stores/authStore";
 
+// propok
 const props = defineProps<{ slug: string; type: string; gameId?: number }>();
+
+// a pinia-k használat
 const store = useGamesStore();
 const authStore = useAuthStore();
 
@@ -135,6 +141,7 @@ const getImages = (imagesData: any): Array<string> => {
     .filter((url) => url && url.startsWith("http"));
 };
 
+// game és collectible vizsgálat
 const filteredCollectibles = computed(() => {
   const game = store.games.find((g) => slugify(g.name) === props.slug);
   if (!game) return [];

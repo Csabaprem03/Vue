@@ -1,3 +1,4 @@
+// kép Id alapján képet keres, ha nincs találat: üres marad
 <template>
   <div>
     <div
@@ -14,6 +15,7 @@
         <span class="loading loading-dots loading-sm ml-0.5 my-1"></span>
       </div>
     </div>
+    <!-- kattintás a képnek mutatás  -->
     <div v-else-if="item" class="max-w-6xl mx-auto p-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div class="space-y-4">
@@ -37,6 +39,7 @@
           </div>
 
           <div class="grid grid-cols-4 gap-2">
+            <!-- igaz-hamis logika alapján színváltozás -->
             <div
               v-for="(img, index) in item.images"
               :key="index"
@@ -66,7 +69,7 @@
             >
             <h1 class="text-4xl font-black mt-2">{{ item.description }}</h1>
           </div>
-
+          <!-- tömb koordinátái: szelesség, hosszúság  -->
           <div v-if="item.map_location" class="p-2">
             <h4 class="text-gray-400 text-xs uppercase mb-3">
               Lelőhely (Koordináták)
@@ -90,7 +93,7 @@
               Nincs térképet!
             </p>
           </div>
-
+          <!-- RouterLink vissza az útvonalhoz  -->
           <RouterLink
             to="/collectibles"
             class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 px-6 py-3"
@@ -108,11 +111,15 @@ import { useGamesStore } from "../../stores/gamesStore";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+// propok
 const props = defineProps<{ id: number }>();
+// a pina-k használat
 const store = useGamesStore();
 const activeImage = ref("");
 
+// item vizsgálat az id azonosító alapján
 let map: L.map | null = null;
+
 const item = computed(() => {
   return store.collectibles.find((c) => c.id === Number(props.id));
 });
@@ -141,6 +148,7 @@ const initMap = async () => {
     .openPopup();
 };
 
+// onMounted GETBYID ha talál, nincs találat esetén üres
 onMounted(async () => {
   await store.GETallcollectibles();
   await initMap();

@@ -4,6 +4,7 @@ import authController from "./Authentications";
 import favoriteController from "./Favorites";
 import publisherCoontroller from "./Publishers";
 
+// kontroller a backendhez
 export const API = {
   games: gameController,
   collectibles: collectibleController,

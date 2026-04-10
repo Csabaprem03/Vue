@@ -9,8 +9,12 @@ import SkeletonLoading from "../components/pages/SkeletonLoading.vue";
 import MessagePanel from "../components/validators/MessagePanel.vue";
 import { useFavoriteStore } from "../stores/favoriteStore";
 import { Icon } from "@iconify/vue";
+import { onMounted } from "vue";
 
+// a Pinia-k használata
 const store = useGamesStore();
+// @click kattintás a pinia-hoz és logika: igaz és hamis, eset (eseménykezelő?) v-if és v-else
+// ha a pinia-hoz konstans logika
 const setting = useSettingStore();
 const favStore = useFavoriteStore();
 const {
@@ -26,7 +30,8 @@ const {
 //     applyFiltered(filteredActive.value)
 // )
 
-store.GETallgames();
+// az onMounted Vue importálás az  adatbázishoz és pinia-hoz
+onMounted(async () => await store.GETallgames());
 // applyFiltered(filteredActive.value)
 </script>
 
@@ -52,6 +57,7 @@ store.GETallgames();
     >
       <div class="card my-1.5 mx-auto">
         <div class="card-body my-3">
+          <!--Vue iconify az ikonok importálása-->
           <Icon icon="mdi:server" class="w-20 h-20" />
           <p class="text-sm dark:text-neutral-50 text-gray-950">
             A szerver nem válaszol
@@ -97,12 +103,15 @@ store.GETallgames();
     </div>
 
     <template v-else>
+      <!-- a logika igaz és hamis, kattintásra változik az ikon -->
       <div
         v-if="setting.isGrid"
         class="my-2 mx-0.5 grid grid-cols-1 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5"
       >
+        <!-- GameGrid.vue komponenshez és prophoz a pinia-nak utasítás -->
         <GameGrid :data="FilteredGamesOrder" />
       </div>
+      <!-- GameCard.vue komponenshez és prophoz a pinia-nak utasítás -->
       <div
         v-else
         class="my-2 mx-0.5 flex flex-column flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5"

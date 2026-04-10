@@ -2,6 +2,8 @@ import http from "../api";
 import type { Game } from "../../types";
 import type { APIResponse } from "../types";
 
+// az útvonalak és a crud-ok
+
 async function getGames() {
   return await http.get<APIResponse<Game[]>>("games");
 }

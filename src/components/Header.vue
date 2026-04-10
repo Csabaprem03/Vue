@@ -5,6 +5,7 @@ import { useAuthStore } from "../stores/authStore";
 import { Icon } from "@iconify/vue";
 import { onMounted, ref } from "vue";
 
+// a Pinia-k használata
 const store = useSettingStore();
 const authStore = useAuthStore();
 const darkBtn = ref<HTMLButtonElement | null>(null);
@@ -47,6 +48,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- navigáció a tailwindccs-t használata -->
   <header class="w-full card-navbar-wrapper">
     <nav class="card-navbar-content">
       <div
@@ -96,6 +98,7 @@ onMounted(() => {
           <ul
             class="font-medium flex flex-col *:dark:hover:bg-blue-950/20 p-0 *:hover:p-2.5 shadow-none *:hover:shadow-md *:hover:shadow-neutral-50/20 rounded-nones inset-shadow-none *:hover:inset-shadow-sm *:dark:hover:inset-shadow-emerald-950/80 ring-0 *:hover:ring-1 *:dark:hover:ring-blue-950/50 *:hover:inset-shadow-yellow-800/80 *:hover:bg-gray-800/10 *:hover:ring-amber-600/20 *:hover:rounded-2xl md:flex-row md:space-x-4"
           >
+            <!-- RouterLink a router/index.ts-ekhez  -->
             <li>
               <RouterLink
                 to="/games"

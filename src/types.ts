@@ -1,4 +1,4 @@
-// Az interfészek tipusa az adatbázishoz
+// Az interfészek típusa az adatbázishoz
 export interface User {
   id: number;
   name: string;
@@ -19,10 +19,10 @@ export interface Game {
   release_year: number;
   genre: string;
   publisher_id: number;
-  platforms: Array<string>; // a string[] tömbök ugyanaz
+  platforms: Array<string>; // ugyanazok a string[] tömbök
   cover: string | null;
   freetogame_url: string | null;
-  created_at: Date; // lehet a string,ha Date a dátum és az idő (időzóna)
+  created_at: Date; // lehet string, ha Date – dátumformátum: a dátum és az idő (időzóna)
   updated_at: Date;
 }
 

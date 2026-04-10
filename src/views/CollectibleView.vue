@@ -36,6 +36,7 @@
         </div>
       </div>
     </div>
+    <!-- CollectibleGrid.vue komponenshez és prophoz pinia-nak  -->
     <div v-else>
       <CollectibleGrid :data="FilteredCollectiblesOrder" />
     </div>
@@ -50,6 +51,7 @@ import CollectiblesFiltered from "../components/pages/CollectiblesFiltered.vue";
 import SkeletonLoadingCollectible from "../components/pages/SkeletonLoadingCollectible.vue";
 import { useGamesStore } from "../stores/gamesStore";
 
+//Pinia-k használata
 const store = useGamesStore();
 const {
   applyFiltered,

@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import { Transition } from "vue";
+// vue-router importálása: RouterView
 import { RouterView } from "vue-router";
 </script>
 
 <template>
   <main>
+    <!-- v-slot dinamikus komponens, mint v-bind  -->
     <RouterView v-slot="{ Component, route }">
+      <!-- átalakulás (transition), fade - homályos, out-in - eltűnés, összekötve v-bind: animáció és az
+animate.css importálása  -->
+
+      <!-- css és tailwindcss -> osztályok szabályai:  .fade-enter-from és .fade-enter-to homályos és 
+eltűnés, .fade-enter-active,.fade-leave-active: @keyframes beállítás, és animációs 
+sebesség, áttűnéssel mutat vagy kitakar -->
+
       <Transition
         name="fade"
         mode="out-in"
