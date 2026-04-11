@@ -20,6 +20,7 @@ const handleSubmit = async (values: any) => {
 
   if (result.success) {
     // settingStore.toggleUserAccount()
+
     route.push("/games");
   } else {
     alert("Hibás felhasználónév vagy jelszó!");

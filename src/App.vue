@@ -3,8 +3,8 @@ import Footer from "./components/Footer.vue";
 import Header from "./components/Header.vue";
 import Main from "./components/Main.vue";
 </script>
-// Heade.vue , Main.vue, Footer.vue komponenshez a propokat adja hozzá
 <template>
+  <!-- Heade.vue , Main.vue, Footer.vue komponenshez a propokat adja hozzá -->
   <Header />
   <Main class="min-h-dvh" />
   <Footer />
