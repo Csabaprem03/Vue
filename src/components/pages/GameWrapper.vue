@@ -19,6 +19,7 @@ import { defineAsyncComponent } from "vue";
 defineProps<{ slug: string }>();
 
 // a defineAsyncComponent Vue importálnak, mint lusta betöltés, egy import, késleltetés, túlidőzítő
+
 const GameDetails = defineAsyncComponent({
   loader: async () => {
     return await import("../components/domains/GameDetails.vue");

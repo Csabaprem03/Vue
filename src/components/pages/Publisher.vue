@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { boolean, string, number } from "yup";
+import { string, number } from "yup";
 import FromWrapper from "../Forms/FromWrapper.vue";
 import SubmitButton from "../Forms/SubmitButton.vue";
 import FormField from "../validators/FormField.vue";

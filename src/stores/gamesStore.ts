@@ -48,11 +48,13 @@ export const useGamesStore = defineStore("gamesStore", () => {
       }
     }
   }
+
   // klasszikus API és modern az Axios
   //állapotkód: 200 küldés sikeres és 400 kliens hiba, 500 szerver hiba
 
   //az Id azonosító
   //Id alapján függvényt hív
+
   async function GETById(id: number): Promise<APIResponse<null>> {
     try {
       const res = await API.games.getGameById(id);
@@ -78,11 +80,15 @@ export const useGamesStore = defineStore("gamesStore", () => {
       status: 400,
     };
   }
+
   // minden GET adatbázishoz ad
+
   async function GETallgames(): Promise<APIResponse<null>> {
     try {
       isLoading.value = true;
+
       // services és Axios hasonló Nodejs-hez
+
       const res = await API.games.getGames();
       const data = await res.data;
       if (res.status === 200 && data) {

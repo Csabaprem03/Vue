@@ -15,6 +15,7 @@
         <span class="loading loading-dots loading-sm ml-0.5 my-1"></span>
       </div>
     </div>
+
     <!-- kattintás a képnek mutatás  -->
     <div v-else-if="item" class="max-w-6xl mx-auto p-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -69,6 +70,7 @@
             >
             <h1 class="text-4xl font-black mt-2">{{ item.description }}</h1>
           </div>
+
           <!-- tömb koordinátái: szelesség, hosszúság  -->
           <div v-if="item.map_location" class="p-2">
             <h4 class="text-gray-400 text-xs uppercase mb-3">
@@ -93,6 +95,7 @@
               Nincs térképet!
             </p>
           </div>
+
           <!-- RouterLink vissza az útvonalhoz  -->
           <RouterLink
             to="/collectibles"
@@ -112,12 +115,16 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 // propok
+
 const props = defineProps<{ id: number }>();
+
 // a pina-k használat
+
 const store = useGamesStore();
 const activeImage = ref("");
 
 // item vizsgálat az id azonosító alapján
+
 let map: L.map | null = null;
 
 const item = computed(() => {
@@ -155,17 +162,11 @@ onMounted(async () => {
 });
 
 watchEffect(() => {
-  if (!item.value) {
+  if (item.value && item.value.images?.length > 0) {
+    activeImage.value = item.value.images[0];
+  } else if (!item.value && !store.isLoading) {
     store.GETCollectibleById(Number(props.id));
   }
-  if (
-    !item.value &&
-    item.value.images.length > 0 &&
-    typeof item.value === "string"
-  ) {
-    item.value.activeImage = item.value.images[0];
-  }
-  console.log(item.value);
 });
 </script>
 <style scoped>

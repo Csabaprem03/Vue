@@ -24,12 +24,14 @@ const game = computed(() => {
     >
       {{ game.name }}
     </h2>
+
     <!-- játék azonosító gameId prophoz  -->
     <RouterView
       :gameId="game?.id"
       class="mx-auto flex flex-col items-center h-dvh"
     />
   </div>
+
   <!-- v-else nincs találat és vissza az útvonalhoz -->
   <div v-else>
     <NotFound />

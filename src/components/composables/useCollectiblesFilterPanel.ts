@@ -6,9 +6,7 @@ import type { Collectible, FilteredCollectibles } from "../../types";
  * @returns
  */
 
-export function useColectiblesFilterPanel(
-  CollectiblesData: Collectible[] | Ref<Collectible[]>,
-) {
+export function useColectiblesFilterPanel(CollectiblesData: Collectible[]) {
   const filteredActive = ref<FilteredCollectibles>({
     nameType: "__osszes__",
     nameDescription: "",
@@ -16,19 +14,17 @@ export function useColectiblesFilterPanel(
   });
 
   const allType = computed(() => {
-    const data = unref(CollectiblesData);
-    const set = new Set(data.map((a) => a.type));
+    const set = new Set(CollectiblesData.map((a) => a.type));
     return Array.from(set).sort();
   });
 
   const FilteredCollectibles = computed<Array<Collectible>>(() => {
-    const data = unref(CollectiblesData);
-    return data.filter((item) => {
+    return CollectiblesData.filter((item) => {
       const typeAppropriate =
         filteredActive.value.nameType == "__osszes__" ||
         item.type === filteredActive.value.nameType;
       const descriptionApproprate =
-        filteredActive.value.nameType == "" ||
+        filteredActive.value.nameDescription == "" ||
         item.description
           .toLowerCase()
           .includes(filteredActive.value.nameDescription);

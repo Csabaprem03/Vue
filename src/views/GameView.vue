@@ -9,14 +9,20 @@ import SkeletonLoading from "../components/pages/SkeletonLoading.vue";
 import MessagePanel from "../components/validators/MessagePanel.vue";
 import { useFavoriteStore } from "../stores/favoriteStore";
 import { Icon } from "@iconify/vue";
-import { onMounted } from "vue";
+import { onMounted, toRef } from "vue";
 
 // a Pinia-k használata
+
 const store = useGamesStore();
+
 // @click kattintás a pinia-hoz és logika: igaz és hamis, eset (eseménykezelő?) v-if és v-else
 // ha a pinia-hoz konstans logika
+
 const setting = useSettingStore();
 const favStore = useFavoriteStore();
+
+// az onMounted Vue importálás az  adatbázishoz és pinia-hoz
+
 const {
   FilteredGamesOrder,
   allGenre,
@@ -30,8 +36,8 @@ const {
 //     applyFiltered(filteredActive.value)
 // )
 
-// az onMounted Vue importálás az  adatbázishoz és pinia-hoz
 onMounted(async () => await store.GETallgames());
+
 // applyFiltered(filteredActive.value)
 </script>
 
@@ -56,7 +62,7 @@ onMounted(async () => await store.GETallgames());
       class="flex flex-col justify-center items-center"
     >
       <div class="card my-1.5 mx-auto">
-        <div class="card-body my-3">
+        <div class="card-body my-3 flex flex-col items-center">
           <!--Vue iconify az ikonok importálása-->
           <Icon icon="mdi:server" class="w-20 h-20" />
           <p class="text-sm dark:text-neutral-50 text-gray-950">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Transition } from "vue";
+
 // vue-router importálása: RouterView
 import { RouterView } from "vue-router";
 </script>

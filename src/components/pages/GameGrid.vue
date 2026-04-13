@@ -16,10 +16,12 @@ import {
 const props = defineProps<{ data: Game[] }>();
 
 // a pinia-k használat
+
 const store = useGamesStore();
 const authStore = useAuthStore();
 
 // a slug vizsgálata és találat
+
 const getFirstType = (id: number) => {
   const found = store.collectibles.find((c) => c.game_id === Number(id));
   return found ? slugify(found.type) : "all";

@@ -1,10 +1,13 @@
 import { createRouter, createWebHashHistory } from "vue-router";
+
 // az animate.css animált komponensek
+
 import "animate.css";
 import { useAuthStore } from "../stores/authStore";
 import { useGamesStore } from "../stores/gamesStore";
 
 // bejelentkezés, regisztráció, játékok listája, gyűjthető dolgok (Collectible)
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -123,7 +126,9 @@ const router = createRouter({
         leaveClass: "animate__animated animate__zoomOutLeft",
       },
     },
+
     // az útvonalon /games/:slug beágyazott komponens a propnak /collectibles/:type
+
     {
       path: "/games/:slug",
       name: "games.detail",
@@ -156,9 +161,9 @@ const router = createRouter({
         if (!exists)
           return {
             name: "NotFound",
-            params: { pathMatch: to.path.split("/").splice(1) },
-            query: to.query,
-            hash: to.hash,
+            // params: { pathMatch: to.path.split("/").splice(1) },
+            // query: to.query,
+            // hash: to.hash,
           };
       },
       meta: {
@@ -175,10 +180,9 @@ router.beforeEach((to) => {
   if (to.meta.requiresAuth && !isAuthenticated) {
     return { name: "login" };
   } else if (to.meta.requiresGuest && isAuthenticated) {
-    return { name: "game.list" };
-  } else {
-    return;
+    return { name: "games.list" };
   }
+  return true;
 });
 
 export default router;

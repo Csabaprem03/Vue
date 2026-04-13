@@ -57,7 +57,7 @@ onMounted(() => {
         <button
           ref="darkBtn"
           class="button-dark-mode p-2 rounded-3xl"
-          @click.="store.ToggleDark()"
+          @click="store.ToggleDark()"
         >
           <template v-if="store.isDark">
             <Icon

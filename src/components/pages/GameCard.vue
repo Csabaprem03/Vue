@@ -17,10 +17,12 @@ import { Icon } from "@iconify/vue";
 const props = defineProps<{ data: Game[] }>();
 
 // a pinia-k használat
+
 const store = useGamesStore();
 const authStore = useAuthStore();
 
 // a slug vizsgálat és találat
+
 const getFirstType = (id: number) => {
   const found = store.collectibles.find(
     (c) => Number(c.game_id) === Number(id),

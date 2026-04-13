@@ -7,7 +7,27 @@
       v-model="filteredActive"
     />
     <div
-      v-if="
+      v-if="!store.isLoading && store.collectibles.length === 0"
+      class="flex flex-col justify-center items-center"
+    >
+      <div class="card my-1.5 mx-auto">
+        <div class="card-body my-3 flex flex-col items-center">
+          <!--Vue iconify az ikonok importálása-->
+          <Icon icon="mdi:server" class="w-20 h-20" />
+          <p class="text-sm dark:text-neutral-50 text-gray-950">
+            A szerver nem válaszol
+          </p>
+          <button
+            @click="store.GETallgames"
+            class="btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+          >
+            Töltsd újra!!!
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      v-else-if="
         store.collectibles.length > 0 && FilteredCollectiblesOrder.length === 0
       "
       class="flex flex-col justify-center items-center"
@@ -50,10 +70,12 @@ import CollectibleGrid from "../components/pages/CollectibleGrid.vue";
 import CollectiblesFiltered from "../components/pages/CollectiblesFiltered.vue";
 import SkeletonLoadingCollectible from "../components/pages/SkeletonLoadingCollectible.vue";
 import { useGamesStore } from "../stores/gamesStore";
+import { onMounted } from "vue";
 
 // Pinia-k használata
 
 const store = useGamesStore();
+
 const {
   applyFiltered,
   allType,
@@ -62,7 +84,7 @@ const {
   resetGame,
 } = useColectiblesFilterPanel(store.collectibles);
 
-store.GETallcollectibles();
+onMounted(async () => store.GETallcollectibles());
 console.log(store.collectibles);
 </script>
 

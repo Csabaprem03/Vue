@@ -18,11 +18,13 @@ import { watch } from "vue";
 const props = defineProps<{ intialValue?: any }>();
 
 // emit esetek és értekek
+
 const emit = defineEmits<{
   (e: "submit", value: any): void;
 }>();
 
 // saját függvény és useForm a veevalidate importálnak
+
 const { handleSubmit, setValues } = useForm({
   initialValues: props.intialValue,
 });

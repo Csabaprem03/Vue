@@ -6,7 +6,7 @@ import type { FilteredGames, Game } from "../../types";
  * @returns
  */
 
-export function useGamesFilterPanel(gamesData: Game[] | Ref<Game[]>) {
+export function useGamesFilterPanel(gamesData: Game[]) {
   const filteredActive = ref<FilteredGames>({
     nameGenre: "__osszes__",
     namePlatform: "__osszes__",
@@ -15,20 +15,17 @@ export function useGamesFilterPanel(gamesData: Game[] | Ref<Game[]>) {
   });
 
   const allGenre = computed(() => {
-    const data = unref(gamesData);
-    const set = new Set(data.map((a) => a.genre));
+    const set = new Set(gamesData.map((a) => a.genre));
     return Array.from(set).sort();
   });
 
   const allplatform = computed(() => {
-    const data = unref(gamesData);
-    const set = new Set(data.flatMap((a) => a.platforms));
+    const set = new Set(gamesData.flatMap((a) => a.platforms));
     return Array.from(set).sort();
   });
 
   const FilteredGames = computed<Array<Game>>(() => {
-    const data = unref(gamesData);
-    return data.filter((item) => {
+    return gamesData.filter((item) => {
       const genreAppropriate =
         filteredActive.value.nameGenre == "__osszes__" ||
         item.genre === filteredActive.value.nameGenre;
