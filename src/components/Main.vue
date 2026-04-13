@@ -22,7 +22,7 @@ sebesség, áttűnéssel mutat vagy kitakar -->
         :enter-active-class="route.meta.enterClass"
         :leave-active-class="route.meta.leaveClass"
       >
-        <component :is="Component" :key="route.path" />
+        <component :is="Component" :key="route.fullPath" />
       </Transition>
     </RouterView>
   </main>

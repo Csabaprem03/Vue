@@ -6,7 +6,7 @@ import Main from "./components/Main.vue";
 <template>
   <!-- Heade.vue , Main.vue, Footer.vue komponenshez a propokat adja hozzá -->
   <Header />
-  <Main class="min-h-dvh" />
+  <Main class="min-h-screen" />
   <Footer />
 </template>
 

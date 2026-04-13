@@ -11,6 +11,7 @@ async function getColectibles() {
 async function getCollectibleById(id: number) {
   return await http.get<APIResponse<Collectible[]>>(`collectibles/${id}`);
 }
+
 async function postCollectible(collectible: Omit<Collectible, "id">) {
   return await http.post<APIResponse<Collectible[]>>(
     "collectibles",

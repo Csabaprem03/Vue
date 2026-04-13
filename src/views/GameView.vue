@@ -9,7 +9,7 @@ import SkeletonLoading from "../components/pages/SkeletonLoading.vue";
 import MessagePanel from "../components/validators/MessagePanel.vue";
 import { useFavoriteStore } from "../stores/favoriteStore";
 import { Icon } from "@iconify/vue";
-import { onMounted, toRef } from "vue";
+import { onMounted } from "vue";
 
 // a Pinia-k használata
 
@@ -102,7 +102,7 @@ onMounted(async () => await store.GETallgames());
         'my-2 mx-0.5',
         setting.isGrid
           ? 'grid grid-cols-1 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5'
-          : ' flex flex-column flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5',
+          : ' flex flex-row flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5',
       ]"
     >
       <SkeletonLoading v-for="n in store.games.length" :key="n" />
@@ -120,7 +120,7 @@ onMounted(async () => await store.GETallgames());
       <!-- GameCard.vue komponenshez és prophoz a pinia-nak utasítás -->
       <div
         v-else
-        class="my-2 mx-0.5 flex flex-column flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5"
+        class="my-2 mx-0.5 flex flex-row flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5"
       >
         <GameCard :data="FilteredGamesOrder" />
       </div>
