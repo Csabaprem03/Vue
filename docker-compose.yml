@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vue_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - frontend-node-modules:/app/node_modules
+    environment:
+      - VITE_API_ENDPOINT=http://localhost:8000/api
+    command: npm run dev -- --host
+
+
+
+volumes:
+  frontend-node-modules:
