@@ -49,7 +49,7 @@ defineEmits(["close"]);
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgb(0, 0, 0, 0, 0.5);
+  background-color: oklab(0 0 0 / 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,17 +59,17 @@ defineEmits(["close"]);
   width: 90%;
   padding: 1%;
   max-width: 400px;
-  background-color: #ebe3e3;
+  background-color: oklab(0.922 0.008 0.003);
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgb(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px oklab(0 0 0 / 0.3);
   color: #0c0808;
   transition: all 0.3s ease;
 }
 .dark .modal-container {
-  background-color: rgb(1, 3, 27);
-  color: #d1c9c9;
-  box-shadow: 0 10px 30px rgba(190, 186, 186, 0.3);
-  border: 1px #0c0c0c solid;
+  background-color: oklab(0.118 -0.003 -0.05);
+  color: oklab(0.842 0.009 0.003);
+  box-shadow: 0 10px 30px oklab(0.78 0.004 0.001 / 0.3);
+  border: 1px oklab(0.154 0 0) solid;
 }
 .modal-enter-from {
   opacity: 0;

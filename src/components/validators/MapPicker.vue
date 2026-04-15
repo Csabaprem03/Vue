@@ -80,8 +80,8 @@ const updateMarker = (lat: number, lng: number) => {
   } else {
     marker = L.circleMarker(newPos, {
       radius: 8,
-      fillColor: "#ce9c31",
-      color: "#fff",
+      fillColor: "oklab(.722 .018 .131)",
+      color: "oklab(1 0 0)",
       weight: 2,
       opacity: 1,
       fillOpacity: 0.8,

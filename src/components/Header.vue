@@ -32,8 +32,8 @@ onMounted(() => {
     const insetY = offsetY / 10;
 
     btn.style.boxShadow = `
-    ${shadowX}px ${shadowY}px 15px rgba(0,0,0,0.2),
-    inset ${insetX}px ${insetY}px 10px rgba(255,255,255,0.1)
+    ${shadowX}px ${shadowY}px 15px oklab(0 0 0 / .2),
+    inset ${insetX}px ${insetY}px 10px oklab(1 0 0 / .1)
     `;
 
     btn.style.transform = `perspective(1000px) rotate(${-offsetY / 2}deg) rotate(${offsetX / 2}deg) scale(1.1)`;
@@ -195,7 +195,7 @@ onMounted(() => {
 }
 
 .button-dark-mode {
-  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  box-shadow: 0px 0px 0px 0px oklab(0 0 0);
 }
 .nav-link {
   @apply font-bold px-3 py-2 rounded-lg transition-colors hover:text-yellow-600 dark:text-white;

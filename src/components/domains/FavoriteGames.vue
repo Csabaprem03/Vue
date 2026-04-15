@@ -97,7 +97,7 @@ onMounted(() => {
 
 .ghost {
   opacity: 0.5;
-  background: #c8ebfb;
+  background: oklab(0.92 -0.029 -0.031);
 }
 
 .no-move {

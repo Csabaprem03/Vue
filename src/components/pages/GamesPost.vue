@@ -112,7 +112,8 @@ const imageValidator = yup
       if (!values) return false;
 
       if (typeof values === "string") {
-        const urlRegex = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
+        const urlRegex =
+          /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))$/i;
         return urlRegex.test(values);
       }
 
@@ -123,6 +124,9 @@ const imageValidator = yup
           "image/jpg",
           "image/png",
           "image/webp",
+          "image/avif",
+          "image/heic",
+          "image/heif",
         ];
         return values.size <= maxSize && allowedTypes.includes(values.type);
       }

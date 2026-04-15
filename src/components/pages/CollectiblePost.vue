@@ -88,13 +88,22 @@ const imageValidator = yup
       if (!values) return true;
 
       if (typeof values === "string") {
-        const url = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i;
+        const url =
+          /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))$/i;
         return url.test(values);
       }
 
       if (values instanceof File) {
         const maxSize = 5 * Math.pow(1024, 2);
-        const allowedTypes = ["image/webp", "image/png", "image/jpg"];
+        const allowedTypes = [
+          "image/jpeg",
+          "image/jpg",
+          "image/png",
+          "image/webp",
+          "image/avif",
+          "image/heic",
+          "image/heif",
+        ];
         return values.size <= maxSize && allowedTypes.includes(values.type);
       }
       return false;

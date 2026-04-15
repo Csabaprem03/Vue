@@ -77,8 +77,8 @@ body {
     content: "";
     @apply absolute w-[200%] h-[200%] animate-border-spin;
     background: conic-gradient(
-      rgba(189, 183, 107, 1) 0deg,
-      rgba(50, 23, 77, 1) 90deg,
+      oklab(76.747% -0.02458 0.09484) 0deg,
+      oklab(27.447% 0.05339 -0.08019) 90deg,
       transparent 180deg
     );
     top: -50%;
@@ -99,8 +99,8 @@ body {
     content: "";
     @apply absolute w-[200%] h-[200%] animate-border-spin;
     background: conic-gradient(
-      rgba(189, 183, 107, 1) 0deg,
-      rgba(50, 23, 77, 1) 90deg,
+      oklab(76.747% -0.02458 0.09484) 0deg,
+      oklab(27.447% 0.05339 -0.08019) 90deg,
       transparent 180deg
     );
     top: -50%;
@@ -119,8 +119,8 @@ body {
     content: "";
     @apply absolute w-[200%] h-[200%] animate-border-spin;
     background: conic-gradient(
-      rgba(189, 183, 107, 1) 0deg,
-      rgba(50, 23, 77, 1) 90deg,
+      oklab(76.747% -0.02458 0.09484) 0deg,
+      oklab(27.447% 0.05339 -0.08019) 90deg,
       transparent 180deg
     );
     top: -50%;
@@ -145,7 +145,7 @@ body {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(189, 183, 107, 0.4) 50%,
+      oklab(76.747% -0.02458 0.09484 / 0.4) 50%,
       transparent 100%
     );
   }
@@ -164,8 +164,8 @@ body {
     content: "";
     @apply absolute w-[250%] h-[250%] animate-border-spin;
     background: conic-gradient(
-      rgba(189, 183, 107, 1) 0deg,
-      rgba(50, 23, 77, 1) 90deg,
+      oklab(76.747% -0.02458 0.09484) 0deg,
+      oklab(27.447% 0.05339 -0.08019) 90deg,
       transparent 180deg
     );
   }

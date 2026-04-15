@@ -1,6 +1,6 @@
 <template>
   <div
-    class="my-2 mx-2 md:my-4 md:mx-4 gap-5 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
+    class="my-2 mx-2 md:my-4 md:mx-4 gap-5 md:gap-7 grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8"
   >
     <List :items="props.data">
       <!-- újrahasznosítás: List.vue, Card.vue és slot használat  -->
