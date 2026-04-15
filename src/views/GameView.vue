@@ -36,7 +36,11 @@ const {
 //     applyFiltered(filteredActive.value)
 // )
 
-onMounted(async () => await store.GETallgames());
+onMounted(async () => {
+  if (store.games.length === 0) {
+    await store.GETallgames();
+  }
+});
 
 // applyFiltered(filteredActive.value)
 </script>

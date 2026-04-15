@@ -244,9 +244,15 @@ export const useGamesStore = defineStore("gamesStore", () => {
 
   async function DELETEgames(id: number): Promise<APIResponse<null>> {
     const index = games.value.findIndex((item) => Number(item.id) === id);
+
+    const originalCollectible = [...collectibles.value];
+
     const removedItem = index !== -1 ? games.value[index] : null;
     if (index !== -1) {
       games.value.splice(index, 1);
+      collectibles.value = collectibles.value.filter(
+        (f) => Number(f.game_id) !== id,
+      );
     }
     try {
       isLoading.value = true;
@@ -260,6 +266,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
       if (removedItem && index != -1) {
         games.value.splice(index, 0, removedItem as Game);
       }
+      collectibles.value = originalCollectible;
       const _error = error as AxiosError<string>;
       return {
         success: false,
@@ -280,7 +287,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
     map_location: Array<string>,
   ): Promise<APIResponse<null>> {
     const addItem: Omit<Collectible, "id"> = {
-      game_id,
+      game_id: Number(game_id),
       type,
       description,
       images,

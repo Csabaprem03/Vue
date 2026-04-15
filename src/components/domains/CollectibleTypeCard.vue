@@ -37,7 +37,7 @@
     <div
       v-for="item in filteredCollectibles"
       :key="item.id"
-      class="relative mt-10 px-3 pt-5 pb-[25%] md:pb-[10%] sm:pb-[16%] lg:pb-[10%] xl:pb-[7%] rounded-2xl flex flex-col gap-y-[30px] items-center w-4/8 bg-[#e2d4c1]/30 shadow-2xl/30 dark:shadow-neutral-50 shadow-gray-950 dark:inset-shadow-emerald-600/80 inset-shadow-emerald-950/80 inset-shadow-sm inset-0.5"
+      class="relative mt-10 px-3 pt-5 pb-[30%] md:pb-[20%] sm:pb-[16%] lg:pb-[10%] xl:pb-[7%] rounded-2xl flex flex-col gap-y-[30px] items-center w-4/8 bg-[#e2d4c1]/30 shadow-2xl/30 dark:shadow-neutral-50 shadow-gray-950 dark:inset-shadow-emerald-600/80 inset-shadow-emerald-950/80 inset-shadow-sm inset-0.5"
     >
       <h3 class="font-extrabold mt-[5%] font-sans text-2xl/9 break-normal">
         {{ item.description }}
@@ -52,7 +52,7 @@
       </div>
       <div v-else class="flex flex-wrap gap-5">
         <div
-          v-for="img in item.images"
+          v-for="img in getImages(item.images)"
           class="flex flex-wrap md:flex-col mx-auto md:mx-auto order-1 sm:items-center sm:justify-center md:order-2 transition-all duration-300"
           :key="img"
         >
@@ -71,30 +71,53 @@
           </div>
         </div>
       </div>
-
-      <RouterLink
+      <div
         :class="[!authStore.token ? 'hidden' : 'block']"
-        :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"
-        class="absolute bottom-5.5 md:bottom-2.5 xl:bottom-2.5 right-auto animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+        class="absolute bottom-1.5 md:bottom-1.5 sm:bottom-0 xl:bottom-0.5 right-auto"
       >
-        <div class="flex flex-row flex-wrap">
-          <Icon
-            icon="line-md:edit-filled"
-            class="text-gray-950/100 dark:text-blue-950/90 mr-1.5"
-            height="20"
-            width="20"
-          />
-          <h1>Szerkezetés</h1>
+        <div
+          class="grid grid-rows-2 gap-0.5 sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-2"
+        >
+          <RouterLink
+            :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"
+            class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+          >
+            <div class="flex flex-row flex-wrap">
+              <Icon
+                icon="line-md:edit-filled"
+                class="text-gray-950/100 dark:text-blue-950/90 mr-1.5"
+                height="20"
+                width="20"
+              />
+              <h1>Szerkezetés</h1>
+            </div>
+          </RouterLink>
+          <RouterLink
+            :to="{
+              name: 'collectibles.post',
+              query: {
+                gameId: item.id,
+                type: item.type,
+                description: item.description,
+              },
+            }"
+            class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+          >
+            <Icon icon="line-md:plus" /> Új tárgy ehhez a játékhoz
+          </RouterLink>
         </div>
-      </RouterLink>
+      </div>
     </div>
     <!-- RouterLink vissza az útvonalhoz  -->
 
-    <RouterLink
-      class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 my-10"
-      to="/games"
-      >Vissza a listához</RouterLink
-    >
+    <div class="flex flex-wrap justify-center gap-4 my-10">
+      <RouterLink
+        class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+        to="/games"
+      >
+        Vissza a listához
+      </RouterLink>
+    </div>
   </div>
 </template>
 

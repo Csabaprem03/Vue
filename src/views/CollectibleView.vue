@@ -84,7 +84,11 @@ const {
   resetGame,
 } = useColectiblesFilterPanel(store.collectibles);
 
-onMounted(async () => await store.GETallcollectibles());
+onMounted(async () => {
+  if (store.collectibles.length === 0) {
+    await store.GETallcollectibles();
+  }
+});
 console.log(store.collectibles);
 </script>
 

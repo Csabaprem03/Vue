@@ -113,7 +113,7 @@ const imageValidator = yup
 const handleSubmit = async (values: any) => {
   let result;
   const formattedImages = Array.isArray(values.images)
-    ? values.images
+    ? values.images.slice(0, 1)
     : [values.images];
   const formattedLocation =
     values.map_location && values.map_location.length >= 2
@@ -152,6 +152,14 @@ onMounted(async () => {
 
   if (collectibleToEdit) {
     initialValue.value = { ...collectibleToEdit };
+  } else if (route.query.gameId) {
+    initialValue.value = {
+      game_id: Number(route.query.gameId),
+      type: route.query.type || "",
+      description: route.query.description || "",
+      images: [],
+      map_location: null,
+    };
   }
 
   console.log("Betöltött játékok:", gamesStore.collectibles);

@@ -30,8 +30,13 @@
         string().required('köletező a jelszó!').min(8, 'Minimum 8 karakter')
       "
     />
-    <!-- <FormField label="Jelszó Megerősítés" type="password" name="confirmPassword" rules="confirmed:@password"
-            :validator="string().required('köletező az megérősítés!')" /> -->
+    <FormField
+      label="Jelszó Megerősítés"
+      type="password"
+      name="password_confirmation"
+      rules="confirmed:@password"
+      :validator="string().required('köletező az megérősítés!')"
+    />
     <!-- SubmitButton.vue komponenshez és slot-hoz  -->
     <SubmitButton :loading="authStore.isLoading">{{
       authStore.isLoading ? "mentés..." : "Küldés"
@@ -55,6 +60,7 @@ const handleSubmit = async (values: any) => {
     name: values.name,
     email: values.email,
     password: values.password,
+    password_confirmation: values.password_confirmation,
   };
 
   const result = await authStore.Registration(register);
