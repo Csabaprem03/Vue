@@ -101,7 +101,7 @@ onMounted(() => {
             <!-- RouterLink a router/index.ts-ekhez  -->
             <li>
               <RouterLink
-                to="/games"
+                :to="{ name: 'games.list' }"
                 class="block py-2 px-3 text-dark md:text-fg-brand md:p-0"
               >
                 Játékok listája</RouterLink
@@ -109,7 +109,7 @@ onMounted(() => {
             </li>
             <li>
               <RouterLink
-                to="/collectibles"
+                :to="{ name: 'gyujtheto' }"
                 class="block py-2 px-3 text-heading md:text-fg-brand md:p-0"
               >
                 Gyűjthető dolgok</RouterLink
@@ -180,18 +180,18 @@ onMounted(() => {
 <style scoped>
 @reference "../style.css";
 
-.button.dark.mode {
+.button-dark-mode {
   position: relative;
   transition:
     transform 0.2s ease,
     box-shadow 0.1s ease;
-  border-radius: 50%;
+  border-radius: 1.5rem;
   cursor: pointer;
-  border: none;
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
 .button-dark-mode {

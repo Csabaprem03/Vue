@@ -29,7 +29,11 @@
                   >
                     <img
                       v-if="img"
-                      :src="img"
+                      :src="img || defaultImage"
+                      @error="
+                        (e) =>
+                          ((e.target as HTMLImageElement).src = defaultImage)
+                      "
                       class="w-full h-full object-cover"
                     />
                   </RouterLink>
@@ -81,6 +85,7 @@ import { Icon } from "@iconify/vue";
 import { useAuthStore } from "../../stores/authStore";
 import { useGamesStore } from "../../stores/gamesStore";
 import List from "./List.vue";
+import defaultImage from "../../svg/icons8-default-image-50.svg";
 
 const authStore = useAuthStore();
 const store = useGamesStore();

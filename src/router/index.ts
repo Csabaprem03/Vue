@@ -72,7 +72,7 @@ const router = createRouter({
           path: "collectibles/:id",
           name: "collectibles.edit",
           component: () => import("../components/pages/CollectiblePost.vue"),
-          props: (route) => ({ id: Number(route.params.id) }),
+          props: (route) => ({ ...route.params, id: Number(route.params.id) }),
           meta: {
             enterClass: "animate__animated animate__fadeInRight",
             leaveClass: "animate__animated animate__fadeOutRight",

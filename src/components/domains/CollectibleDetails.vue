@@ -25,7 +25,10 @@
               class="h-100 rounded-2xl shadow-2xl shadow-gray-950/30 dark:shadow-neutral-50/20"
             >
               <img
-                :src="activeImage || item.images[0]"
+                :src="activeImage || item.images[0] || defaultImage"
+                @error="
+                  (e) => ((e.target as HTMLImageElement).src = defaultImage)
+                "
                 class="w-full h-full object-contain"
               />
             </figure>
@@ -53,8 +56,12 @@
               ]"
             >
               <img
-                :src="img"
-                class="w-full h-20 object-cover opacity-70 hover:opacity-100"
+                v-if="img"
+                :src="img || defaultImage"
+                @error="
+                  (e) => ((e.target as HTMLImageElement).src = defaultImage)
+                "
+                class="w-full h-full object-cover"
               />
             </div>
           </div>
@@ -113,6 +120,7 @@ import { ref, computed, watchEffect, onMounted } from "vue";
 import { useGamesStore } from "../../stores/gamesStore";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import defaultImage from "../../svg/icons8-default-image-50.svg";
 
 // propok
 

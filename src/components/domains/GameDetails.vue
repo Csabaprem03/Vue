@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useGamesStore } from "../../stores/gamesStore";
 import { slugify } from "../../stores/slugfiy";
 import NotFound from "../pages/NotFound.vue";
@@ -7,19 +7,24 @@ import NotFound from "../pages/NotFound.vue";
 const props = defineProps<{ slug: string }>();
 const store = useGamesStore();
 
-if (store.games.length === 0) {
-  store.GETallgames();
-}
-store.GETallcollectibles();
-const game = computed(() => {
-  return store.games.find((g) => slugify(g.name) === props.slug);
+onMounted(async () => {
+  if (store.games.length === 0) {
+    await store.GETallgames();
+  }
+  await store.GETallcollectibles();
 });
+const game = computed(() => {
+  const found = store.games.find((g) => slugify(g.name) === props.slug);
 
-console.log("URL slug:", props.slug);
-console.log(
-  "Store games:",
-  store.games.map((g) => slugify(g.name)),
-);
+  if (!found && store.games.length > 0) {
+    console.error("DEBUG: Nincs találat erre a slugra:", props.slug);
+    console.log(
+      "Elérhető slugok a store-ban:",
+      store.games.map((g) => slugify(g.name)),
+    );
+  }
+  return found;
+});
 </script>
 
 <template>

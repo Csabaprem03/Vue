@@ -37,7 +37,7 @@
     <div
       v-for="item in filteredCollectibles"
       :key="item.id"
-      class="relative mt-10 px-3 pt-5 pb-[30%] md:pb-[20%] sm:pb-[16%] lg:pb-[10%] xl:pb-[7%] rounded-2xl flex flex-col gap-y-[30px] items-center w-4/8 bg-[#e2d4c1]/30 shadow-2xl/30 dark:shadow-neutral-50 shadow-gray-950 dark:inset-shadow-emerald-600/80 inset-shadow-emerald-950/80 inset-shadow-sm inset-0.5"
+      class="relative mt-10 px-3 pt-5 pb-[30%] md:pb-[20%] sm:pb-[20%] lg:pb-[16%] xl:pb-[13%] rounded-2xl flex flex-col gap-y-[30px] items-center w-4/8 bg-[#e2d4c1]/30 shadow-2xl/30 dark:shadow-neutral-50 shadow-gray-950 dark:inset-shadow-emerald-600/80 inset-shadow-emerald-950/80 inset-shadow-sm inset-0.5"
     >
       <h3 class="font-extrabold mt-[5%] font-sans text-2xl/9 break-normal">
         {{ item.description }}
@@ -73,10 +73,10 @@
       </div>
       <div
         :class="[!authStore.token ? 'hidden' : 'block']"
-        class="absolute bottom-1.5 md:bottom-1.5 sm:bottom-0 xl:bottom-0.5 right-auto"
+        class="absolute bottom-1.5 md:bottom-1.5 sm:bottom-0 lg:bottom-0 xl:bottom-0 right-auto"
       >
         <div
-          class="grid grid-rows-2 gap-0.5 sm:grid-cols-2 lg:grid-cols-2 md:grid-cols-2"
+          class="grid grid-rows-2 gap-0.5 md:gap-3 sm:grid-rows-2 lg:grid-cols-2 md:grid-row-2"
         >
           <RouterLink
             :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"

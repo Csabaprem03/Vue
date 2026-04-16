@@ -284,14 +284,14 @@ export const useGamesStore = defineStore("gamesStore", () => {
     type: string,
     description: string,
     images: Array<string>,
-    map_location: Array<string>,
+    map_location: any,
   ): Promise<APIResponse<null>> {
     const addItem: Omit<Collectible, "id"> = {
       game_id: Number(game_id),
       type,
       description,
-      images,
-      map_location,
+      images: images.filter((url) => !!url),
+      map_location: map_location ? map_location(Number) : [],
     };
     try {
       isLoading.value = true;

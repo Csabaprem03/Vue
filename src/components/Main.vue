@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { Transition } from "vue";
-
+import { useRoute } from "vue-router";
 // vue-router importálása: RouterView
 import { RouterView } from "vue-router";
+const route = useRoute();
 </script>
 
 <template>
   <main>
     <!-- v-slot dinamikus komponens, mint v-bind  -->
-    <RouterView v-slot="{ Component, route }">
+    <RouterView v-slot="{ Component }">
       <!-- átalakulás (transition), fade - homályos, out-in - eltűnés, összekötve v-bind: animáció és az
 animate.css importálása  -->
 
@@ -17,12 +18,20 @@ eltűnés, .fade-enter-active,.fade-leave-active: @keyframes beállítás, és a
 sebesség, áttűnéssel mutat vagy kitakar -->
 
       <Transition
-        name="fade"
         mode="out-in"
-        :enter-active-class="route.meta.enterClass"
-        :leave-active-class="route.meta.leaveClass"
+        :enter-active-class="
+          (route.meta.enterClass as string) ||
+          'animate__animated animate__fadeIn'
+        "
+        :leave-active-class="
+          (route.meta.leaveClass as string) ||
+          'animate__animated animate__fadeOut'
+        "
       >
-        <component :is="Component" :key="route.fullPath" />
+        <component
+          :is="Component"
+          :key="route.meta.requiresAuth ? route.path : undefined"
+        />
       </Transition>
     </RouterView>
   </main>

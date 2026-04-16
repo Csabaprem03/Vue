@@ -113,11 +113,11 @@ const imageValidator = yup
 const handleSubmit = async (values: any) => {
   let result;
   const formattedImages = Array.isArray(values.images)
-    ? values.images.slice(0, 1)
+    ? values.images
     : [values.images];
   const formattedLocation =
     values.map_location && values.map_location.length >= 2
-      ? values.map_location
+      ? values.map_location.map((val: any) => Number(val))
       : null;
 
   if (isEditMode.value && collectibleId.value) {

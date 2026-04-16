@@ -14,7 +14,9 @@
     </div>
   </div>
   <div v-else-if="favStore.Favorites.length === 0">
-    {{ favStore.isMessage }}
+    <div class="flex items-center justify-center p-[28.125rem]">
+      {{ favStore.isMessage }}
+    </div>
   </div>
   <div v-else>
     <draggable

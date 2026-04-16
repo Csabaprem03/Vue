@@ -7,6 +7,7 @@ import type { Game } from "../../types";
 import Card from "./Card.vue";
 import FavoriteButton from "./FavoriteButton.vue";
 import List from "./List.vue";
+import defaultImage from "../../svg/icons8-default-image-50.svg";
 import {
   getPlatforms,
   getPlatformsColor,
@@ -84,9 +85,11 @@ function handleDelete(id: number, name: string): void {
               }"
             >
               <img
-                v-if="item.cover"
-                :src="item.cover"
+                :src="item.cover || defaultImage"
                 :alt="item.name"
+                @error="
+                  (e) => ((e.target as HTMLImageElement).src = defaultImage)
+                "
                 class="w-45 max-h-50 object-fill hover:box-border shadow hover:shadow-xl/40 transition-transform duration-300 rotate-0 hover:rotate-12 rounded motion-reduce:transition-none"
               />
             </RouterLink>
