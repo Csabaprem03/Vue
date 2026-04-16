@@ -11,6 +11,7 @@
           v-model="manualLat"
           step="any"
           @input="updateFormInput"
+          @blur="handleBlur"
           class="outline-none border rounded-md block bg-yellow-700/10 dark:bg-blue-950/20 h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4"
         />
       </div>
@@ -21,6 +22,7 @@
           v-model="manualLng"
           step="any"
           @input="updateFormInput"
+          @blur="handleBlur"
           class="outline-none border rounded-md block bg-yellow-700/10 dark:bg-blue-950/20 h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4"
         />
       </div>
@@ -39,7 +41,7 @@ import "leaflet/dist/leaflet.css";
 interface Props {
   label: string;
   name: string;
-  modelValue?: Array<[number, number]>;
+  modelValue?: [number, number];
   validator?: any;
   validateOnChange?: boolean;
 }
@@ -61,7 +63,7 @@ const emit = defineEmits<{
 }>();
 
 let map: L.Map | null = null;
-let marker: L.Marker | null = null;
+let marker: L.CircleMarker | null = null;
 
 const {
   value: coords,
@@ -74,7 +76,7 @@ const {
 const updateMarker = (lat: number, lng: number) => {
   if (!map) return;
 
-  const newPos = new L.latLng(lat, lng);
+  const newPos = new L.LatLng(lat, lng);
   if (marker) {
     marker.setLatLng(newPos);
   } else {

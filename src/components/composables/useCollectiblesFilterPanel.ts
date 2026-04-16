@@ -1,4 +1,4 @@
-import { computed, ref, unref, type Ref } from "vue";
+import { computed, ref } from "vue";
 import type { Collectible, FilteredCollectibles } from "../../types";
 
 /**

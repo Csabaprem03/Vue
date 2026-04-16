@@ -31,6 +31,7 @@
       "
     />
     <FormField
+      placeholder=""
       label="Jelszó Megerősítés"
       type="password"
       name="password_confirmation"

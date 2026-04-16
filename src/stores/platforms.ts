@@ -42,5 +42,5 @@ export const parsePlatform = (platforms: any): Array<string> => {
     else if (platform.includes("switch")) categories.add("switch");
     else if (platform.length > 0) categories.add("other");
   });
-  return Array.from(categories);
+  return Array.from(categories) as Array<string>;
 };

@@ -80,7 +80,8 @@ const collectibleNames = computed(() => {
 
 const imageValidator = yup
   .mixed()
-  .required("Kép megadása kötelező!")
+  .notRequired()
+  .nullable()
   .test(
     "file or url",
     "Érvénytelen formátum vagy túl nagy fájl",

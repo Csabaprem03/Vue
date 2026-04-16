@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
 // az animate.css animált komponensek
 
@@ -9,7 +9,7 @@ import { useGamesStore } from "../stores/gamesStore";
 // bejelentkezés, regisztráció, játékok listája, gyűjthető dolgok (Collectible)
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [
     {
       path: "/",
@@ -84,10 +84,6 @@ const router = createRouter({
       path: "/favorites",
       name: "favorite",
       component: () => import("../components/domains/FavoriteGames.vue"),
-      meta: {
-        enterClass: "animate__animated animate__zoomInDown",
-        leaveClass: "animate__animated animate__zoomOutDown",
-      },
     },
     {
       path: "/:pathMatch(.*)*",
@@ -153,7 +149,7 @@ const router = createRouter({
       name: "collectible.id",
       component: () => import("../components/domains/CollectibleDetails.vue"),
       props: (route) => ({ ...route.params, id: Number(route.params.id) }),
-      beforeEnter(to, from) {
+      beforeEnter(to) {
         const stores = useGamesStore();
         const exists = stores.collectibles.find(
           (f) => Number(f.id) === Number(to.params.id),

@@ -24,8 +24,14 @@
         <Transition
           name="fade"
           mode="out-in"
-          :enter-active-class="route.meta.enterClass"
-          :leave-active-class="route.meta.leaveClass"
+          :enter-active-class="
+            (route.meta.enterClass as string) ||
+            'animate__animated animate__fadeIn'
+          "
+          :leave-active-class="
+            (route.meta.enterClass as string) ||
+            'animate__animated animate__fadeIn'
+          "
         >
           <component :is="Component" :key="route.path" />
         </Transition>

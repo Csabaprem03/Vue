@@ -65,7 +65,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
           content: null,
         };
       }
-      initGames(data);
+      initGames(data.content || data);
     } catch (error) {
       const _error = error as AxiosError<string>;
       return {
@@ -92,7 +92,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
       const res = await API.games.getGames();
       const data = await res.data;
       if (res.status === 200 && data) {
-        initGames(data);
+        initGames(data.content);
         return {
           success: true,
           content: null,
@@ -406,7 +406,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
       const res = await API.collectibles.getColectibles();
       const data = await res.data;
       if (res.status === 200 && data) {
-        initCollectibles(data);
+        initCollectibles(data.content || data);
         return {
           success: true,
           content: null,

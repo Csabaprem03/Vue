@@ -10,6 +10,9 @@ const store = useSettingStore();
 const authStore = useAuthStore();
 const darkBtn = ref<HTMLButtonElement | null>(null);
 
+console.log("Név: ", authStore.userName);
+console.log("Email: ", authStore.userEmail);
+
 onMounted(() => {
   const btn = darkBtn.value;
   if (!btn) return;
@@ -119,7 +122,7 @@ onMounted(() => {
         </div>
         <div class="relative group user-menu-container z-50">
           <button
-            class="flex items-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            class="flex items-center mt-0 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <Icon
               icon="line-md:account"
@@ -135,7 +138,7 @@ onMounted(() => {
             <div v-if="authStore.token" class="user-name-display">
               <p class="opacity-70 text-[10px]">Felhasználó</p>
               <p class="text-sm font-medium truncate dark:text-white">
-                {{ authStore.user?.name }}
+                {{ authStore.userName }}
               </p>
             </div>
 

@@ -22,7 +22,7 @@ defineProps<{ slug: string }>();
 
 const GameDetails = defineAsyncComponent({
   loader: async () => {
-    return await import("../components/domains/GameDetails.vue");
+    return await import("../../components/domains/GameDetails.vue");
   },
   delay: 200,
 });

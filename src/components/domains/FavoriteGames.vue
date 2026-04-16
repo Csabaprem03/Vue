@@ -35,7 +35,7 @@
               <div class="ml-4">
                 <img
                   class="w-20 shadow-lg shadow-yellow-700/20 dark:shadow-neutral-50/10 inset-shadow-yellow-600 h-[90px] object-fill"
-                  :src="FoundGame(element.game_id)?.cover"
+                  :src="FoundGame(element.game_id)?.cover || null || undefined"
                 />
               </div>
               <div
@@ -65,7 +65,6 @@ import { useFavoriteStore } from "../../stores/favoriteStore";
 import { useGamesStore } from "../../stores/gamesStore";
 import draggable from "vuedraggable";
 import { Icon } from "@iconify/vue";
-import { useSettingStore } from "../../stores/settingsStore";
 
 const favStore = useFavoriteStore();
 const gamesStore = useGamesStore();

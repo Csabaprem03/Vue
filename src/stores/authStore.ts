@@ -1,22 +1,24 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import { API } from "../services";
-import type { LoginCredentials, RegisterData, User } from "../types";
+import type { LoginCredentials, RegisterData, User, UserName } from "../types";
 import { AxiosError } from "axios";
 import type { APIResponse } from "../services/types";
 import { useFavoriteStore } from "./favoriteStore";
 
 export const useAuthStore = defineStore("Authentication", () => {
   const user = ref<User | null>(null);
+  const userName = ref<string>(localStorage.getItem("userName") || "");
+  const userEmail = ref<string>(localStorage.getItem("userEmail") || "");
   const token = ref<string | null>(localStorage.getItem("accessToken"));
   const isLoading = ref<boolean>(false);
 
   async function Registration(
     register: RegisterData,
-  ): Promise<APIResponse<any>> {
+  ): Promise<APIResponse<null>> {
     try {
       const res = await API.auth.Register(register);
-      const data = res.data;
+      const data = res.data as unknown as UserName;
       if ((res.status === 200 || res.status === 201) && data) {
         return {
           success: true,
@@ -25,8 +27,11 @@ export const useAuthStore = defineStore("Authentication", () => {
       }
       if (data && data.token) {
         token.value = data.token;
-        user.value = data.user;
+        userName.value = data.user.name;
+        userEmail.value = data.user.email;
         localStorage.setItem("accessToken", data.token);
+        localStorage.setItem("userName", data.user.name);
+        localStorage.setItem("userEmail", data.user.email);
       }
       return { success: false, content: null, status: res.status };
     } catch (error) {
@@ -43,15 +48,18 @@ export const useAuthStore = defineStore("Authentication", () => {
 
   async function Login(
     credentails: LoginCredentials,
-  ): Promise<APIResponse<any>> {
+  ): Promise<APIResponse<null>> {
     try {
       isLoading.value = true;
       const res = await API.auth.Login(credentails);
-      const data = res.data;
+      const data = res.data as unknown as UserName;
       if ((res.status === 200 || res.status === 201) && data) {
         token.value = data.token;
-        user.value = data.user;
+        userName.value = data.user.name;
+        userEmail.value = data.user.email;
         localStorage.setItem("accessToken", data.token);
+        localStorage.setItem("userName", data.user.name);
+        localStorage.setItem("userEmail", data.user.email);
         return {
           success: true,
           content: null,
@@ -83,11 +91,15 @@ export const useAuthStore = defineStore("Authentication", () => {
       user.value = null;
       FavStore.Favorites = [];
       localStorage.removeItem("accessToken");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("userEmail");
     }
   }
 
   return {
     user,
+    userName,
+    userEmail,
     token,
     isLoading,
     Login,

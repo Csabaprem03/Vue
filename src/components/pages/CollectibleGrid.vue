@@ -102,11 +102,6 @@ function handleDelete(id: number, type: string): void {
   }
 }
 
-function filename(url: string): string {
-  if (!url) return "";
-  return url.split("/").pop() || "";
-}
-
 function ImageSplit(ImageData: any): string[] {
   if (!ImageData) return [];
   if (Array.isArray(ImageData)) return ImageData;

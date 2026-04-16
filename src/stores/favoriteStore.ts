@@ -31,10 +31,10 @@ export const useFavoriteStore = defineStore("Favorites", () => {
       isMessage.value = null;
       const res = await API.favorite.getFavorites();
       if (Array.isArray(res.data)) {
-        Favorites.value = res.data;
+        Favorites.value = res.data.content as Favorite[];
       } else {
         Favorites.value = [];
-        isMessage.value = res.data.message || "Ismeretlen hiba";
+        isMessage.value = (res.data as any).message || "Ismeretlen hiba";
       }
     } catch (error) {
       const _error = error as AxiosError<{ message: string }>;
@@ -55,7 +55,7 @@ export const useFavoriteStore = defineStore("Favorites", () => {
     try {
       isLoading.value = true;
       const res = await API.favorite.getFavoritesById(favoriteID);
-      Favorites.value = res.data;
+      Favorites.value = res.data.content as Favorite[];
     } catch (error) {
       const _error = error as AxiosError<string>;
       return {

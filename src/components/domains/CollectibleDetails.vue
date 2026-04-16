@@ -133,7 +133,7 @@ const activeImage = ref("");
 
 // item vizsgálat az id azonosító alapján
 
-let map: L.map | null = null;
+let map: L.Map | null = null;
 
 const item = computed(() => {
   return store.collectibles.find((c) => c.id === Number(props.id));
@@ -142,7 +142,11 @@ const item = computed(() => {
 const initMap = async () => {
   if (!item.value?.map_location) return;
 
-  const coords = item.value.map_location as [number, number];
+  const loc = item.value.map_location;
+
+  if (loc[0] === null || loc[1] === null) return;
+
+  const coords: [number, number] = [Number(loc[0]), Number(loc[1])];
 
   if (!map) {
     map = L.map("map", {

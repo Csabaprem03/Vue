@@ -27,7 +27,7 @@
 // a veevalidate importálásnak modern egyszerűsítése
 import { defineRule, useField } from "vee-validate";
 import { ref, toRef, watch } from "vue";
-import { StringSchema } from "yup";
+import { StringSchema, type AnySchema } from "yup";
 
 // propok és hibaüzenet
 
@@ -37,7 +37,7 @@ interface Props {
   type: "text" | "email" | "password" | "number";
   placeholder: string | null;
   name: string;
-  validator?: StringSchema<string> | undefined;
+  validator?: StringSchema<string> | AnySchema | undefined;
   validateOnChange?: boolean;
   rules?: string;
 }

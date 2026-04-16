@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { Collectible, Game, Publisher } from "../types";
+import type { Publisher } from "../types";
 import { API } from "../services/index";
 import { ref } from "vue";
 import type { APIResponse } from "../services/types";
@@ -39,7 +39,7 @@ export const usepublishersStore = defineStore("pubisherStore", () => {
         initpublishers(items);
         return {
           success: true,
-          content: items,
+          content: items as any,
         };
       }
     } catch (error) {

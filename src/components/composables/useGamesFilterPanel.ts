@@ -1,4 +1,4 @@
-import { computed, ref, unref, type Ref } from "vue";
+import { computed, ref } from "vue";
 import type { FilteredGames, Game } from "../../types";
 
 /**
@@ -32,9 +32,10 @@ export function useGamesFilterPanel(gamesData: Game[]) {
       const platformAppropiate =
         filteredActive.value.namePlatform == "__osszes__" ||
         item.platforms.includes(filteredActive.value.namePlatform);
+      const searchTitle = filteredActive.value.title.toLowerCase();
       const titleApproprate =
         filteredActive.value.title == "" ||
-        item.name.toLowerCase().includes(filteredActive.value.title);
+        item.name.toLowerCase().includes(searchTitle);
 
       return genreAppropriate && titleApproprate && platformAppropiate;
     });

@@ -40,7 +40,7 @@ import { useField } from "vee-validate";
 import { computed, ref, toRef, watch } from "vue";
 
 interface Option {
-  value: number;
+  value: string | number;
   label: string;
 }
 
