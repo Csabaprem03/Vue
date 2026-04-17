@@ -5,7 +5,7 @@
     <button
       @click="store.toggleMenu"
       type="button"
-      class="flex flex-col p-2 w-10 h-10 text-sm text-body rounded-base md:hidden hover:bg-stone-200 dark:hover:bg-slate-800 transition-colors z-50"
+      class="flex flex-col p-2 w-10 h-10 text-sm text-body rounded-base md:hidden z-50"
     >
       <Icon
         :icon="store.isOpen ? 'line-md:close' : 'line-md:menu'"
@@ -33,7 +33,7 @@
       <div
         v-if="store.isOpen || !isMobile"
         :class="[
-          'w-full md:w-auto absolute md:relative top-full left-0 z-[100] mt-2  md:bg-transparent p-6 md:p-0 rounded-b-2xl shadow-2xl md:shadow-none',
+          'w-full md:w-auto absolute md:relative top-full left-0 md:z-[30] z-[90] mt-2  md:bg-transparent p-6 md:p-0 rounded-b-2xl shadow-2xl md:shadow-none',
           store.isOpen ? 'flex flex-col' : 'hidden md:flex md:flex-row',
         ]"
       >
@@ -42,7 +42,7 @@
             class="md:w-[46.850rem] w-70 item rounded-2xl justify-start flex md:flex-row flex-wrap flex-row md:justify-evenly px-9.5 md:px-2.5 py-2.5 gap-5 shadow-sm shadow-gray-950/20 dark:shadow-neutral-50/20"
           >
             <template #filteredSelect>
-              <div class="grid md:grid-cols-2 grid-cols-1 gap-6">
+              <div class="grid md:grid-cols-2 grid-cols-2 gap-6">
                 <div class="flex flex-col items-start gap-0.5">
                   <label
                     class="text-sm text-shadow-2xs/20 text-shadow-blue-950/60 font-medium"
@@ -51,7 +51,7 @@
                   <select
                     name="__osszes__"
                     v-model="localGenre"
-                    class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral dark:border-neutral-50 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50 w-[6.001rem]"
+                    class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral dark:border-neutral-50 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50 w-[5.99rem] md:w-[6.001rem]"
                   >
                     <option selected value="__osszes__">Összes</option>
                     <option
@@ -71,7 +71,7 @@
                   <select
                     name="__osszes__"
                     v-model="localPlatform"
-                    class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral dark:border-neutral-50 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50 w-[6.001rem]"
+                    class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral dark:border-neutral-50 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50 w-[5.99rem] md:w-[6.001rem]"
                   >
                     <option selected value="__osszes__">Összes</option>
                     <option
@@ -230,9 +230,7 @@ watch(
 
 @media (max-width: 768px) {
   :deep(.item) {
-    width: 100% !important;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    width: 85% !important;
   }
 }
 </style>

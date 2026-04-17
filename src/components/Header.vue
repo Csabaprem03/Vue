@@ -81,7 +81,7 @@ onMounted(() => {
           <slot />
         </button>
         <button
-          @click="store.toggleMenu"
+          @click="store.toggleMenuWithMobile"
           type="button"
           class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading"
         >
@@ -95,7 +95,7 @@ onMounted(() => {
         <div
           :class="[
             'w-full md:block md:w-auto',
-            store.isOpen ? 'block' : 'hidden',
+            store.isOpenWithMobile ? 'block' : 'hidden',
           ]"
         >
           <ul
@@ -120,7 +120,7 @@ onMounted(() => {
             </li>
           </ul>
         </div>
-        <div class="relative group user-menu-container z-[110]">
+        <div class="relative group user-menu-container z-[110] md:order-2">
           <button
             class="flex items-center mt-0 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
@@ -133,7 +133,7 @@ onMounted(() => {
           </button>
 
           <div
-            class="absolute right-0 top-full mt-2 hidden group-hover:block w-48 bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[120] overflow-hidden"
+            class="absolute right-0 top-full w-64 mt-2 hidden group-hover:block bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[120] overflow-hidden"
           >
             <div v-if="authStore.token" class="user-name-display">
               <div class="flex flex-col gap-y-1.5">
@@ -237,16 +237,24 @@ onMounted(() => {
   z-index: 10;
 }
 .user-name-display {
-  @apply block px-4 py-3 border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-[#252545] font-bold text-xs uppercase tracking-wider text-gray-500;
+  @apply block p-4 py-3 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-[#252545] font-bold text-xs uppercase tracking-wider text-gray-500;
   min-width: 100%;
   word-wrap: break-word;
+}
+.user-name-display p {
+  @apply text-neutral-950 dark:text-neutral-50/80 font-bold break-all;
 }
 
 @media (max-width: 768px) {
   .user-menu-container .absolute {
-    right: -10px;
-    width: calc(100vw-40px);
+    right: 0;
+
+    left: 15%;
+    width: calc(100vw-2rem);
     max-width: 280px;
+    position: fixed;
+    top: 20%;
+    margin-right: 1rem;
   }
 }
 </style>

@@ -85,11 +85,11 @@
             <div class="flex flex-row flex-wrap">
               <Icon
                 icon="line-md:edit-filled"
-                class="text-gray-950/100 dark:text-blue-950/90 mr-1.5"
+                class="text-gray-950/100 dark:text-neutral-100 mr-1.5"
                 height="20"
                 width="20"
               />
-              <h1>Szerkezetés</h1>
+              <h1>Szerkesztés</h1>
             </div>
           </RouterLink>
           <RouterLink
