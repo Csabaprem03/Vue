@@ -15,12 +15,12 @@
     <div
       :class="[
         'w-full md:w-auto',
-        store.isOpen ? 'flex flex-col' : 'hidden md:flex md:flex-row ',
+        store.isOpen ? 'flex flex-col' : 'hidden md:flex md:flex-row sm:flex',
       ]"
     >
       <form @submit.prevent="handleSubmit" class="mx-auto">
         <FilterPanel
-          class="md:w-160 w-70 item rounded-2xl flex md:flex-row flex-col justify-evenly px-2.5 py-2.5 gap-5 shadow-sm shadow-gray-950/20 dark:shadow-neutral-50/20"
+          class="md:w-[46.850rem] w-70 item rounded-2xl justify-start flex md:flex-row flex-wrap flex-row md:justify-evenly px-9.5 md:px-2.5 py-2.5 gap-5 shadow-sm shadow-gray-950/20 dark:shadow-neutral-50/20"
         >
           <template #filteredSelect>
             <div class="flex flex-col items-start gap-0.5">
@@ -31,7 +31,7 @@
               <select
                 name="__osszes__"
                 v-model="localType"
-                class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral dark:select-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+                class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral w-51.5 dark:border-neutral-50 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
               >
                 <option selected value="__osszes__">Összes</option>
                 <option
@@ -51,15 +51,19 @@
                 >Kereső:</label
               >
               <label
-                class="input bg-neutral-50 dark:bg-[#0C0519] input-neutral dark:input-primary"
+                class="input bg-neutral-50 dark:bg-[#0C0519] input-neutral dark:border-neutral-50"
               >
                 <Icon
                   icon="line-md:search"
-                  class="text-gray-950/100 dark:text-blue-950/90"
+                  class="text-gray-950/100 dark:text-neutral-100/80"
                   height="15"
                   width="15"
                 />
-                <input v-model="localDescription" type="search" class="w-30" />
+                <input
+                  v-model="localDescription"
+                  type="search"
+                  class="w-40.5 md:w-30"
+                />
               </label>
             </div>
           </template>
@@ -71,7 +75,7 @@
               >
               <select
                 v-model="localOrder"
-                class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral dark:select-primary w-26 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+                class="bg-neutral-50 dark:bg-[#0C0519] select-large appearance-none select select-neutral dark:border-neutral-50 w-26 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
               >
                 <option selected value="a-z">Név: A-Z</option>
                 <option value="z-a">Név: Z-A</option>
@@ -79,17 +83,19 @@
             </div>
           </template>
           <template #fileredButton>
-            <div class="flex flex-col justify-items-start items-center gap-2">
+            <div
+              class="flex md:flex-col flex-row justify-items-start items-center gap-2"
+            >
               <button
                 type="submit"
-                class="btn w-[89.56px] btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+                class="btn w-[6.563rem] btn-sm btn-outline border-neutral-50 dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 shadow-sm hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
               >
                 Szűrés
               </button>
               <button
                 type="button"
                 @click="handleReset"
-                class="btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+                class="btn w-[6.563rem] btn-sm btn-outline border-neutral-50 dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 shadow-sm hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
               >
                 Alaphelyzet
               </button>

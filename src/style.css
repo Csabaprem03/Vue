@@ -68,9 +68,9 @@ body {
 
 @layer utilities {
   .card-wrapper {
-    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 dark:shadow-neutral-200 dark:shadow-2xl/20  flex items-center justify-center;
-    width: 215px;
-    height: 410px;
+    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 rounded-2xl dark:shadow-neutral-200 dark:shadow-2xl/20  flex items-center justify-center;
+    width: auto;
+    height: auto;
   }
 
   .card-wrapper::before {
@@ -86,7 +86,7 @@ body {
   }
 
   .card-content {
-    @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519]  flex flex-col items-center;
+    @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519] p-1.5 shadow-md shadow-neutral-50/20   inset-shadow-sm dark:inset-shadow-emerald-950/80  ring-1 dark:ring-blue-950/50 inset-shadow-yellow-800/80 ring-amber-600/20 rounded-2xl;
   }
 
   .card-flex-wrapper {
@@ -111,7 +111,7 @@ body {
     @apply relative z-10 w-[calc(100%-1.5px)] h-[calc(100%-1.5px)] bg-neutral-50 dark:bg-[#0C0519]  flex flex-col items-center;
   }
   .card-grid-collectible-wrapper {
-    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 dark:shadow-neutral-200 dark:shadow-2xl/20  flex items-center justify-center;
+    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 rounded-lg dark:shadow-neutral-200 dark:shadow-2xl/20  flex items-center justify-center;
     width: 150px;
     height: 150px;
   }

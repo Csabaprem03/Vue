@@ -92,7 +92,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
       const res = await API.games.getGames();
       const data = await res.data;
       if (res.status === 200 && data) {
-        initGames(data.content);
+        initGames(data.content || data);
         return {
           success: true,
           content: null,

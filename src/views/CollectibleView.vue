@@ -19,7 +19,7 @@
           </p>
           <button
             @click="store.GETallgames"
-            class="btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+            class="btn btn-sm btn-outline border-neutral-50 dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
           >
             Töltsd újra!!!
           </button>

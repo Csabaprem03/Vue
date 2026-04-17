@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { API } from "../services";
 import type { LoginCredentials, RegisterData, User, UserName } from "../types";
 import { AxiosError } from "axios";

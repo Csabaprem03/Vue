@@ -55,26 +55,25 @@ GameView.vue komponensnek
         <Card class="card-flex-content py-4 px-2">
           <div
             :class="[!authStore.token ? 'hidden' : 'block']"
-            class="grid grid-cols-2 py-3 gap-2 my-auto absolute z-30 top-[-1%] right-0 animate-none *:hover:animate-wiggle"
+            class="absolute top-1 -left-1 -right-1 px-2 flex justify-between items-center z-30"
           >
-            <RouterLink
-              class="animate-none hover:animate-wiggle transition-all duration-100"
-              :to="{ name: 'games.edit', params: { id: Number(item.id) } }"
-            >
-              <Icon
-                icon="line-md:edit-filled"
-                class="text-gray-950/100 dark:text-blue-950/90"
-                height="30"
-                width="30"
-            /></RouterLink>
-            <button class="" @click="handleDelete(item.id, item.name)">
+            <button @click="handleDelete(item.id, item.name)">
               <Icon
                 icon="line-md:trash"
-                class="text-red-950/100"
+                class="text-red-700/90 animate-none hover:animate-wiggle transition-all duration-100"
                 height="30"
                 width="30"
               />
             </button>
+            <RouterLink
+              :to="{ name: 'games.edit', params: { id: Number(item.id) } }"
+            >
+              <Icon
+                icon="line-md:edit-filled"
+                class="text-gray-950/100 animate-none hover:animate-wiggle transition-all duration-100 dark:text-neutral-100"
+                height="30"
+                width="30"
+            /></RouterLink>
           </div>
           <div class="my-1 mt-10">
             <RouterLink

@@ -74,7 +74,7 @@ onMounted(async () => {
           </p>
           <button
             @click="store.GETallgames"
-            class="btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+            class="btn btn-sm btn-outline border-neutral-50 dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
           >
             Töltsd újra!!!
           </button>
@@ -93,7 +93,7 @@ onMounted(async () => {
           </p>
           <button
             @click="resetGame"
-            class="my-0.5 btn btn-sm btn-outline dark:btn-primary shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
+            class="my-0.5 btn btn-sm btn-outline border-neutral-50 dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 shadow-lg hover:shadow-gray-950/50 dark:hover:shadow-neutral-50/50"
           >
             Szűrések törlése
           </button>
@@ -105,7 +105,7 @@ onMounted(async () => {
       :class="[
         'my-2 mx-0.5',
         setting.isGrid
-          ? 'grid grid-cols-1 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5'
+          ? 'hidden'
           : ' flex flex-row flex-wrap order-5 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5',
       ]"
     >
@@ -114,12 +114,11 @@ onMounted(async () => {
 
     <template v-else>
       <!-- a logika igaz és hamis, kattintásra változik az ikon -->
-      <div
-        v-if="setting.isGrid"
-        class="my-2 mx-0.5 grid grid-cols-1 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-3.5 lg:gap-4 xl:gap-5"
-      >
-        <!-- GameGrid.vue komponenshez és prophoz a pinia-nak utasítás -->
-        <GameGrid :data="FilteredGamesOrder" />
+      <div v-if="setting.isGrid" class="card-wrapper">
+        <div class="card-content grid grid-cols-2">
+          <!-- GameGrid.vue komponenshez és prophoz a pinia-nak utasítás -->
+          <GameGrid :data="FilteredGamesOrder" />
+        </div>
       </div>
       <!-- GameCard.vue komponenshez és prophoz a pinia-nak utasítás -->
       <div

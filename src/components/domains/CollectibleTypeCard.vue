@@ -26,7 +26,7 @@
       Nincs találat a gyűjthető dolgot!
     </p>
     <RouterLink
-      class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 my-[48.23px]"
+      class="animate-none hover:animate-wiggle btn btn-outline dark:border-neutral-50 dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 my-[48.23px]"
       to="/games"
       >Vissza a listához</RouterLink
     >

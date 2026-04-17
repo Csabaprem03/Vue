@@ -23,11 +23,10 @@ export function useColectiblesFilterPanel(CollectiblesData: Collectible[]) {
       const typeAppropriate =
         filteredActive.value.nameType == "__osszes__" ||
         item.type === filteredActive.value.nameType;
+      const searchTitle = filteredActive.value.nameDescription.toLowerCase();
       const descriptionApproprate =
         filteredActive.value.nameDescription == "" ||
-        item.description
-          .toLowerCase()
-          .includes(filteredActive.value.nameDescription);
+        item.description.toLowerCase().includes(searchTitle);
 
       return typeAppropriate && descriptionApproprate;
     });

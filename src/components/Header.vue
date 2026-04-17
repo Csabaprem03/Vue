@@ -120,7 +120,7 @@ onMounted(() => {
             </li>
           </ul>
         </div>
-        <div class="relative group user-menu-container z-50">
+        <div class="relative group user-menu-container z-[110]">
           <button
             class="flex items-center mt-0 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
@@ -133,13 +133,24 @@ onMounted(() => {
           </button>
 
           <div
-            class="absolute right-0 top-full mt-2 hidden group-hover:block w-48 bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[100] overflow-hidden"
+            class="absolute right-0 top-full mt-2 hidden group-hover:block w-48 bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[120] overflow-hidden"
           >
             <div v-if="authStore.token" class="user-name-display">
-              <p class="opacity-70 text-[10px]">Felhasználó</p>
-              <p class="text-sm font-medium truncate dark:text-white">
-                {{ authStore.userName }}
-              </p>
+              <div class="flex flex-col gap-y-1.5">
+                <p
+                  class="opacity-100 text-neutral-950/80 dark:text-neutral-100/70 text-[0.57rem]"
+                >
+                  Felhasználó
+                </p>
+                <h1 class="text-neutral-950/80 dark:text-neutral-100/70">
+                  Név:
+                </h1>
+                <p
+                  class="text-[0.75rem] font-normal text-neutral-950/80 dark:text-neutral-100/70 break-all leading-tight"
+                >
+                  {{ authStore.userName }}
+                </p>
+              </div>
             </div>
 
             <ul class="py-1">
@@ -200,6 +211,9 @@ onMounted(() => {
 .button-dark-mode {
   box-shadow: 0px 0px 0px 0px oklab(0 0 0);
 }
+.dark .button-dark-mode {
+  box-shadow: 0px 0px 0px 0px oklab(100% 0 -0.00011);
+}
 .nav-link {
   @apply font-bold px-3 py-2 rounded-lg transition-colors hover:text-yellow-600 dark:text-white;
 }
@@ -225,5 +239,14 @@ onMounted(() => {
 .user-name-display {
   @apply block px-4 py-3 border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-[#252545] font-bold text-xs uppercase tracking-wider text-gray-500;
   min-width: 100%;
+  word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .user-menu-container .absolute {
+    right: -10px;
+    width: calc(100vw-40px);
+    max-width: 280px;
+  }
 }
 </style>

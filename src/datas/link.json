@@ -33,6 +33,136 @@
           }
         ]
       }
+    ],
+    [
+      {
+        "title": "Videójáték-kiadó cégek",
+        "links": [
+          {
+            "to": "https://2k.com/",
+            "text": "2K Games"
+          },
+          {
+            "to": "https://www.activision.com/",
+            "text": "Activision"
+          },
+          {
+            "to": "https://www.blizzard.com/en-us/",
+            "text": "Blizzard Entertainment"
+          },
+          {
+            "to": "https://warnerbrosgames.com/",
+            "text": "Warner Bros Games"
+          },
+          {
+            "to": "https://bethesda.net/en-US",
+            "text": "Bethesda Softworks"
+          },
+          {
+            "to": "https://www.bungie.net/7",
+            "text": "Bungie"
+          },
+          {
+            "to": "https://www.capcom.com/",
+            "text": "Capcom"
+          },
+          {
+            "to": "https://www.cdprojektred.com/en",
+            "text": "Cd Projekt Red"
+          },
+          {
+            "to": "https://www.crystaldynamics.com/",
+            "text": "Ceystal Dynamics"
+          },
+          {
+            "to": "https://www.ea.com/",
+            "text": "Electronic Arts (EA)"
+          },
+          {
+            "to": "https://www.konami.com/en/",
+            "text": "Konami Group Corporation"
+          },
+          {
+            "to": "https://www.ttgames.com/",
+            "text": "TT Games"
+          },
+          {
+            "to": "https://www.riotgames.com/en",
+            "text": "Riot Games"
+          },
+          {
+            "to": "https://www.rockstargames.com/",
+            "text": "Rockstar Games"
+          },
+          {
+            "to": "https://www.square-enix-games.com/en_US/home",
+            "text": "Square Enix"
+          },
+          {
+            "to": "https://www.take2games.com/",
+            "text": "Take-Two Interactive Software"
+          },
+          {
+            "to": "https://www.ubisoft.com/en-gb",
+            "text": "Ubisoft"
+          },
+          {
+            "to": "https://www.valvesoftware.com/hu/",
+            "text": "Value Corporation"
+          },
+          {
+            "to": "https://www.neteasegames.com/",
+            "text": "Netease Games"
+          },
+          {
+            "to": "https://www.marvel.com/games",
+            "text": "Marvel Games"
+          },
+          {
+            "to": "https://www.sega.com/",
+            "text": "Sega Corporation"
+          },
+          {
+            "to": "https://www.remedygames.com/",
+            "text": "Remedy Entertainment"
+          },
+          {
+            "to": "https://rocksteadyltd.com/",
+            "text": "Rocksteady Studios"
+          },
+          {
+            "to": "https://gamesci.cn/",
+            "text": "Game Science"
+          },
+          {
+            "to": "https://www.fromsoftware.jp/ww/",
+            "text": "FromSoftware"
+          }
+        ]
+      }
+    ],
+    [
+      {
+        "title": "Videójáték-műfajok",
+        "links": [
+          {
+            "to": "https://gepigeny.hu/mufajok",
+            "text": "Gépigény.hu"
+          },
+          {
+            "to": "https://glitchwave.com/games/genre/",
+            "text": "GlitchWave"
+          },
+          {
+            "to": "https://www.mobygames.com/genre/",
+            "text": "MobyGames"
+          },
+          {
+            "to": "https://games.gg/genres/",
+            "text": "games.gg"
+          }
+        ]
+      }
     ]
   ]
 }
