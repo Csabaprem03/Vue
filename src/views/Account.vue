@@ -47,22 +47,20 @@
       </div>
     </Card>
     <div class="mt-5.5">
-      <RouterView v-slot="{ Component, route }">
-        <Transition
-          name="fade"
-          mode="out-in"
-          :enter-active-class="
-            (route.meta.enterClass as string) ||
-            'animate__animated animate__fadeIn'
-          "
-          :leave-active-class="
-            (route.meta.enterClass as string) ||
-            'animate__animated animate__fadeIn'
-          "
-        >
-          <component :is="Component" :key="route.path" />
-        </Transition>
-      </RouterView>
+      <Transition
+        name="fade"
+        mode="out-in"
+        :enter-active-class="
+          (route.meta.enterClass as string) ||
+          'animate__animated animate__fadeIn'
+        "
+        :leave-active-class="
+          (route.meta.enterClass as string) ||
+          'animate__animated animate__fadeIn'
+        "
+      >
+        <RouterView />
+      </Transition>
     </div>
   </div>
 </template>
@@ -71,8 +69,10 @@
 import { Transition } from "vue";
 import Card from "../components/pages/Card.vue";
 import { useAuthStore } from "../stores/authStore";
+import { useRoute } from "vue-router";
 
 const authStore = useAuthStore();
+const route = useRoute();
 </script>
 
 <style scoped></style>

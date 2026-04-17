@@ -8,32 +8,25 @@ const route = useRoute();
 
 <template>
   <main>
-    <!-- v-slot dinamikus komponens, mint v-bind  -->
-    <RouterView v-slot="{ Component }">
-      <!-- átalakulás (transition), fade - homályos, out-in - eltűnés, összekötve v-bind: animáció és az
+    <!-- átalakulás (transition), fade - homályos, out-in - eltűnés, összekötve v-bind: animáció és az
 animate.css importálása  -->
 
-      <!-- css és tailwindcss -> osztályok szabályai:  .fade-enter-from és .fade-enter-to homályos és 
+    <!-- css és tailwindcss -> osztályok szabályai:  .fade-enter-from és .fade-enter-to homályos és 
 eltűnés, .fade-enter-active,.fade-leave-active: @keyframes beállítás, és animációs 
 sebesség, áttűnéssel mutat vagy kitakar -->
 
-      <Transition
-        mode="out-in"
-        :enter-active-class="
-          (route.meta.enterClass as string) ||
-          'animate__animated animate__fadeIn'
-        "
-        :leave-active-class="
-          (route.meta.leaveClass as string) ||
-          'animate__animated animate__fadeOut'
-        "
-      >
-        <component
-          :is="Component"
-          :key="route.meta.requiresAuth ? route.path : undefined"
-        />
-      </Transition>
-    </RouterView>
+    <Transition
+      mode="out-in"
+      :enter-active-class="
+        (route.meta.enterClass as string) || 'animate__animated animate__fadeIn'
+      "
+      :leave-active-class="
+        (route.meta.leaveClass as string) ||
+        'animate__animated animate__fadeOut'
+      "
+    >
+      <RouterView />
+    </Transition>
   </main>
 </template>
 

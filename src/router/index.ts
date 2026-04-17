@@ -39,10 +39,6 @@ const router = createRouter({
           path: "publisher",
           name: "publisher",
           component: () => import("../components/pages/Publisher.vue"),
-          meta: {
-            enterClass: "animate__animated animate__fadeInRight",
-            leaveClass: "animate__animated animate__fadeOutRight",
-          },
         },
         {
           path: "games",
@@ -157,9 +153,9 @@ const router = createRouter({
         if (!exists)
           return {
             name: "NotFound",
-            // params: { pathMatch: to.path.split("/").splice(1) },
-            // query: to.query,
-            // hash: to.hash,
+            params: { pathMatch: to.path.split("/").splice(1) },
+            query: to.query,
+            hash: to.hash,
           };
       },
       meta: {
