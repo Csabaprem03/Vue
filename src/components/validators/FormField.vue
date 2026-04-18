@@ -17,7 +17,7 @@
         class="outline-none border rounded-md block bg-yellow-700/10 dark:bg-blue-950/20 w-[400px] h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4"
         v-model="value"
       />
-      <div class="text-red-500 dark:text-red-950 font-bold text-sm mt-1 ml-1">
+      <div class="text-red-500 font-bold text-sm mt-1 ml-1">
         {{ errorMessage }}
       </div>
     </div>
@@ -78,11 +78,11 @@ const { value, errorMessage, validate } = useField(
 
 watch(errorMessage, (newError) => {
   if (newError) {
-    labelClass.value = "text-red-500 dark:text-red-950";
-    inputClass.value = "border-red-500 dark:border-red-900";
+    labelClass.value = "text-red-500 ";
+    inputClass.value = "border-red-500 ";
   } else if (value.value !== undefined) {
-    labelClass.value = "text-green-700 dark:text-emerald-950";
-    inputClass.value = "border-green-500 dark:border-emerald-900";
+    labelClass.value = "text-green-700 ";
+    inputClass.value = "border-green-500 ";
   }
 });
 
@@ -91,11 +91,11 @@ async function handleBlur() {
   if (!validateOnChange.value) {
     const { valid } = await validate();
     if (valid) {
-      labelClass.value = "text-green-700 dark:text-emerald-950";
-      inputClass.value = "border-green-500 dark:border-emerald-900";
+      labelClass.value = "text-green-700 ";
+      inputClass.value = "border-green-500 ";
     } else {
-      labelClass.value = "text-red-500 dark:text-red-950";
-      inputClass.value = "border-red-500 dark:border-red-900";
+      labelClass.value = "text-red-500 ";
+      inputClass.value = "border-red-500 ";
     }
   }
 }

@@ -7,7 +7,21 @@
         type="text"
         label="Név"
         name="name"
-        :validator="yup.string().required('Kötelező mező')"
+        :validator="
+          yup
+            .string()
+            .required('A játék nevének megadása kötelező.')
+            .max(255, 'A név maximum 255 karakter lehet.')
+            .test(
+              'unique',
+              'Ez a játék már szerepel',
+              (value: string | any) => {
+                return !gamesStore.games.some(
+                  (g) => g.name.toLowerCase() === value.toLowerCase(),
+                );
+              },
+            )
+        "
       />
       <FormField
         placeholder=""
@@ -17,9 +31,9 @@
         :validator="
           yup
             .number()
-            .min(1970, '1970 előtti játék nem rögzíthetők')
-            .max(new Date().getFullYear(), 'A jövőben adhatsz ki játékot!!!')
-            .required('Kötelező mező')
+            .required('A megjelenési év megadása kötelező.')
+            .min(1970, 'Csak 1970 utáni játékokat rögzíthetsz.')
+            .max(2030, 'A megjelenési év nem lehet 2030-nál későbbi.')
         "
       />
       <SelectField
@@ -38,7 +52,10 @@
         name="platforms"
         label="Platformok"
         :validator="
-          yup.array().min(1, 'Legalább egy platformot ki kell választani!')
+          yup
+            .array()
+            .required('Legalább egy platformot meg kell adnod.')
+            .min(1, 'Legalább egy platformot válassz ki.')
         "
         :options="Platforms"
       />
@@ -54,7 +71,11 @@
         name="freetogame_url"
         type="url"
         :validator="
-          yup.string().url('Hibás link formátum').notRequired().nullable()
+          yup
+            .string()
+            .url('A FreeToGame linknek érvényes URL-nek kell lennie.')
+            .notRequired()
+            .nullable()
         "
       />
       <SubmitButton :loading="gamesStore.isLoading"
@@ -103,14 +124,22 @@ const publishersName = computed(() => {
 
 const imageValidator = yup
   .mixed()
-  .notRequired()
   .nullable()
+  .notRequired()
   .test(
-    "file or url",
-    "Érvénytelen formátum vagy túl nagy fájl",
+    "length",
+    "Az URL túl hosszú (max 500 karakter)",
+    (value: string | any) => {
+      if (typeof value === "string") return value.length <= 500;
+      return true;
+    },
+  )
+  .test(
+    "url",
+    "A borítóképnek érvényes URL-nek kell lennie.",
     (values: any) => {
       if (!isEditMode.value && typeof values === "string") return true;
-      if (!values) return false;
+      if (!values || values === "") return true;
 
       if (typeof values === "string") {
         const urlRegex =

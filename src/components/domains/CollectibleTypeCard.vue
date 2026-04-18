@@ -80,7 +80,7 @@
         >
           <RouterLink
             :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"
-            class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+            class="animate-none hover:animate-wiggle btn btn-outline dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
           >
             <div class="flex flex-row flex-wrap">
               <Icon
@@ -101,7 +101,7 @@
                 description: item.description,
               },
             }"
-            class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+            class="animate-none hover:animate-wiggle btn btn-outline dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
           >
             <Icon icon="line-md:plus" /> Új tárgy ehhez a játékhoz
           </RouterLink>
@@ -112,7 +112,7 @@
 
     <div class="flex flex-wrap justify-center gap-4 my-10">
       <RouterLink
-        class="animate-none hover:animate-wiggle btn btn-outline dark:btn-primary hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
+        class="animate-none hover:animate-wiggle btn btn-outline dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
         to="/games"
       >
         Vissza a listához

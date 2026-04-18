@@ -15,10 +15,7 @@
       :class="inputClass"
       class="outline-none border rounded-md block bg-yellow-700/10 dark:bg-blue-950/20 w-[400px] h-[45px] text-sm text-gray-950/60 dark:text-neutral-50/80 pl-4"
     />
-    <div
-      v-if="errorMessage"
-      class="text-red-500 dark:text-red-950 font-bold text-sm mt-1 ml-1"
-    >
+    <div v-if="errorMessage" class="text-red-500 font-bold text-sm mt-1 ml-1">
       {{ errorMessage }}
     </div>
   </div>
@@ -30,7 +27,7 @@ import { ref, toRef, watch } from "vue";
 
 interface Props {
   label: string;
-  type: "file" | "url" | "text";
+  type: "url";
   name: string;
   validator?: any;
   validateOnChange?: boolean;
@@ -56,35 +53,31 @@ const {
 
 watch(errorMessage, (newError) => {
   if (newError) {
-    labelClass.value = "text-red-500 dark:text-red-950";
-    inputClass.value = "border-red-500 dark:border-red-900";
-  } else if (value.value) {
-    labelClass.value = "text-green-700 dark:text-emerald-950";
-    inputClass.value = "border-green-500 dark:border-emerald-900";
+    labelClass.value = "text-red-500 ";
+    inputClass.value = "border-red-500 ";
+  } else if (value.value && value.value !== "") {
+    labelClass.value = "text-green-700 0";
+    inputClass.value = "border-green-500 ";
   } else {
-    labelClass.value = "text-zinc-600 dark:text-zinc-200";
-    inputClass.value = "border-zinc-300 dark:border-zinc-700";
+    labelClass.value = "text-zinc-600 ";
+    inputClass.value = "border-zinc-300 ";
   }
 });
 
 async function handleChange(e: Event) {
   const target = e.target as HTMLInputElement;
-  if (target.files && props.type === "file") {
-    vhandleChange(target.files[0]);
-  } else {
-    vhandleChange(target.value);
-  }
+  vhandleChange(target.value);
 }
 
 async function handleBlur() {
   if (!validateOnChange.value) {
     const { valid } = await validate();
     if (valid) {
-      labelClass.value = "text-green-700 dark:text-emerald-950";
-      inputClass.value = "border-green-500 dark:border-emerald-900";
+      labelClass.value = "text-green-700 0";
+      inputClass.value = "border-green-500 ";
     } else {
-      labelClass.value = "text-red-500 dark:text-red-950";
-      inputClass.value = "border-red-500 dark:border-red-900";
+      labelClass.value = "text-red-500 ";
+      inputClass.value = "border-red-500 ";
     }
   }
 }

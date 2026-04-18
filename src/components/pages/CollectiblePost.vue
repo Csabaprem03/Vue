@@ -14,7 +14,12 @@
         name="type"
         label="Típus"
         :validator="
-          yup.string().max(100, 'A 100 betű karakter').required('Kötelező mező')
+          yup
+            .string()
+            .required(
+              'A kollekció típusának megadása kötelező (pl. Weapon Skin, Character Skin).',
+            )
+            .max(100, 'A típus maximum 100 karakter hosszú lehet.')
         "
       />
       <FormField
@@ -23,7 +28,11 @@
         name="description"
         label="Leírás"
         :validator="
-          yup.string().max(100, 'A 100 betű karakter').required('Kötelező mező')
+          yup
+            .string()
+            .required('A leírás megadása kötelező.')
+            .min(10, 'A leírás legalább 10 karakter hosszú kell legyen.')
+            .max(500, 'A leírás maximum 500 karakter lehet.')
         "
       />
       <UploadField
@@ -39,8 +48,18 @@
           yup
             .array()
             .nullable()
-            .min(2, 'Kattints a térképre a helyszín megjelöléséhez!')
             .notRequired()
+            .of(
+              yup.number().typeError('A koordinátáknak számoknak kell lenniük'),
+            )
+            .test(
+              'coords',
+              'Kattints a térképre a helyszín megjelöléséhez!',
+              (value: number | any) => {
+                if (!value) return true;
+                return value.length === 2;
+              },
+            )
         "
       />
       <SubmitButton :loading="gamesStore.isLoading">{{
@@ -80,36 +99,41 @@ const collectibleNames = computed(() => {
 
 const imageValidator = yup
   .mixed()
-  .notRequired()
   .nullable()
+  .notRequired()
   .test(
-    "file or url",
-    "Érvénytelen formátum vagy túl nagy fájl",
-    (values: any) => {
-      if (!values) return true;
-
-      if (typeof values === "string") {
-        const url =
-          /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))$/i;
-        return url.test(values);
-      }
-
-      if (values instanceof File) {
-        const maxSize = 5 * Math.pow(1024, 2);
-        const allowedTypes = [
-          "image/jpeg",
-          "image/jpg",
-          "image/png",
-          "image/webp",
-          "image/avif",
-          "image/heic",
-          "image/heif",
-        ];
-        return values.size <= maxSize && allowedTypes.includes(values.type);
-      }
-      return false;
+    "length",
+    "Az URL túl hosszú (max 500 karakter)",
+    (value: string | any) => {
+      if (typeof value === "string") return value.length <= 500;
+      return true;
     },
-  );
+  )
+  .test("url", "Minden képnek érvényes URL-nek kell lennie.", (values: any) => {
+    if (!isEditMode.value && typeof values === "string") return true;
+    if (!values || values === "") return true;
+
+    if (typeof values === "string") {
+      const urlRegex =
+        /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))$/i;
+      return urlRegex.test(values);
+    }
+
+    if (values instanceof File) {
+      const maxSize = 5 * 1024 * 1024;
+      const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/webp",
+        "image/avif",
+        "image/heic",
+        "image/heif",
+      ];
+      return values.size <= maxSize && allowedTypes.includes(values.type);
+    }
+    return false;
+  });
 
 const handleSubmit = async (values: any) => {
   let result;

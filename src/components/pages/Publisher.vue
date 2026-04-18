@@ -7,31 +7,52 @@
         label="Cégnév"
         type="text"
         name="name"
-        :validator="string().required('kötelező mező')"
+        :validator="
+          string()
+            .required('A kiadó neve kötelező.')
+            .max(255, 'A név maximum 255 karakter lehet.')
+            .test(
+              'unique',
+              'Ez a kiadó név már létezik',
+              (value: string | any) => {
+                return !store.publishers.some(
+                  (p) => p.name.toLowerCase() === value.toLowerCase(),
+                );
+              },
+            )
+        "
       />
       <FormField
         placeholder="Város, ország"
         label="Székhely"
         type="text"
         name="headquarters"
-        :validator="string().required('kötelező mező')"
+        :validator="
+          string()
+            .required('kötelező mező')
+            .max(255, 'A név maximum 255 karakter lehet.')
+        "
       />
       <div>
         <RadioField
           label="Aktív"
           name="is_active"
           :radio-value="1"
-          :validator="number().required('Válassz státuszt')"
+          :validator="
+            number().required('Az is_active mező csak 0 vagy 1 lehet.')
+          "
         />
         <RadioField
           label="Inaktív"
           name="is_active"
           :radio-value="0"
-          :validator="number().required('Válassz státuszt')"
+          :validator="
+            number().required('Az is_active mező csak 0 vagy 1 lehet.')
+          "
         />
       </div>
       <SubmitButton :loading="store.isLoading">{{
-        store.isLoading ? "Bejelentkezés..." : "Küldés"
+        store.isLoading ? "mentés..." : "Küldés"
       }}</SubmitButton>
     </FromWrapper>
   </div>
