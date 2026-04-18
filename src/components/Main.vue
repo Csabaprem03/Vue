@@ -3,7 +3,7 @@ import { Transition } from "vue";
 import { useRoute } from "vue-router";
 // vue-router importálása: RouterView
 import { RouterView } from "vue-router";
-const route = useRoute();
+
 </script>
 
 <template>
@@ -14,7 +14,7 @@ animate.css importálása  -->
     <!-- css és tailwindcss -> osztályok szabályai:  .fade-enter-from és .fade-enter-to homályos és 
 eltűnés, .fade-enter-active,.fade-leave-active: @keyframes beállítás, és animációs 
 sebesség, áttűnéssel mutat vagy kitakar -->
-
+<RouterView v-slot="{Component,route}">
     <Transition
       mode="out-in"
       :enter-active-class="
@@ -22,11 +22,13 @@ sebesség, áttűnéssel mutat vagy kitakar -->
       "
       :leave-active-class="
         (route.meta.leaveClass as string) ||
-        'animate__animated animate__fadeOut'
+        'animate__animated animate__fadeOut' 
       "
+      :duration="{enter:300, leave:300}"
     >
-      <RouterView />
+    <component :is="Component" :key="route.fullPath"/>
     </Transition>
+    </RouterView>
   </main>
 </template>
 

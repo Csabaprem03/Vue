@@ -122,7 +122,7 @@ onMounted(() => {
         </div>
         <div class="relative group user-menu-container z-[110] md:order-2">
           <button
-            class="flex items-center mt-0 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            class="flex items-center mt-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <Icon
               icon="line-md:account"
@@ -133,6 +133,7 @@ onMounted(() => {
           </button>
 
           <div
+          :class="{'hidden': !store.isUserMenuOpen, 'block': store.isUserMenuOpen}"
             class="absolute right-0 top-full w-64 mt-2 hidden group-hover:block bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[120] overflow-hidden"
           >
             <div v-if="authStore.token" class="user-name-display">
@@ -249,12 +250,14 @@ onMounted(() => {
   .user-menu-container .absolute {
     right: 0;
 
-    left: 15%;
-    width: calc(100vw-2rem);
-    max-width: 280px;
-    position: fixed;
-    top: 20%;
-    margin-right: 1rem;
+    position: absolute; 
+    right: 0;
+    left: auto; 
+    width: 200px; 
+    max-width: 80vw;
+    top: 100%; 
+    margin-top: 0.5rem;
+    z-index: 1000;
   }
 }
 </style>
