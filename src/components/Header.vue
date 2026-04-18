@@ -9,9 +9,14 @@ import { onMounted, ref } from "vue";
 const store = useSettingStore();
 const authStore = useAuthStore();
 const darkBtn = ref<HTMLButtonElement | null>(null);
+const isUserMenuOpen = ref<boolean>(false);
 
 console.log("Név: ", authStore.userName);
 console.log("Email: ", authStore.userEmail);
+
+const toggleUserMenu = () => {
+  isUserMenuOpen.value = !isUserMenuOpen.value;
+};
 
 onMounted(() => {
   const btn = darkBtn.value;
@@ -46,6 +51,14 @@ onMounted(() => {
       btn.style.transform =
         "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
     });
+  });
+});
+
+onMounted(() => {
+  window.addEventListener("click", (e) => {
+    if (!(e.target as Element).closest(".user-menu-container")) {
+      isUserMenuOpen.value = false;
+    }
   });
 });
 </script>
@@ -120,8 +133,9 @@ onMounted(() => {
             </li>
           </ul>
         </div>
-        <div class="relative group user-menu-container z-[110] md:order-2">
+        <div class="relative group user-menu-container z-[200] md:order-2">
           <button
+            @click="toggleUserMenu"
             class="flex items-center mt-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <Icon
@@ -133,8 +147,8 @@ onMounted(() => {
           </button>
 
           <div
-          :class="{'hidden': !store.isUserMenuOpen, 'block': store.isUserMenuOpen}"
-            class="absolute right-0 top-full w-64 mt-2 hidden group-hover:block bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[120] overflow-hidden"
+            :class="[isUserMenuOpen ? 'block' : 'hidden']"
+            class="absolute right-0 top-full w-64 mt-2 bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[9999] overflow-hidden"
           >
             <div v-if="authStore.token" class="user-name-display">
               <div class="flex flex-col gap-y-1.5">
@@ -224,8 +238,8 @@ onMounted(() => {
   min-width: max-content;
 }
 .user-menu-container {
-  display: flex;
-  align-items: center;
+  position: relative;
+  z-index: 200;
 }
 .card-navbar-wrapper {
   overflow: visible !important;
@@ -248,16 +262,15 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .user-menu-container .absolute {
-    right: 0;
-
-    position: absolute; 
-    right: 0;
-    left: auto; 
-    width: 200px; 
-    max-width: 80vw;
-    top: 100%; 
+    position: absolute;
+    right: 0 !important;
+    left: auto !important;
+    width: 260px;
+    max-width: 85vw;
+    top: 100%;
+    margin-top: 8px;
     margin-top: 0.5rem;
-    z-index: 1000;
+    z-index: 9999 !important;
   }
 }
 </style>

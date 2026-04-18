@@ -7,21 +7,7 @@
         type="text"
         label="Név"
         name="name"
-        :validator="
-          yup
-            .string()
-            .required('A játék nevének megadása kötelező.')
-            .max(255, 'A név maximum 255 karakter lehet.')
-            .test(
-              'unique',
-              'Ez a játék már szerepel',
-              (value: string | any) => {
-                return !gamesStore.games.some(
-                  (g) => g.name.toLowerCase() === value.toLowerCase(),
-                );
-              },
-            )
-        "
+        :validator="nameValidator"
       />
       <FormField
         placeholder=""
@@ -29,33 +15,45 @@
         label="Év kiadó"
         name="release_year"
         :validator="
-          yup
-            .number()
-            .required('A megjelenési év megadása kötelező.')
-            .min(1970, 'Csak 1970 utáni játékokat rögzíthetsz.')
-            .max(2030, 'A megjelenési év nem lehet 2030-nál későbbi.')
+          isEditMode
+            ? yup.number().nullable().notRequired()
+            : yup
+                .number()
+                .required('A megjelenési év megadása kötelező.')
+                .min(1970, 'Csak 1970 utáni játékokat rögzíthetsz.')
+                .max(2030, 'A megjelenési év nem lehet 2030-nál későbbi.')
         "
       />
       <SelectField
         label="Műfaj"
         name="genre"
-        :validator="yup.string().required('Választani kell egy műfajt!')"
+        :validator="
+          isEditMode
+            ? yup.string().nullable()
+            : yup.string().required('Választani kell egy műfajt!')
+        "
         :options="genreOptions"
       />
       <SelectField
         label="Válassz egy cégnév"
         name="publisher_id"
-        :validator="yup.string().required('Választani kell egy játékot!')"
+        :validator="
+          isEditMode
+            ? yup.string().nullable()
+            : yup.string().required('Választani kell egy játékot!')
+        "
         :options="publishersName"
       />
       <CheckBoxField
         name="platforms"
         label="Platformok"
         :validator="
-          yup
-            .array()
-            .required('Legalább egy platformot meg kell adnod.')
-            .min(1, 'Legalább egy platformot válassz ki.')
+          isEditMode
+            ? yup.array().nullable().notRequired()
+            : yup
+                .array()
+                .required('Legalább egy platformot meg kell adnod.')
+                .min(1, 'Legalább egy platformot válassz ki.')
         "
         :options="Platforms"
       />
@@ -122,10 +120,28 @@ const publishersName = computed(() => {
   }));
 });
 
+const nameValidator = computed(() => {
+  let schema = yup.string().max(255, "A név maximum 255 karakter lehet.");
+
+  if (!isEditMode.value) {
+    schema = schema.required("A játék nevének megadása kötelező.");
+  }
+
+  return schema.test("unique", "Ez a játék már szerepel", (value) => {
+    if (!value) return true;
+    const duplicate = gamesStore.games.find(
+      (g) => g.name.toLowerCase() === value.toLowerCase(),
+    );
+    if (!duplicate) return true;
+    return isEditMode.value && duplicate.id === gameId.value;
+  });
+});
+
 const imageValidator = yup
   .mixed()
   .nullable()
   .notRequired()
+
   .test(
     "length",
     "Az URL túl hosszú (max 500 karakter)",
@@ -138,7 +154,6 @@ const imageValidator = yup
     "url",
     "A borítóképnek érvényes URL-nek kell lennie.",
     (values: any) => {
-      if (!isEditMode.value && typeof values === "string") return true;
       if (!values || values === "") return true;
 
       if (typeof values === "string") {

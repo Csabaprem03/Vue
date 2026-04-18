@@ -42,7 +42,7 @@
       <h3 class="font-extrabold mt-[5%] font-sans text-2xl/9 break-normal">
         {{ item.description }}
       </h3>
-      <div v-if="item.images.length === 0 && !item.images">
+      <div v-if="getImages(item.images).length === 0">
         <Icon
           icon="line-md:image-twotone"
           class="text-gray-200"
@@ -96,7 +96,7 @@
             :to="{
               name: 'collectibles.post',
               query: {
-                gameId: item.id,
+                gameId: Number(item.game_id),
                 type: item.type,
                 description: item.description,
               },

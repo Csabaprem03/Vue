@@ -19,7 +19,7 @@ defineProps<{ id: number }>();
 // a defineAsyncComponent Vue importálnak, mint lusta betöltés, egy import, késleltetés, túlidőzítő
 const CollectibleDetails = defineAsyncComponent({
   loader: () => import("../domains/CollectibleDetails.vue"),
-  delay: 200,
+  delay: 300,
   timeout: 3000,
 });
 </script>

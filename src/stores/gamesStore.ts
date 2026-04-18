@@ -4,6 +4,7 @@ import { API } from "../services/index";
 import { ref } from "vue";
 import type { APIResponse } from "../services/types";
 import type { AxiosError } from "axios";
+import { object } from "yup";
 
 export const useGamesStore = defineStore("gamesStore", () => {
   // konstansok használata
@@ -210,14 +211,14 @@ export const useGamesStore = defineStore("gamesStore", () => {
       isLoading.value = true;
       const res = await API.games.patchGame(id, updates);
       if (res.status === 200 || res.status === 201) {
-        if (res.data.content && !Array.isArray(res.data.content)) {
+        if (res.data?.content && !Array.isArray(res.data.content)) {
           Object.assign(item, {
             ...res.data,
             created_at: new Date(),
             updated_at: new Date(),
           });
         }
-        await GETallgames();
+        // await GETallgames();
         return {
           success: true,
           content: null,
@@ -235,6 +236,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
       isLoading.value = false;
       saveToLocalStorage();
     }
+    Object.assign(item, originalItem);
     return {
       success: false,
       content: null,
@@ -339,10 +341,10 @@ export const useGamesStore = defineStore("gamesStore", () => {
       isLoading.value = true;
       const res = await API.collectibles.patchCollectible(id, updates);
       if (res.status === 200 || res.status === 201) {
-        if (res.data.content && !Array.isArray(res.data.content)) {
+        if (res.data?.content && !Array.isArray(res.data.content)) {
           Object.assign(item, res.data.content);
         }
-        await GETallcollectibles();
+        // await GETallcollectibles();
         return {
           success: true,
           content: null,
@@ -360,6 +362,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
       isLoading.value = false;
       saveToLocalStorage();
     }
+    Object.assign(item, originalItem);
     return {
       success: false,
       content: null,

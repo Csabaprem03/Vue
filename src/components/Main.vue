@@ -4,30 +4,26 @@ import { useRoute } from "vue-router";
 // vue-router importálása: RouterView
 import { RouterView } from "vue-router";
 
+const route = useRoute();
 </script>
 
 <template>
-  <main>
-    <!-- átalakulás (transition), fade - homályos, out-in - eltűnés, összekötve v-bind: animáció és az
+  <!-- átalakulás (transition), fade - homályos, out-in - eltűnés, összekötve v-bind: animáció és az
 animate.css importálása  -->
 
-    <!-- css és tailwindcss -> osztályok szabályai:  .fade-enter-from és .fade-enter-to homályos és 
+  <!-- css és tailwindcss -> osztályok szabályai:  .fade-enter-from és .fade-enter-to homályos és 
 eltűnés, .fade-enter-active,.fade-leave-active: @keyframes beállítás, és animációs 
 sebesség, áttűnéssel mutat vagy kitakar -->
-<RouterView v-slot="{Component,route}">
-    <Transition
-      mode="out-in"
-      :enter-active-class="
-        (route.meta.enterClass as string) || 'animate__animated animate__fadeIn'
-      "
-      :leave-active-class="
-        (route.meta.leaveClass as string) ||
-        'animate__animated animate__fadeOut' 
-      "
-      :duration="{enter:300, leave:300}"
-    >
-    <component :is="Component" :key="route.fullPath"/>
-    </Transition>
+
+  <main>
+    <RouterView v-slot="{ Component, route }">
+      <Transition
+        enter-active-class="'animate__animated animate__fadeIn'"
+        leave-active-class="'animate__animated animate__fadeIn'"
+        :duration="{ enter: 400, leave: 400 }"
+      >
+        <component :is="Component" :key="route.fullPath" />
+      </Transition>
     </RouterView>
   </main>
 </template>

@@ -16,9 +16,7 @@
         :validator="
           yup
             .string()
-            .required(
-              'A kollekció típusának megadása kötelező (pl. Weapon Skin, Character Skin).',
-            )
+            .required('A kollekció típusának megadása kötelező')
             .max(100, 'A típus maximum 100 karakter hosszú lehet.')
         "
       />
@@ -109,48 +107,59 @@ const imageValidator = yup
       return true;
     },
   )
-  .test("url", "Minden képnek érvényes URL-nek kell lennie.", (values: any) => {
-    if (!isEditMode.value && typeof values === "string") return true;
-    if (!values || values === "") return true;
+  .test(
+    "url",
+    "A borítóképnek érvényes URL-nek kell lennie.",
+    (values: string | any) => {
+      if (!values || values === "") return true;
 
-    if (typeof values === "string") {
-      const urlRegex =
-        /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))$/i;
-      return urlRegex.test(values);
-    }
+      if (typeof values === "string") {
+        if (values.trim()) return true;
+        const urlRegex =
+          /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))$/i;
+        return urlRegex.test(values);
+      }
 
-    if (values instanceof File) {
-      const maxSize = 5 * 1024 * 1024;
-      const allowedTypes = [
-        "image/jpeg",
-        "image/jpg",
-        "image/png",
-        "image/webp",
-        "image/avif",
-        "image/heic",
-        "image/heif",
-      ];
-      return values.size <= maxSize && allowedTypes.includes(values.type);
-    }
-    return false;
-  });
+      if (values instanceof File) {
+        const maxSize = 5 * 1024 * 1024;
+        const allowedTypes = [
+          "image/jpeg",
+          "image/jpg",
+          "image/png",
+          "image/webp",
+          "image/avif",
+          "image/heic",
+          "image/heif",
+        ];
+        return values.size <= maxSize && allowedTypes.includes(values.type);
+      }
+      return false;
+    },
+  );
 
 const handleSubmit = async (values: any) => {
   let result;
-  const formattedImages = Array.isArray(values.images)
-    ? values.images
-    : [values.images];
+  let formattedImages: Array<string> = [];
+  if (values.images) {
+    formattedImages = Array.isArray(values.images)
+      ? [values.images[0]]
+      : [values.images];
+  }
   const formattedLocation =
     values.map_location && values.map_location.length >= 2
-      ? values.map_location.map((val: any) => Number(val))
+      ? values.map_location.map((val: number | any) => Number(val))
       : null;
 
+  const payload = {
+    game_id: Number(values.game_id),
+    type: values.type,
+    description: values.description,
+    images: formattedImages, // Itt üres tömb lesz, ha nem adtak meg URL-t
+    map_location: formattedLocation,
+  };
+
   if (isEditMode.value && collectibleId.value) {
-    result = await gamesStore.PATCHcollectible(collectibleId.value, {
-      ...values,
-      formattedImages,
-      formattedLocation,
-    });
+    result = await gamesStore.PATCHcollectible(collectibleId.value, payload);
   } else {
     result = await gamesStore.POSTCollectibles(
       values.game_id,

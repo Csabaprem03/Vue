@@ -8,7 +8,6 @@ export const useSettingStore = defineStore("settings", () => {
   const isOpenWithMobile = ref<boolean>(false);
   const isGrid = ref<boolean>(false);
   const userAccount = ref<boolean>(false);
-  const isUserMenuOpen = ref<boolean>(false);
 
   const isDark = useDark({
     selector: "html",
@@ -17,7 +16,6 @@ export const useSettingStore = defineStore("settings", () => {
     valueLight: "light",
   });
 
-  
   const ToggleDark = useToggle(isDark);
 
   // saját függvények használata
@@ -38,11 +36,6 @@ export const useSettingStore = defineStore("settings", () => {
     userAccount.value = !userAccount.value;
     saveToLocalStorage();
   }
-
-  const toggleUserMenu = () => {
-    isUserMenuOpen.value = !isUserMenuOpen.value;
-    saveToLocalStorage()
-  };
 
   function saveToLocalStorage() {
     const settings = {
@@ -71,9 +64,7 @@ export const useSettingStore = defineStore("settings", () => {
     isGrid,
     isDark,
     isOpenWithMobile,
-    isUserMenuOpen,
     userAccount,
-    toggleUserMenu,
     ToggleDark,
     toggleMenuWithMobile,
     toggleUserAccount,
