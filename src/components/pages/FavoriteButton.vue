@@ -38,10 +38,8 @@ const favStore = useFavoriteStore();
 const props = defineProps<{ gameId: number }>();
 
 const isFavorite = computed(() => {
-  if (!favStore.Favorites) return false;
-  return favStore.Favorites.some(
-    (f) => Number(f.game_id) === Number(props.gameId),
-  );
+  const id = Number(props.gameId);
+  return favStore.Favorites.some((f) => Number(f.game_id) === id);
 });
 
 function handleToggle() {
