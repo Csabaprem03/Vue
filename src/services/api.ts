@@ -1,9 +1,11 @@
 // Axios-t létrehozza
 import axios from "axios";
 
+const baseUrl: string = import.meta.env.VITE_API_ENDPOINT || 'http://localhost:8000/api'
+
 // környezeten hozzáadva: a Laravel backenden 8000 porton, féjléc (header): tartalom, fogadás
 const instance = axios.create({
-  baseURL: `${import.meta.env.VITE_API_ENDPOINT}/`,
+  baseURL: `${baseUrl}/`,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
