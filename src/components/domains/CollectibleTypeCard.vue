@@ -73,39 +73,22 @@
       </div>
       <div
         :class="[!authStore.token ? 'hidden' : 'block']"
-        class="absolute bottom-1.5 md:bottom-1.5 sm:bottom-0 lg:bottom-0 xl:bottom-0 right-auto"
+        class="absolute bottom-1.5 md:bottom-5 sm:bottom-2 lg:bottom-5 xl:bottom-5 right-auto"
       >
-        <div
-          class="grid grid-rows-2 gap-0.5 md:gap-3 sm:grid-rows-2 lg:grid-cols-2 md:grid-row-2"
+        <RouterLink
+          :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"
+          class="break-normal py-10 w-50 md:w-max md:py-0 transition-all animate-none hover:animate-wiggle btn btn-outline dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
         >
-          <RouterLink
-            :to="{ name: 'collectibles.edit', params: { id: Number(item.id) } }"
-            class="animate-none hover:animate-wiggle btn btn-outline dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
-          >
-            <div class="flex flex-row flex-wrap">
-              <Icon
-                icon="line-md:edit-filled"
-                class="text-gray-950/100 dark:text-neutral-100 mr-1.5"
-                height="20"
-                width="20"
-              />
-              <h1>Szerkesztés</h1>
-            </div>
-          </RouterLink>
-          <RouterLink
-            :to="{
-              name: 'collectibles.post',
-              query: {
-                gameId: Number(item.game_id),
-                type: item.type,
-                description: item.description,
-              },
-            }"
-            class="animate-none hover:animate-wiggle btn btn-outline dark:hover:text-neutral-950/100 dark:hover:bg-neutral-100/80 hover:text-neutral-50 shadow-lg dark:shadow-neutral-50/20 dark:inset-shadow-2xs dark:inset-shadow-neutral-50/90 shadow-gray-950/50 inset-shadow-2xs inset-shadow-yellow-600/70 mb-5"
-          >
-            <Icon icon="line-md:plus" /> Új tárgy ehhez a játékhoz
-          </RouterLink>
-        </div>
+          <div class="flex flex-row flex-wrap">
+            <Icon
+              icon="line-md:edit-filled"
+              class="text-gray-950/100 dark:text-neutral-100 mr-1.5"
+              height="20"
+              width="20"
+            />
+            <h1>Szerkesztés / Új tárgy ehhez a játékhoz</h1>
+          </div>
+        </RouterLink>
       </div>
     </div>
     <!-- RouterLink vissza az útvonalhoz  -->
@@ -145,25 +128,28 @@ if (store.collectibles.length === 0) {
 
 const getImages = (imagesData: any): Array<string> => {
   if (!imagesData) return [];
+
   let result: Array<string> = [];
+
   if (typeof imagesData === "string") {
-    try {
-      const parsed = JSON.parse(imagesData);
-      result = Array.isArray(parsed) ? parsed : [imagesData];
-    } catch (error) {
+    if (imagesData.startsWith("[") && imagesData.endsWith("]")) {
+      try {
+        result = JSON.parse(imagesData);
+      } catch {
+        result = [imagesData];
+      }
+    } else if (imagesData.includes(",")) {
+      result = imagesData.split(",").map((s) => s.trim());
+    } else {
       result = [imagesData];
     }
   } else if (Array.isArray(imagesData)) {
     result = imagesData;
   }
+
   return result
-    .map((url) => {
-      if (typeof url === "string") {
-        return url.replace(/\\/g, "");
-      }
-      return url;
-    })
-    .filter((url) => url && url.startsWith("http"));
+    .filter((url) => typeof url === "string" && url.startsWith("http"))
+    .map((url) => url.replace(/\\/g, ""));
 };
 
 // game és collectible vizsgálat

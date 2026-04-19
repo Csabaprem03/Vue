@@ -20,7 +20,7 @@
     <div v-else-if="item" class="max-w-6xl mx-auto p-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
         <div class="space-y-4">
-          <div class="hover-3d">
+          <div class="hover-3d flex justify-center">
             <figure
               class="h-100 rounded-2xl shadow-2xl shadow-gray-950/30 dark:shadow-neutral-50/20"
             >

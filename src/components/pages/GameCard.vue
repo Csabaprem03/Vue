@@ -33,11 +33,6 @@ const getFirstType = (id: number) => {
 };
 
 function handleDelete(id: number, name: string): void {
-  if (!authStore.token) {
-    alert("A játékhez be kell jelentkezni");
-    return;
-  }
-
   if (confirm(`Biztosan törölni szeretnéd: ${name}`)) {
     store.DELETEgames(id);
   }

@@ -156,7 +156,7 @@ body {
     margin-bottom: 1px;
   }
   .card-favorite-wrapper {
-    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 dark:shadow-neutral-200 dark:shadow-2xl/20  flex  items-center justify-center;
+    @apply relative overflow-hidden bg-neutral-300 dark:bg-[#0C0519]/500 shadow-2xl/20 shadow-yellow-800/90 dark:shadow-neutral-200 dark:shadow-2xl/20 rounded-2xl  flex  items-center justify-center;
     width: 320px;
     height: 102px;
   }

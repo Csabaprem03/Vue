@@ -62,7 +62,7 @@
         label="Kép URL (borító)"
         name="cover"
         type="url"
-        :validator="imageValidator"
+        :validator="isEditMode ? yup.string().url().nullable() : imageValidator"
       />
       <UploadField
         label="kép URL (optionális)"

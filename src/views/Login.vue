@@ -41,7 +41,13 @@ const handleSubmit = async (values: any) => {
       type="email"
       name="email"
       :validator="
-        string().required('köletező az email!').email('Email érvényes')
+        string()
+          .required('köletező az email!')
+          .matches(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            'Érvénytelen email formátum (pl. pelda@domain.hu)',
+          )
+          .email('Email érvényes')
       "
     />
     <FormField
@@ -50,7 +56,10 @@ const handleSubmit = async (values: any) => {
       type="password"
       name="password"
       :validator="
-        string().required('köletező a jelszó!').min(8, 'Minimum 8 karakter')
+        string()
+          .trim()
+          .required('köletező a jelszó!')
+          .min(8, 'Minimum 8 karakter')
       "
     />
     <!-- SubmitButton.vue komponenshez és slot-hoz kapcsolja -->

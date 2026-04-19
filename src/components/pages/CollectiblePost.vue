@@ -6,7 +6,11 @@
         name="game_id"
         label="Játék név"
         :options="collectibleNames"
-        :validator="yup.string().required('Választani kell egy játékot!')"
+        :validator="
+          isEditMode
+            ? yup.string().nullable()
+            : yup.string().required('Választani kell egy játékot!')
+        "
       />
       <FormField
         placeholder=""
@@ -14,10 +18,12 @@
         name="type"
         label="Típus"
         :validator="
-          yup
-            .string()
-            .required('A kollekció típusának megadása kötelező')
-            .max(100, 'A típus maximum 100 karakter hosszú lehet.')
+          isEditMode
+            ? yup.string().nullable()
+            : yup
+                .string()
+                .required('A kollekció típusának megadása kötelező')
+                .max(100, 'A típus maximum 100 karakter hosszú lehet.')
         "
       />
       <FormField
@@ -26,11 +32,13 @@
         name="description"
         label="Leírás"
         :validator="
-          yup
-            .string()
-            .required('A leírás megadása kötelező.')
-            .min(10, 'A leírás legalább 10 karakter hosszú kell legyen.')
-            .max(500, 'A leírás maximum 500 karakter lehet.')
+          isEditMode
+            ? yup.string().nullable()
+            : yup
+                .string()
+                .required('A leírás megadása kötelező.')
+                .min(10, 'A leírás legalább 10 karakter hosszú kell legyen.')
+                .max(500, 'A leírás maximum 500 karakter lehet.')
         "
       />
       <UploadField
@@ -43,21 +51,25 @@
         name="map_location"
         label="Válaszd ki a lelőhelyet a térképen!"
         :validator="
-          yup
-            .array()
-            .nullable()
-            .notRequired()
-            .of(
-              yup.number().typeError('A koordinátáknak számoknak kell lenniük'),
-            )
-            .test(
-              'coords',
-              'Kattints a térképre a helyszín megjelöléséhez!',
-              (value: number | any) => {
-                if (!value) return true;
-                return value.length === 2;
-              },
-            )
+          isEditMode
+            ? yup.array().nullable()
+            : yup
+                .array()
+                .nullable()
+                .notRequired()
+                .of(
+                  yup
+                    .number()
+                    .typeError('A koordinátáknak számoknak kell lenniük'),
+                )
+                .test(
+                  'coords',
+                  'Kattints a térképre a helyszín megjelöléséhez!',
+                  (value: number | any) => {
+                    if (!value) return true;
+                    return value.length === 2;
+                  },
+                )
         "
       />
       <SubmitButton :loading="gamesStore.isLoading">{{
@@ -111,13 +123,17 @@ const imageValidator = yup
     "url",
     "A borítóképnek érvényes URL-nek kell lennie.",
     (values: string | any) => {
-      if (!values || values === "") return true;
+      if (
+        !values ||
+        values === "" ||
+        (Array.isArray(values) && values.length === 0)
+      )
+        return true;
 
       if (typeof values === "string") {
-        if (values.trim()) return true;
         const urlRegex =
-          /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))$/i;
-        return urlRegex.test(values);
+          /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp|avif|heic|heif))/i;
+        return urlRegex.test(values.split(",")[0].trim());
       }
 
       if (values instanceof File) {
@@ -133,28 +149,40 @@ const imageValidator = yup
         ];
         return values.size <= maxSize && allowedTypes.includes(values.type);
       }
-      return false;
+      return true;
     },
   );
 
 const handleSubmit = async (values: any) => {
   let result;
   let formattedImages: Array<string> = [];
+
   if (values.images) {
-    formattedImages = Array.isArray(values.images)
-      ? [values.images[0]]
-      : [values.images];
+    if (Array.isArray(values.images)) {
+      formattedImages = values.images.filter(
+        (img: string) => img && String(img).trim() !== "",
+      );
+    } else if (
+      typeof values.images === "string" &&
+      values.images.trim() !== ""
+    ) {
+      formattedImages = values.images
+        .split(",")
+        .map((img: string) => img.trim())
+        .filter((img: string) => img !== "");
+    }
   }
+
   const formattedLocation =
     values.map_location && values.map_location.length >= 2
-      ? values.map_location.map((val: number | any) => Number(val))
+      ? values.map_location.map((val: number) => Number(val))
       : null;
 
   const payload = {
     game_id: Number(values.game_id),
     type: values.type,
     description: values.description,
-    images: formattedImages, // Itt üres tömb lesz, ha nem adtak meg URL-t
+    images: formattedImages,
     map_location: formattedLocation,
   };
 
@@ -162,20 +190,20 @@ const handleSubmit = async (values: any) => {
     result = await gamesStore.PATCHcollectible(collectibleId.value, payload);
   } else {
     result = await gamesStore.POSTCollectibles(
-      values.game_id,
-      values.type,
-      values.description,
-      formattedImages,
-      formattedLocation,
+      payload.game_id,
+      payload.type,
+      payload.description,
+      payload.images,
+      payload.map_location,
     );
   }
+
   if (result.success) {
-    alert(isEditMode.value ? "sikeres frissítés!" : "sikeres mentés");
+    alert(isEditMode.value ? "Sikeres frissítés!" : "Sikeres mentés!");
     router.push({ name: "games.list" });
   } else {
-    alert("sikertelen mentés");
+    alert("Sikertelen mentés!");
   }
-  console.log("sikeres mentés: ", values);
 };
 
 onMounted(async () => {
@@ -185,7 +213,13 @@ onMounted(async () => {
   );
 
   if (collectibleToEdit) {
-    initialValue.value = { ...collectibleToEdit };
+    initialValue.value = {
+      ...collectibleToEdit,
+      images:
+        typeof collectibleToEdit.images === "string"
+          ? [collectibleToEdit.images]
+          : collectibleToEdit.images || [],
+    };
   } else if (route.query.gameId) {
     initialValue.value = {
       game_id: Number(route.query.gameId),

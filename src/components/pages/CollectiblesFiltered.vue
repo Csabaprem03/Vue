@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row md:flex-row justify-between items-center my-4 mx-4 relative"
+    class="mb-4 md:mb-[8.35rem] flex flex-row md:flex-row justify-between items-center my-4 mx-4 relative"
   >
     <button
       @click="store.toggleMenu"
@@ -17,15 +17,18 @@
     <div
       v-if="store.isOpen || !isMobile"
       :class="[
-        'w-full md:w-auto absolute md:relative top-full left-0 md:left-0 md:right-auto md:z-[30] z-[90] mt-2  md:bg-transparent p-6 md:p-0 rounded-b-2xl shadow-2xl md:shadow-none',
-        store.isOpen ? 'flex flex-col' : 'hidden md:flex md:flex-row',
+        'w-120 md:w-auto absolute md:absolute top-full right-0 left-auto md:z-[30] z-[90] mt-2 md:bg-transparent p-6 md:p-0 rounded-b-2xl shadow-2xl md:shadow-none',
+        store.isOpen
+          ? 'flex flex-col items-center'
+          : 'hidden md:flex md:flex-row',
       ]"
     >
       <Transition name="fade">
         <form @submit.prevent="handleSubmit" class="mx-auto w-full">
           <FilterPanel
-            class="md:w-[46.850rem] w-70 item rounded-2xl justify-start flex md:flex-row flex-wrap flex-row md:justify-evenly px-10.5 md:px-2.5 py-2.5 gap-5 shadow-sm shadow-gray-950/20 dark:shadow-neutral-50/20"
+            class="md:w-[43.845rem] w-60 md:max-w-none item rounded-2xl justify-center md:justify-start flex flex-row flex-wrap md:justify-evenly px-4 md:px-[1.65rem] py-4 mb-6 gap-5 shadow-sm shadow-gray-950/20 dark:shadow-neutral-50/20"
           >
+            >
             <template #filteredSelect>
               <div class="flex flex-col items-start gap-0.5">
                 <label
@@ -183,10 +186,25 @@ watch(
 .v-leave-to {
   opacity: 0;
 }
+@media (min-width: 768px) {
+  /* Kényszerítjük a konténert a jobb szélre */
+  .md\:absolute {
+    right: 0 !important;
+    left: auto !important;
+  }
 
+  /* A form tartalmát is jobbra toljuk */
+  form {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
 @media (max-width: 768px) {
   :deep(.item) {
-    width: 85% !important;
+    width: 75% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 2rem !important;
   }
 }
 </style>

@@ -15,65 +15,57 @@
   </div>
   <div v-else-if="favStore.Favorites.length === 0">
     <div class="flex items-center justify-center p-[28.125rem]">
-      {{ favStore.isMessage }}
+      {{ favStore.isMessage || "Nincsenek kedvencek még." }}
     </div>
   </div>
-  <div v-else>
-    <draggable
-      v-model="favStore.Favorites"
-      v-if="favStore.Favorites"
-      v-bind="dragOptions"
-      item-key="game_id"
-      class="flex flex-col items-center justify-center"
-    >
-      <template #item="{ element }">
-        <div
-          class="card-favorite-wrapper rounded-2xl shadow-lg dark:shadow-neutral-50/30 shadow-gray-950/20 w-80 mx-auto my-2.5 hover:outline-2 hover:outline-offset-2 hover:outline-[#24252b] dark:hover:outline-2 dark:hover:outline-offset-2 dark:hover:outline-[#133b43] dark:hover:shadow-blue-950/70 hover:shadow-gray-950/90 transition-shadow duration-300"
-        >
-          <div class="card-favorite-content">
-            <template v-if="FoundGame(element.game_id)">
-              <div class="ml-4">
-                <img
-                  class="w-20 shadow-lg shadow-yellow-700/20 dark:shadow-neutral-50/10 inset-shadow-yellow-600 h-[90px] object-fill"
-                  :src="FoundGame(element.game_id)?.cover || null || undefined"
-                />
-              </div>
-              <div
-                class="font-bold text-shadow-yellow-600/30 text-center mx-auto p-0 px-3 w-2/3 break-normal text-lg text-shadow-lg/90 dark:text-shadow-blue-950/70 text-shadow--950/70"
-              >
+  <div v-else class="flex flex-col items-center pt-20 pb-10 w-full px-4">
+    <h1 class="text-3xl font-bold mb-8 text-center">Kedvenc játékaim</h1>
+
+    <div class="w-full max-w-lg mx-auto">
+      <draggable
+        v-model="favStore.Favorites"
+        item-key="game_id"
+        class="flex flex-col gap-4"
+        :animation="400"
+        @end="favStore.saveToLocalStorage"
+      >
+        <template #item="{ element }">
+          <div class="card-favorite-wrapper mx-auto">
+            <div class="card-favorite-content flex items-center gap-4 p-4">
+              <img
+                v-if="FoundGame(element.game_id)"
+                :src="FoundGame(element.game_id)?.cover || defaultImage"
+                class="w-20 h-[90px] object-cover rounded shadow"
+              />
+
+              <div class="flex-1 font-bold">
                 {{ FoundGame(element.game_id)?.name }}
               </div>
-              <div class="relative animate-none hover:animate-wiggle">
-                <button @click="favStore.ToggleFavorite(element.game_id)">
-                  <Icon
-                    icon="line-md:close-small"
-                    class="text-red-500 w-10 h-10"
-                  />
-                </button>
-              </div>
-            </template>
+
+              <button
+                @click.stop="favStore.ToggleFavorite(element.game_id)"
+                class="p-1 cursor-pointer"
+              >
+                <Icon icon="line-md:close-small" class="text-red-500 w-9 h-9" />
+              </button>
+            </div>
           </div>
-        </div>
-      </template>
-    </draggable>
+        </template>
+      </draggable>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { useFavoriteStore } from "../../stores/favoriteStore";
 import { useGamesStore } from "../../stores/gamesStore";
 import draggable from "vuedraggable";
 import { Icon } from "@iconify/vue";
+import defaultImage from "../../svg/icons8-default-image-50.svg";
 
 const favStore = useFavoriteStore();
 const gamesStore = useGamesStore();
-
-const dragOptions = computed(() => ({
-  animation: 400,
-  ghostClass: "ghost",
-  dragClass: "drag",
-}));
 
 const FoundGame = (gameId: number) => {
   return gamesStore.games.find((game) => Number(game.id) === Number(gameId));

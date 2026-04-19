@@ -37,7 +37,7 @@ export interface Collectible {
   type: string;
   description: string;
   images: Array<string>;
-  map_location: Array<string | null>;
+  map_location: Array<number | null>;
 }
 
 export interface FilteredCollectibles {

@@ -1,51 +1,72 @@
-**Játék könyvtárok -- Vuejs 3 frontend**
+### 💡 Miről szól?
 
-A játékgyűjtemények, gyűjthető dolgok, a videojátékek játsszunk. A Vuejs 3 composition API , Veevalidate validációja, Tailwindcss és css, Pinia, Axios, useVue, animate.css építéseket.
+Egy olyan oldal, ahol:
 
-**Technológiák:**
+- játékokat / gyűjthető dolgokat lehet böngészni
+- felhasználók be tudnak jelentkezni
+- lehet kedvenceket menteni
+- lehet keresni és szűrni
+- mobilon is jól működik
 
-- Backend: az eredeti backenden laravel hasznaláta
+---
 
-- Adatbázis: az eredeti mysql-en kapcsolatba laravel
+### 🧱 Frontend (amit a böngésző lát)
 
-- Ikonok: Vue Iconify, Tailwindcss (svg támogatja)
+**Vue.js 3** (modern JavaScript keretrendszer)
 
-- Vue Router 4: autorizáció és autentikáció, útvonalok
+Fő technológiák:
 
-- TypeScript: interfészek, Composables (Vuejs 3 segítség), Pinia
+- **Composition API** → modern Vue kódolási stílus
+- **TypeScript** → típusos JavaScript (biztonságosabb kód)
+- **Pinia** → állapotkezelés (pl. be van-e jelentkezve a user)
+- **Vue Router 4** → oldalak közti navigáció
+- **Axios** → kommunikáció a backenddel (API hívások)
+- **VeeValidate + Yup** → űrlap validáció (pl. login form)
+- **TailwindCSS + DaisyUI** → dizájn / kinézet
+- **Iconify** → ikonok
+- **animate.css** → animációk
+- **VueDraggable** → drag & drop (pl. rendezés húzással)
 
-- Komponensek mappája: domains, pages, forms, validators
+---
 
-- mappák: services API, router, stores Pinia, Views
+### 📁 Projekt struktúra (mappák)
 
-- DaisyUI: tradicionális Tailwindccs, mint Bootstrap mixelés
+- `domains` → üzleti logika
+- `pages` → oldalak (pl. Home, Login)
+- `forms` → űrlapok
+- `validators` → validációs szabályok
+- `services/api` → backend hívások
+- `stores` → Pinia állapot
+- `router` → útvonalak
 
-- VeeValidate és yup sémák egyszerűsítése
+---
 
-- VueDraggable drag and drop módszer (animált tranzíció)
+### 🎨 Funkciók / UI
 
-**Vuejs 3 composition API + TypeScript frontend modern játékok weboldalon:**
+- skeleton loading (betöltés animáció)
+- animált oldalcserék
+- navigációs sáv
+- kártyás és listás nézet
+- kereső + szűrők
+- dark/light mód
+- reszponzív (mobil + desktop)
+- kedvencek rendszer
+- profil / fiók kezelés
 
-- skeleton loading
+---
 
-- animációs routeren
+### 🔙 Backend
 
-- navigációsávbar
+- **Laravel** (PHP keretrendszer)
+- **MySQL** adatbázis
 
-- formák: kártya, rács (grid) (lista nézet 2 oszlopban), flex
+---
 
-- szűrések és kereső
+### 🧠 Egyszerűen összefoglalva:
 
-- autorizáció és autentikáció: bejelentkezés, kijelentkezés, regisztráció
+Ez egy **modern játékgyűjteményes weboldal**, ahol:
 
-- fiók: kedvencek listája, felhasználók
-
-- query media és reszponzív dizájn méretei
-
-- mobil nézet és monitor nézet
-
-- CSS animációk: gomb, kártya
-
-- Tailwindcss világos/sötét + useVue isDark
-
-- szűrések és kereső, mint mobil nézet flex fordított
+- Vue 3 a frontend
+- Laravel a backend
+- MySQL az adatbázis
+- és sok UI/UX funkció van (animációk, kereső, login, kedvencek)

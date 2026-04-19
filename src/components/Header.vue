@@ -68,139 +68,133 @@ onMounted(() => {
   <header class="w-full card-navbar-wrapper">
     <nav class="card-navbar-content">
       <div
-        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3.5"
+        class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3.5 relative"
       >
         <button
           ref="darkBtn"
-          class="button-dark-mode p-2 rounded-3xl"
+          class="button-dark-mode p-2 rounded-3xl shrink-0"
           @click="store.ToggleDark()"
         >
-          <template v-if="store.isDark">
-            <Icon
-              icon="line-md:sun-rising-filled-loop"
-              class="text-gray-200/[95.0%]"
-              height="30"
-              width="30"
-            />
-          </template>
-          <template v-else>
-            <Icon
-              icon="line-md:moon-rising-alt-filled-loop"
-              class="text-gray-950/[95.4%]"
-              height="30"
-              width="30"
-            />
-          </template>
-          <slot />
-        </button>
-        <button
-          @click="store.toggleMenuWithMobile"
-          type="button"
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading"
-        >
           <Icon
-            icon="line-md:menu"
+            v-if="store.isDark"
+            icon="line-md:sun-rising-filled-loop"
             height="30"
             width="30"
-            class="dark:text-white text-gray-800"
+            class="text-gray-200"
+          />
+          <Icon
+            v-else
+            icon="line-md:moon-rising-alt-filled-loop"
+            height="30"
+            width="30"
+            class="text-gray-950"
           />
         </button>
-        <div
-          :class="[
-            'w-full md:block md:w-auto',
-            store.isOpenWithMobile ? 'block' : 'hidden',
-          ]"
-        >
-          <ul
-            class="font-medium flex flex-col *:dark:hover:bg-blue-950/20 p-0 *:hover:p-2.5 shadow-none *:hover:shadow-md *:hover:shadow-neutral-50/20 rounded-nones inset-shadow-none *:hover:inset-shadow-sm *:dark:hover:inset-shadow-emerald-950/80 ring-0 *:hover:ring-1 *:dark:hover:ring-blue-950/50 *:hover:inset-shadow-yellow-800/80 *:hover:bg-gray-800/10 *:hover:ring-amber-600/20 *:hover:rounded-2xl md:flex-row md:space-x-4"
-          >
-            <!-- RouterLink a router/index.ts-ekhez  -->
-            <li>
-              <RouterLink
-                :to="{ name: 'games.list' }"
-                class="block py-2 px-3 text-dark md:text-fg-brand md:p-0"
-              >
-                Játékok listája</RouterLink
-              >
-            </li>
-            <li>
-              <RouterLink
-                :to="{ name: 'gyujtheto' }"
-                class="block py-2 px-3 text-heading md:text-fg-brand md:p-0"
-              >
-                Gyűjthető dolgok</RouterLink
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="relative group user-menu-container z-[200] md:order-2">
-          <button
-            @click="toggleUserMenu"
-            class="flex items-center mt-2 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-          >
-            <Icon
-              icon="line-md:account"
-              height="28"
-              width="28"
-              class="dark:text-white text-gray-800"
-            />
-          </button>
 
-          <div
-            :class="[isUserMenuOpen ? 'block' : 'hidden']"
-            class="absolute right-0 top-full w-64 mt-2 bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[9999] overflow-hidden"
-          >
-            <div v-if="authStore.token" class="user-name-display">
-              <div class="flex flex-col gap-y-1.5">
+        <div class="flex items-center gap-2 md:order-2">
+          <div class="relative user-menu-container">
+            <button
+              @click.stop="toggleUserMenu"
+              class="flex items-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            >
+              <Icon
+                icon="line-md:account"
+                height="28"
+                width="28"
+                class="dark:text-white text-gray-800"
+              />
+            </button>
+
+            <div
+              v-show="isUserMenuOpen"
+              class="absolute right-0 top-full w-64 mt-2 bg-white dark:bg-[#1a1a2e] shadow-2xl rounded-xl border border-gray-200 dark:border-gray-700 z-[9999] overflow-hidden"
+            >
+              <div
+                v-if="authStore.token"
+                class="user-name-display px-4 py-3 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-[#252545]"
+              >
                 <p
-                  class="opacity-100 text-neutral-950/80 dark:text-neutral-100/70 text-[0.57rem]"
+                  class="text-[0.6rem] uppercase opacity-60 text-gray-500 dark:text-gray-400"
                 >
                   Felhasználó
                 </p>
-                <h1 class="text-neutral-950/80 dark:text-neutral-100/70">
-                  Név:
-                </h1>
                 <p
-                  class="text-[0.75rem] font-normal text-neutral-950/80 dark:text-neutral-100/70 break-all leading-tight"
+                  class="text-[0.8rem] font-bold truncate text-neutral-900 dark:text-neutral-100"
                 >
                   {{ authStore.userName }}
                 </p>
               </div>
+              <ul class="py-1">
+                <template v-if="!authStore.token">
+                  <li>
+                    <RouterLink to="/user/register" class="dropdown-item"
+                      >Regisztráció</RouterLink
+                    >
+                  </li>
+                  <li>
+                    <RouterLink to="/user/login" class="dropdown-item"
+                      >Bejelentkezés</RouterLink
+                    >
+                  </li>
+                </template>
+                <template v-else>
+                  <li>
+                    <RouterLink :to="{ name: 'favorite' }" class="dropdown-item"
+                      >Kedvencek</RouterLink
+                    >
+                  </li>
+                  <li>
+                    <RouterLink to="/user" class="dropdown-item"
+                      >Fiók</RouterLink
+                    >
+                  </li>
+                  <li>
+                    <button
+                      @click="authStore.logout"
+                      class="dropdown-item text-red-500 w-full text-left"
+                    >
+                      Kijelentkezés
+                    </button>
+                  </li>
+                </template>
+              </ul>
             </div>
-
-            <ul class="py-1">
-              <template v-if="!authStore.token">
-                <li>
-                  <RouterLink to="/user/register" class="dropdown-item"
-                    >Regisztráció</RouterLink
-                  >
-                </li>
-                <li>
-                  <RouterLink to="/user/login" class="dropdown-item"
-                    >Bejelentkezés</RouterLink
-                  >
-                </li>
-              </template>
-              <template v-else>
-                <li>
-                  <RouterLink to="/favorites" class="dropdown-item"
-                    >Kedvencek</RouterLink
-                  >
-                </li>
-                <li>
-                  <RouterLink to="/user" class="dropdown-item">Fiók</RouterLink>
-                </li>
-                <li>
-                  <button
-                    @click="authStore.logout"
-                    class="dropdown-item text-red-500 w-full text-left"
-                  >
-                    Kijelentkezés
-                  </button>
-                </li>
-              </template>
-            </ul>
           </div>
+
+          <button
+            @click="store.toggleMenuWithMobile"
+            type="button"
+            class="inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg md:hidden hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            <Icon
+              icon="line-md:menu"
+              height="30"
+              width="30"
+              class="dark:text-white text-gray-800"
+            />
+          </button>
+        </div>
+
+        <div
+          :class="[
+            store.isOpenWithMobile ? 'block' : 'hidden',
+            'w-full md:block md:w-auto md:order-1',
+          ]"
+        >
+          <ul
+            class="font-medium flex flex-col *:dark:hover:bg-blue-950/20 p-2 py-2.5 md:py-0 md:p-0 *:hover:p-2.5 shadow-none *:hover:shadow-md *:hover:shadow-neutral-50/20 rounded-nones inset-shadow-none *:hover:inset-shadow-sm *:dark:hover:inset-shadow-emerald-950/80 ring-0 *:hover:ring-1 *:dark:hover:ring-blue-950/50 *:hover:inset-shadow-yellow-800/80 *:hover:bg-gray-800/10 *:hover:ring-amber-600/20 *:hover:rounded-2xl md:flex-row md:space-x-4"
+          >
+            <li>
+              <RouterLink :to="{ name: 'games.list' }"
+                >Játékok listája</RouterLink
+              >
+            </li>
+            <li>
+              <RouterLink :to="{ name: 'gyujtheto' }"
+                >Gyűjthető dolgok</RouterLink
+              >
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
@@ -240,6 +234,7 @@ onMounted(() => {
 .user-menu-container {
   position: relative;
   z-index: 200;
+  overflow: visible !important;
 }
 .card-navbar-wrapper {
   overflow: visible !important;
@@ -262,15 +257,10 @@ onMounted(() => {
 
 @media (max-width: 768px) {
   .user-menu-container .absolute {
-    position: absolute;
-    right: 0 !important;
-    left: auto !important;
-    width: 260px;
-    max-width: 85vw;
-    top: 100%;
-    margin-top: 8px;
-    margin-top: 0.5rem;
-    z-index: 9999 !important;
+    right: 0;
+    left: auto;
+    width: 240px;
+    max-width: 90vw;
   }
 }
 </style>

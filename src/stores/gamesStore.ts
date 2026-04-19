@@ -4,7 +4,6 @@ import { API } from "../services/index";
 import { ref } from "vue";
 import type { APIResponse } from "../services/types";
 import type { AxiosError } from "axios";
-import { object } from "yup";
 
 export const useGamesStore = defineStore("gamesStore", () => {
   // konstansok használata
@@ -218,7 +217,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
             updated_at: new Date(),
           });
         }
-        // await GETallgames();
+        await GETallgames();
         return {
           success: true,
           content: null,
@@ -286,14 +285,14 @@ export const useGamesStore = defineStore("gamesStore", () => {
     type: string,
     description: string,
     images: Array<string>,
-    map_location: any,
+    map_location: number,
   ): Promise<APIResponse<null>> {
     const addItem: Omit<Collectible, "id"> = {
       game_id: Number(game_id),
       type,
       description,
-      images: images.filter((url) => !!url),
-      map_location: map_location ? map_location(Number) : [],
+      images: images || [],
+      map_location: Array.isArray(map_location) ? map_location.map(Number) : [],
     };
     try {
       isLoading.value = true;
@@ -344,7 +343,7 @@ export const useGamesStore = defineStore("gamesStore", () => {
         if (res.data?.content && !Array.isArray(res.data.content)) {
           Object.assign(item, res.data.content);
         }
-        // await GETallcollectibles();
+        await GETallcollectibles();
         return {
           success: true,
           content: null,

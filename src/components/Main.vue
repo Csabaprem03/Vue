@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { Transition } from "vue";
-import { useRoute } from "vue-router";
 // vue-router importálása: RouterView
 import { RouterView } from "vue-router";
-
-const route = useRoute();
 </script>
 
 <template>
@@ -20,7 +17,7 @@ sebesség, áttűnéssel mutat vagy kitakar -->
       <Transition
         enter-active-class="'animate__animated animate__fadeIn'"
         leave-active-class="'animate__animated animate__fadeIn'"
-        :duration="{ enter: 400, leave: 400 }"
+        :duration="{ enter: 300, leave: 300 }"
       >
         <component :is="Component" :key="route.fullPath" />
       </Transition>
